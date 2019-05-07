@@ -31,6 +31,8 @@ export class QuestionsComponent implements OnInit {
   courseCategories: Category[] = [];
   courseUsers$: Observable<User[]>;
 
+  sortFromOldest: boolean = false;
+
   allUsers: Object = {};
   questionTypes: Object = {};
   questionDifficulties: Object = {};
@@ -120,6 +122,11 @@ export class QuestionsComponent implements OnInit {
     this.questionService.getQuestions(this.id_category, this.id_difficulty, this.id_user, this.id_type, this.state)
       .subscribe(q => {
         this.loading = false;
+
+        if (this.sortFromOldest) {
+          q = q.reverse();
+        }
+
         this.questions = q;
 
         if (this.questions.length > 0) {

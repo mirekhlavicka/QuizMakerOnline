@@ -52,33 +52,35 @@
 
 <mat-toolbar class="question-toolbar" *ngIf="question">
 
-  <button (click)="goto(1)" mat-stroked-button color="primary">
+  <button (click)="goto(1)" mat-stroked-button color="primary" matTooltip="Přejít na první otázku">
     <mat-icon>first_page</mat-icon>
   </button>&nbsp;
 
-  <button (click)="prev()" mat-stroked-button color="primary">
+  <button (click)="prev()" mat-stroked-button color="primary" matTooltip="Přejít na předchozí otázku">
     <mat-icon>navigate_before</mat-icon>
   </button>&nbsp;
 
   <input class="inputGoTo" type="text" [value]="current+1" (input)="goto($event.target.value)">&nbsp;/&nbsp;{{questions ? questions.length : 0}}&nbsp;
 
-  <button (click)="next()" mat-stroked-button color="primary">
+  <button (click)="next()" mat-stroked-button color="primary" matTooltip="Přejít na další otázku">
     <mat-icon>navigate_next</mat-icon>
   </button>&nbsp;
 
-  <button (click)="goto(questions ? questions.length : 0)" mat-stroked-button color="primary">
+  <button (click)="goto(questions ? questions.length : 0)" mat-stroked-button color="primary" matTooltip="Přejít na poslední otázku">
     <mat-icon>last_page</mat-icon>
   </button>&nbsp;
+
+  <mat-slide-toggle [(ngModel)]="sortFromOldest" (change)="onFilterChange()" color="primary">Od nejstarších</mat-slide-toggle>
 
   <div fxFlex fxLayout fxLayoutAlign="center">
     <mat-spinner *ngIf="loading" [diameter]="40"></mat-spinner>
   </div>
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end">
-    <button (click)="addToTest()" mat-stroked-button color="accent">
+    <button (click)="addToTest()" mat-stroked-button color="accent" matTooltip="Vložit do testu">
       <mat-icon>add</mat-icon>
     </button>&nbsp;
-    <button (click)="addToTest()" mat-stroked-button color="accent" disabled>
+    <button (click)="addToTest()" mat-stroked-button color="accent" disabled matTooltip="Odebrat z testu">
       <mat-icon>remove</mat-icon>
     </button>
   </div>
