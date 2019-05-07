@@ -1,0 +1,43 @@
+<div *ngIf="question" class="questionDetail">
+
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Otázka
+      </mat-panel-title>
+      <mat-panel-description>
+        <span class="infoItem">{{question.enter_date | date:'mediumDate'}}</span><span class="infoItemSeparator">|</span>
+        <mat-icon inline>person</mat-icon><span class="infoItem">{{allUsers[question.id_user]}}</span><span class="infoItemSeparator">|</span>
+        <mat-icon inline>device_hub</mat-icon><span class="infoItem">{{questionTypes[question.id_question_type]}}</span><span class="infoItemSeparator">|</span>
+        <mat-icon inline>accessibility</mat-icon><span class="infoItem">{{questionDifficulties[question.id_question_difficulty]}}</span><span class="infoItemSeparator">|</span>
+        <mat-icon inline>{{question.state == 1 ? "done" : "pan_tool"}}</mat-icon><span class="infoItem">{{questionState[question.state]}}</span><span class="infoItemSeparator">|</span>
+        <span class="infoItem">id: {{question.id_question}}</span>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mathjax [content]='question.question' class="box"></mathjax>
+    <div class="points">({{question.points}} {{question.points == 1 ? "bod" : (question.points < 5 ? "body" : "bodů")}})</div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel expanded="true" *ngIf="question.answers.length > 0">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Podtázky
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div *ngFor="let answer of question.answers">
+      <mathjax [content]='answer.position + ") " + answer.answer' class="box"></mathjax>
+      <div class="points">({{answer.points}} {{answer.points == 1 ? "bod" : (answer.points < 5 ? "body" : "bodů")}})</div>
+    </div>
+  </mat-expansion-panel>
+
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Řešení
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mathjax [content]='question.solution' class="box"></mathjax>
+  </mat-expansion-panel>
+
+</div>

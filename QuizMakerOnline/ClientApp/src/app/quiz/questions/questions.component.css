@@ -1,0 +1,35 @@
+.question-filter-card, .question-card {
+  /*max-width: 1024px;*/
+  margin: 30px 30px 10px 30px;
+  /*width: auto;*/
+}
+
+.question-toolbar {
+  margin: 10px 30px 10px 30px;
+  width: auto;
+}
+
+.question-filter-select{
+  margin-right:20px;
+  max-width:180px;
+}
+
+.select-category {
+  width: 400px;
+  max-width: 400px!important;
+}
+
+.panel-category.mat-select-panel {
+  max-height: 600px;
+  max-width: 800px;
+}
+
+.inputGoTo {
+  width: 50px;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  outline: none;
+  border: 1px solid #bdbdbd;
+  padding-left: 5px;
+}

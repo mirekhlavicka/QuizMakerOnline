@@ -1,0 +1,11 @@
+.login-main {
+  margin-top: 10%;
+}
+
+form {
+  min-width: 30%;
+}
+
+mat-card {
+  width: 100%;
+}

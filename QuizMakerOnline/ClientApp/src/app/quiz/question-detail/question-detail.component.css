@@ -1,0 +1,36 @@
+.questionDetail {
+  margin: 10px 30px 10px 30px;
+}
+
+mat-expansion-panel {
+  margin-bottom: 10px;
+}
+
+.questionDetail .mat-expansion-panel-header {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.points {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size:12px;
+  text-align:right;
+}
+
+.infoItemSeparator {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.infoItem {
+ /*background-color : #eeeeee;
+ padding:4px*/
+ font-weight: 500;
+ font-size:15px;
+}
+
+mat-panel-description mat-icon {
+  /*margin-top: -3px;*/
+  margin-right: 5px;
+}

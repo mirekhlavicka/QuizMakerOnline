@@ -1,0 +1,73 @@
+<mat-card class="question-filter-card">
+  <mat-form-field class="select-category question-filter-select">
+    <mat-select placeholder="Kategorie" (selectionChange)="onFilterChange()" [(ngModel)]="id_category" panelClass="panel-category">
+      <mat-option *ngFor="let category of courseCategories" [value]="category.id_category">
+        {{category.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="question-filter-select">
+    <mat-select placeholder="Autor" (selectionChange)="onFilterChange()" [(ngModel)]="id_user">
+      <mat-option *ngFor="let user of courseUsers$ | async " [value]="user.id_user">
+        {{user.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="question-filter-select">
+    <mat-select placeholder="Typ" (selectionChange)="onFilterChange()" [(ngModel)]="id_type">
+      <mat-option [value]="0">(nerozhoduje)</mat-option>
+      <!--<mat-option [value]="1">test</mat-option>
+      <mat-option [value]="2">jedna otázka</mat-option>
+      <mat-option [value]="3">více podotázek</mat-option>-->
+      <mat-option *ngFor="let key of objectKeys(questionTypes)" [value]="key">
+        {{questionTypes[key]}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="question-filter-select">
+    <mat-select placeholder="Obtížnost" (selectionChange)="onFilterChange()" [(ngModel)]="id_difficulty">
+      <mat-option [value]="0">(nerozhoduje)</mat-option>
+      <!--<mat-option [value]="1">snadná</mat-option>
+      <mat-option [value]="2">střední</mat-option>
+      <mat-option [value]="3">těžká</mat-option>-->
+      <mat-option *ngFor="let key of objectKeys(questionDifficulties)" [value]="key">
+        {{questionDifficulties[key]}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="question-filter-select">
+    <mat-select placeholder="Stav" (selectionChange)="onFilterChange()" [(ngModel)]="state">
+      <mat-option [value]="-1">(nerozhoduje)</mat-option>
+      <mat-option *ngFor="let key of objectKeys(questionState)" [value]="key">
+        {{questionState[key]}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</mat-card>
+
+<mat-toolbar class="question-toolbar" *ngIf="question">
+  <button (click)="prev()" mat-raised-button color="primary">
+    <mat-icon>navigate_before</mat-icon>
+  </button>&nbsp;
+
+  <input class="inputGoTo" type="text" [value]="current+1" (input)="goto($event.target.value)">&nbsp;/&nbsp;{{questions ? questions.length : 0}}&nbsp;
+
+  <button (click)="next()" mat-raised-button color="primary">
+    <mat-icon>navigate_next</mat-icon>
+  </button>&nbsp;
+
+  <button (click)="addToTest()" mat-raised-button color="primary">
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-toolbar>
+
+<app-question-detail [question]="question" [allUsers]="allUsers" [questionTypes]="questionTypes" [questionDifficulties]="questionDifficulties" [questionState]="questionState" ></app-question-detail>
+
+<mat-card class="question-card" *ngIf="!question">
+  Nenalezena žádná otázka
+</mat-card>
