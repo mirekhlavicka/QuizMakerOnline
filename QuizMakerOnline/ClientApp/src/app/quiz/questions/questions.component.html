@@ -51,19 +51,32 @@
 </mat-card>
 
 <mat-toolbar class="question-toolbar" *ngIf="question">
-  <button (click)="prev()" mat-raised-button color="primary">
+  <button (click)="goto(1)" mat-stroked-button color="primary">
+    <mat-icon>first_page</mat-icon>
+  </button>&nbsp;
+
+  <button (click)="prev()" mat-stroked-button color="primary">
     <mat-icon>navigate_before</mat-icon>
   </button>&nbsp;
 
   <input class="inputGoTo" type="text" [value]="current+1" (input)="goto($event.target.value)">&nbsp;/&nbsp;{{questions ? questions.length : 0}}&nbsp;
 
-  <button (click)="next()" mat-raised-button color="primary">
+  <button (click)="next()" mat-stroked-button color="primary">
     <mat-icon>navigate_next</mat-icon>
   </button>&nbsp;
 
-  <button (click)="addToTest()" mat-raised-button color="primary">
-    <mat-icon>add</mat-icon>
-  </button>
+  <button (click)="goto(questions ? questions.length : 0)" mat-stroked-button color="primary">
+    <mat-icon>last_page</mat-icon>
+  </button>&nbsp;
+
+  <div fxFlex fxLayout fxLayoutAlign="flex-end">
+    <button (click)="addToTest()" mat-stroked-button color="accent">
+      <mat-icon>add</mat-icon>
+    </button>&nbsp;
+    <button (click)="addToTest()" mat-stroked-button color="accent" disabled>
+      <mat-icon>remove</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
 
 <app-question-detail [question]="question" [allUsers]="allUsers" [questionTypes]="questionTypes" [questionDifficulties]="questionDifficulties" [questionState]="questionState" ></app-question-detail>

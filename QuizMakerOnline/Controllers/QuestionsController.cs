@@ -53,6 +53,8 @@ namespace QuizMakerOnline.Controllers
                 res = res.Where(q => q.State == state.Value);
             }
 
+            res = res.OrderByDescending(q => q.IdQuestion);
+
             return res.Select(q => new
             {
                 id_question = q.IdQuestion,
@@ -86,8 +88,9 @@ namespace QuizMakerOnline.Controllers
         [AllowAnonymous]
         public IEnumerable<Object> GetCourses()
         {
-            var res = _context.Courses;
-
+            var res = _context.Courses
+                .Where(c => c.IdCourse != 0)
+                .OrderBy(c => c.Name);
 
             return res.Select(c => new
             {

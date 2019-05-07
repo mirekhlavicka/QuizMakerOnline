@@ -1,16 +1,16 @@
 <div *ngIf="question" class="questionDetail">
 
-  <mat-expansion-panel [expanded]='question.question != ""'>
+  <mat-expansion-panel [expanded]='question.question.trim() != ""'>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Otázka
       </mat-panel-title>
       <mat-panel-description>
-        <span class="infoItem">{{question.enter_date | date:'mediumDate'}}</span><span class="infoItemSeparator">|</span>
-        <mat-icon inline>person</mat-icon><span class="infoItem">{{allUsers[question.id_user]}}</span><span class="infoItemSeparator">|</span>
-        <mat-icon inline>device_hub</mat-icon><span class="infoItem">{{questionTypes[question.id_question_type]}}</span><span class="infoItemSeparator">|</span>
-        <mat-icon inline>accessibility</mat-icon><span class="infoItem">{{questionDifficulties[question.id_question_difficulty]}}</span><span class="infoItemSeparator">|</span>
-        <mat-icon inline>{{question.state == 1 ? "done" : "pan_tool"}}</mat-icon><span class="infoItem">{{questionState[question.state]}}</span><span class="infoItemSeparator">|</span>
+        <span class="infoItem">{{question.enter_date | date:'mediumDate'}}</span><span class="infoItemSeparator"></span>
+        <mat-icon inline>person</mat-icon><span class="infoItem">{{allUsers[question.id_user]}}</span><span class="infoItemSeparator"></span>
+        <mat-icon inline>{{question.id_question_type == 2 ? "remove" : "list"}}</mat-icon><span class="infoItem">{{questionTypes[question.id_question_type]}}</span><span class="infoItemSeparator"></span>
+        <mat-icon inline>{{question.id_question_difficulty == 1 ? "star_border" : (question.id_question_difficulty == 2 ? "star_half" : "star")}}</mat-icon><span class="infoItem">{{questionDifficulties[question.id_question_difficulty]}}</span><span class="infoItemSeparator"></span>
+        <mat-icon inline>{{question.state == 1 ? "done" : "pan_tool"}}</mat-icon><span class="infoItem">{{questionState[question.state]}}</span><span class="infoItemSeparator"></span>
         <span class="infoItem">id: {{question.id_question}}</span>
       </mat-panel-description>
     </mat-expansion-panel-header>
@@ -31,7 +31,7 @@
   </mat-expansion-panel>
 
 
-  <mat-expansion-panel>
+  <mat-expansion-panel *ngIf='question.solution.trim() != ""'>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Řešení

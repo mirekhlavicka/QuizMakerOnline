@@ -21,6 +21,9 @@ mat-expansion-panel {
 .infoItemSeparator {
   margin-left: 10px;
   margin-right: 10px;
+  border-right: solid;
+  border-right-width: 1px;
+  border-right-color:#a0a0a0;
 }
 
 .infoItem {
