@@ -18,7 +18,7 @@
     <div class="points">({{question.points}} {{question.points == 1 ? "bod" : (question.points < 5 ? "body" : "bodů")}})</div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel expanded="true" *ngIf="question.answers.length > 0">
+  <mat-expansion-panel [expanded]='question.answers.length > 0'>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Podtázky
@@ -31,7 +31,7 @@
   </mat-expansion-panel>
 
 
-  <mat-expansion-panel *ngIf='question.solution.trim() != ""'>
+  <mat-expansion-panel [expanded]='question.solution.trim() != ""'>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Řešení

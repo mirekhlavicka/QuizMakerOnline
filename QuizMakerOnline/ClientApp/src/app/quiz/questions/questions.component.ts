@@ -40,6 +40,8 @@ export class QuestionsComponent implements OnInit {
   question: Question;
   current: number = -1;
 
+  loading: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -114,8 +116,10 @@ export class QuestionsComponent implements OnInit {
   getQuestions(): void {
     //let selectedId: number = +this.route.snapshot.paramMap.get('id_question');
 
+    this.loading = true;
     this.questionService.getQuestions(this.id_category, this.id_difficulty, this.id_user, this.id_type, this.state)
       .subscribe(q => {
+        this.loading = false;
         this.questions = q;
 
         if (this.questions.length > 0) {

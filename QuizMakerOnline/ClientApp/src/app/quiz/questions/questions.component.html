@@ -51,6 +51,7 @@
 </mat-card>
 
 <mat-toolbar class="question-toolbar" *ngIf="question">
+
   <button (click)="goto(1)" mat-stroked-button color="primary">
     <mat-icon>first_page</mat-icon>
   </button>&nbsp;
@@ -68,6 +69,10 @@
   <button (click)="goto(questions ? questions.length : 0)" mat-stroked-button color="primary">
     <mat-icon>last_page</mat-icon>
   </button>&nbsp;
+
+  <div fxFlex fxLayout fxLayoutAlign="center">
+    <mat-spinner *ngIf="loading" [diameter]="40"></mat-spinner>
+  </div>
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end">
     <button (click)="addToTest()" mat-stroked-button color="accent">
