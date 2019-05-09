@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Course, Category, Question, Answer, User } from '../../quiz/questionModel';
+import { Course, Category, Question, Answer, User, QuestionsFilter } from '../../quiz/questionModel';
 import { QuestionService } from '../../quiz/question.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { switchMap, map, tap, flatMap } from 'rxjs/operators';
+import { switchMap, map, tap, flatMap, filter } from 'rxjs/operators';
 
 
 
@@ -21,17 +21,18 @@ export class QuestionsComponent implements OnInit {
 
   id_course: number = 0;
 
-  id_category: number = 0;
-  id_difficulty: number = 0;
-  id_user: number = 0;
-  id_type: number = 0;
-  state: number = -1;
+  filter: QuestionsFilter = {
+    id_category: 0,
+    id_difficulty: 0,
+    id_user: 0,
+    id_type: 0,
+    state: -1,
+    sortFromOldest: false
+  }
 
   categories: Category[] = [];
   courseCategories: Category[] = [];
-  courseUsers$: Observable<User[]>;
-
-  sortFromOldest: boolean = false;
+  courseUsers: User[];
 
   allUsers: Object = {};
   questionTypes: Object = {};
@@ -41,6 +42,7 @@ export class QuestionsComponent implements OnInit {
   questions: Question[];
   question: Question;
   current: number = -1;
+  gotoCurrent: number = -1;
 
   loading: boolean = false;
 
@@ -74,7 +76,7 @@ export class QuestionsComponent implements OnInit {
       }),
 
       flatMap(o => {
-        this.questionState= o;
+        this.questionState = o;
 
         return this.route.paramMap.pipe(
           map(params => {
@@ -91,65 +93,75 @@ export class QuestionsComponent implements OnInit {
 
     this.courseCategories = this.categories.filter(cat => { return cat.id_course == this.id_course });
 
-    if (this.courseCategories.length > 0) {
-      this.id_category = this.courseCategories[0].id_category;
-    } else {
-      this.id_category = 0;
-    }
-
-    this.courseUsers$ = this.questionService.getUsers(this.id_course).pipe(tap(users =>
+    this.questionService.getUsers(this.id_course).pipe(tap(users =>
       users.unshift(Object.assign(new User(), {
         id_user: 0,
         name: "(nerozhoduje)"
-      }))));
+      }))))
+      .subscribe(u => {
+        this.courseUsers = u;
 
-    this.id_user = 0;
-    this.id_difficulty = 0;
-    this.id_type = 0;
+        let sfilter = localStorage.getItem("questions_filter_" + this.id_course);
 
-    this.onFilterChange();
+        if (sfilter) {
+          this.filter = JSON.parse(sfilter);
+        } else {
+          if (this.courseCategories.length > 0) {
+            this.filter.id_category = this.courseCategories[0].id_category;
+          } else {
+            this.filter.id_category = 0;
+          }
+
+          this.filter.id_user = 0;
+          this.filter.id_difficulty = 0;
+          this.filter.id_type = 0;
+          this.filter.state = -1;
+
+          this.filter.sortFromOldest = false;
+        }
+
+        this.gotoCurrent = +localStorage.getItem("questions_current_" + this.id_course);
+
+        if (!this.gotoCurrent) {
+          this.gotoCurrent = -1;
+        }
+
+        this.onFilterChange();
+      });
   }
 
   onFilterChange() {
-    //console.log(this.id_category + "," + this.id_user + "," + this.id_difficulty);
+    localStorage.setItem("questions_filter_" + this.id_course, JSON.stringify(this.filter));
     this.getQuestions();
   }
 
   getQuestions(): void {
-    //let selectedId: number = +this.route.snapshot.paramMap.get('id_question');
-
     this.loading = true;
-    this.questionService.getQuestions(this.id_category, this.id_difficulty, this.id_user, this.id_type, this.state)
+    this.questionService.getQuestions(this.filter)
       .subscribe(q => {
-        this.loading = false;
+        setTimeout(() => { this.loading = false; }, 500);
 
-        if (this.sortFromOldest) {
+        if (this.filter.sortFromOldest) {
           q = q.reverse();
         }
 
         this.questions = q;
 
-        if (this.questions.length > 0) {
-          this.current = 0;
+        if (this.gotoCurrent >= 0 && this.gotoCurrent < this.questions.length) {
+          this.current = this.gotoCurrent;
           this.question = this.questions[this.current];
+          this.gotoCurrent = -1;
         } else {
-          this.current = -1;
-          this.question = null;
+          if (this.questions.length > 0) {
+            this.current = 0;
+            this.question = this.questions[this.current];
+          } else {
+            this.current = -1;
+            this.question = null;
+          }
         }
 
-        /*if (selectedId != 0) {
-          this.current = this.questions.findIndex(q => q.id_question == selectedId)
-        } else {
-          this.current = -1;
-        }
-
-        if (this.current == -1) {
-          this.current = 0;
-          this.question = this.questions[this.current];
-          this.router.navigate(['/quiz', { id_question: this.question.id_question }])
-        } else {
-          this.question = this.questions[this.current];
-        }*/
+        this.saveCurrentPosition();
       });
   }
 
@@ -159,7 +171,7 @@ export class QuestionsComponent implements OnInit {
       this.current = 0;
     }
     this.question = this.questions[this.current];
-    //this.router.navigate(['/quiz', { id_question: this.question.id_question }])
+    this.saveCurrentPosition();
   }
 
   prev(): void {
@@ -168,7 +180,7 @@ export class QuestionsComponent implements OnInit {
       this.current = this.questions.length - 1;
     }
     this.question = this.questions[this.current];
-    //this.router.navigate(['/quiz', { id_question: this.question.id_question }])
+    this.saveCurrentPosition();
   }
 
   goto(val: string | number): void {
@@ -180,10 +192,13 @@ export class QuestionsComponent implements OnInit {
 
     this.current = n - 1;
     this.question = this.questions[this.current];
-    //this.router.navigate(['/quiz', { id_question: this.question.id_question }])
+    this.saveCurrentPosition();
+  }
+
+  saveCurrentPosition(): void {
+    localStorage.setItem("questions_current_" + this.id_course, this.current.toString());
   }
 
   addToTest(): void {
-
   }
 }

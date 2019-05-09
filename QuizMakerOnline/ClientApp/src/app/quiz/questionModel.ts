@@ -36,3 +36,11 @@ export class User {
   name: string;
 }
 
+export class  QuestionsFilter  {
+  id_category: number;
+  id_difficulty: number;
+  id_user: number;
+  id_type: number;
+  state: number;
+  sortFromOldest: boolean
+}

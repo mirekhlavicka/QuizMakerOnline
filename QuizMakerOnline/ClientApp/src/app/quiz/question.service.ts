@@ -4,10 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Question } from './questionModel';
-import { Course } from './questionModel';
-import { Category } from './questionModel';
-import { User } from './questionModel';
+import { Question, Course, Category, User, QuestionsFilter } from './questionModel';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -36,10 +33,10 @@ export class QuestionService {
   //    //);
   //}
 
-  getQuestions(id_category: number, id_difficulty: number, id_user: number, id_type: number, state: number): Observable<Question[]> {
+  getQuestions(filter: QuestionsFilter): Observable<Question[]> {
     //const url = (id_category && id_category != 0) ? `${this.questionsUrl}/?id_category=${id_category}` : this.questionsUrl;
 
-    const url = `${this.questionsUrl}/?id_category=${id_category}&id_difficulty=${id_difficulty}&id_user=${id_user}&id_type=${id_type}&state=${state}`;
+    const url = `${this.questionsUrl}/?id_category=${filter.id_category}&id_difficulty=${filter.id_difficulty}&id_user=${filter.id_user}&id_type=${filter.id_type}&state=${filter.state}`;
 
     return this.http.get<Question[]>(url);
     //.pipe(
