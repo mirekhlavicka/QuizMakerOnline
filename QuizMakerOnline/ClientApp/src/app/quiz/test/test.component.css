@@ -1,4 +1,12 @@
 .test-card {
-  /*max-width: 1024px;*/
-  margin: 30px;
+  margin: 10px 30px 10px 30px;
+}
+
+.test-toolbar {
+  margin: 10px 30px 10px 30px;
+  width: auto;
+}
+
+.answer {
+  padding-left: 20px;
 }

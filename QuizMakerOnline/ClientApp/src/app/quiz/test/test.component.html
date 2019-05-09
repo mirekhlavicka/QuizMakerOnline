@@ -1,3 +1,32 @@
+<mat-toolbar class="test-toolbar">
+  <button (click)="showSolution=!showSolution" mat-stroked-button color="primary">
+    {{showSolution ? "Skrýt řešení": "Zobrazit řešení"}}
+  </button>
+</mat-toolbar>
+
 <mat-card class="test-card">
-  Nejsou vybrány žádné příklady
+
+  <div *ngFor="let question of testService.Get(); let i = index">
+    <mathjax [content]='"<b>" + (i+1).toString() + ".</b> " +  question.question'></mathjax>
+    <div *ngFor="let answer of question.answers" class="answer">
+      <mathjax [content]='answer.position + ") " +  answer.answer'></mathjax>
+    </div>
+
+    <div [hidden]="!showSolution" class="answer">
+      <h5>Řešeni:</h5>
+      <mathjax [content]='question.solution'></mathjax>
+    </div>
+
+    <div>
+      <div fxFlex fxLayout fxLayoutAlign="flex-end">
+        <button (click)="removeFromTest(question)" mat-stroked-button color="accent" matTooltip="Odebrat z testu">
+          <mat-icon>remove</mat-icon>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="testService.Get().length==0">Nejsou vybrány žádné příklady</div>
+
 </mat-card>

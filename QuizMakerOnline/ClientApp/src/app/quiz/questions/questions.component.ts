@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Course, Category, Question, Answer, User, QuestionsFilter } from '../../quiz/questionModel';
-import { QuestionService } from '../../quiz/question.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { switchMap, map, tap, flatMap, filter } from 'rxjs/operators';
+
+import { Course, Category, Question, Answer, User, QuestionsFilter } from '../../quiz/questionModel';
+import { QuestionService } from '../../quiz/question.service';
+import { TestService } from '../test.service';
 
 
 
@@ -49,7 +51,8 @@ export class QuestionsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private questionService: QuestionService) {
+    private questionService: QuestionService,
+    private testService: TestService) {
   }
 
   ngOnInit() {
@@ -200,5 +203,10 @@ export class QuestionsComponent implements OnInit {
   }
 
   addToTest(): void {
+    this.testService.Add(this.question);
+  }
+
+  removeFromTest(): void {
+    this.testService.Del(this.question);
   }
 }

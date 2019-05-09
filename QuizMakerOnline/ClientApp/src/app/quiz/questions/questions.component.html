@@ -71,10 +71,10 @@
   </div>
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end">
-    <button (click)="addToTest()" mat-stroked-button color="accent" matTooltip="Vložit do testu">
+    <button (click)="addToTest()" mat-stroked-button color="accent" matTooltip="Vložit do testu" [disabled]="testService.Contains(question)" [matBadge]="testService.Get().length" matBadgePosition="before" matBadgeColor="accent">
       <mat-icon>add</mat-icon>
     </button>&nbsp;
-    <button (click)="addToTest()" mat-stroked-button color="accent" disabled matTooltip="Odebrat z testu">
+    <button (click)="removeFromTest()" mat-stroked-button color="accent" matTooltip="Odebrat z testu" [disabled]="!testService.Contains(question)">
       <mat-icon>remove</mat-icon>
     </button>
   </div>
