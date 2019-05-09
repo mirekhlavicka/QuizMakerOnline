@@ -6,7 +6,7 @@
 
 <mat-card class="test-card">
 
-  <div *ngFor="let question of testService.Get(); let i = index">
+  <div *ngFor="let question of testService.getQuestions(); let i = index" class="question">
     <mathjax [content]='"<b>" + (i+1).toString() + ".</b> " +  question.question'></mathjax>
     <div *ngFor="let answer of question.answers" class="answer">
       <mathjax [content]='answer.position + ") " +  answer.answer'></mathjax>
@@ -17,9 +17,15 @@
       <mathjax [content]='question.solution'></mathjax>
     </div>
 
-    <div>
-      <div fxFlex fxLayout fxLayoutAlign="flex-end">
-        <button (click)="removeFromTest(question)" mat-stroked-button color="accent" matTooltip="Odebrat z testu">
+    <div fxLayout>
+      <div fxFlex fxLayoutAlign="flex-end">
+        <button (click)="removeFromTest(question)" mat-mini-fab color="default" matTooltip="Posunout dolů" class="questionActionButton">
+          <mat-icon>arrow_downward</mat-icon>
+        </button>
+        <button (click)="removeFromTest(question)" mat-mini-fab color="default" matTooltip="Posunout nahoru" class="questionActionButton">
+          <mat-icon>arrow_upward</mat-icon>
+        </button>
+        <button (click)="removeFromTest(question)" mat-mini-fab color="default" matTooltip="Odebrat z testu" class="questionActionButton">
           <mat-icon>remove</mat-icon>
         </button>
       </div>
@@ -27,6 +33,6 @@
 
   </div>
 
-  <div *ngIf="testService.Get().length==0">Nejsou vybrány žádné příklady</div>
+  <div *ngIf="testService.count == 0">Nejsou vybrány žádné příklady</div>
 
 </mat-card>

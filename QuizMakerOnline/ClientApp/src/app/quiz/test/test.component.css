@@ -10,3 +10,16 @@
 .answer {
   padding-left: 20px;
 }
+
+.questionActionButton {
+  margin-right: 8px;
+  margin-bottom:5px;
+}
+
+.question {
+  padding: 5px;
+}
+
+.question:hover {
+  background-color: #f0f0f0;
+}

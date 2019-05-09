@@ -24,7 +24,7 @@
       <mat-divider></mat-divider>
 
       <a mat-list-item [routerLinkActive]='["active"]' routerLink="/test" (click)="closeSideNav()">
-        <mat-icon matListIcon class="app-nav-list-icon">format_list_numbered</mat-icon>
+        <mat-icon matListIcon class="app-nav-list-icon">shopping_cart</mat-icon>
         Sestavit test
       </a>
     </mat-nav-list>
@@ -44,15 +44,20 @@
       <div fxFlex fxLayout fxLayoutAlign="flex-end">
         <ul fxLayout fxLayoutGap="20px" class="navigation-items">
           <!--<li fxHide.xs>
-        <button mat-icon-button>
-          <mat-icon>settings</mat-icon>
-        </button>
-      </li>
-      <li fxHide.xs>
-        <button mat-icon-button>
-          <mat-icon>help_outline</mat-icon>
-        </button>
-      </li>-->
+    <button mat-icon-button>
+      <mat-icon>settings</mat-icon>
+    </button>
+  </li>
+  <li fxHide.xs>
+    <button mat-icon-button>
+      <mat-icon>help_outline</mat-icon>
+    </button>
+  </li>-->
+          <li fxHide.xs>
+            <a routerLink="/test" mat-icon-button [matBadge]="testService.count" matBadgePosition="before|below" matBadgeColor="accent" matBadgeSize="medium" matBadgeOverlap="true" [matBadgeHidden]="testService.count == 0">
+              <mat-icon>shopping_cart</mat-icon>
+            </a>
+          </li>          
           <li>
             <button mat-icon-button [matMenuTriggerFor]="auth">
               <mat-icon>person_outline</mat-icon>

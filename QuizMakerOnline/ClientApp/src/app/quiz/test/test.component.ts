@@ -23,6 +23,6 @@ export class TestComponent implements OnInit {
   }
 
   removeFromTest(q: Question) {
-    this.testService.Del(q);
+    this.testService.del(q);
   }
 }

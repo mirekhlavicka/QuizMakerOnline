@@ -10,6 +10,7 @@ import {
 import { AuthService } from '../auth.service';
 import { Course } from '../../quiz/questionModel';
 import { QuestionService } from '../../quiz/question.service';
+import { TestService } from '../../quiz/test.service';
 
 
 
@@ -32,7 +33,12 @@ export class NavComponent implements OnInit, OnDestroy {
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService, private router: Router, private questionService: QuestionService) {
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private authService: AuthService,
+    private router: Router,
+    private questionService: QuestionService,
+    private testService: TestService) {
   }
 
   ngOnInit(): void {

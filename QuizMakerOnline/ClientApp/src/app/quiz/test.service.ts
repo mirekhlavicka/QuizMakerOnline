@@ -7,27 +7,43 @@ import { Question } from './questionModel';
 })
 export class TestService {
 
-  constructor() { }
+  constructor() {
+    let saved = localStorage.getItem("saved_test");
 
-  private questions: Question[] = [];
-
-  public Add(q: Question) {
-    this.questions.push(q);
-  }
-
-  public Del(q: Question) {
-
-    var i = this.questions.findIndex(qq => qq.id_question == q.id_question);
-    if (i != -1) {
-      this.questions.splice(i, 1)
+    if (saved) {
+      this.questions = JSON.parse(saved);
     }
   }
 
-  public Get(): Question[] {
+  private questions: Question[] = [];
+
+  public add(q: Question) {
+    this.questions.push(q);
+    this.save();
+  }
+
+  public del(q: Question) {
+
+    var i = this.questions.findIndex(qq => qq.id_question == q.id_question);
+    if (i != -1) {
+      this.questions.splice(i, 1);
+      this.save();
+    }
+  }
+
+  public getQuestions(): Question[] {
     return this.questions;
   }
 
-  public Contains(q: Question): boolean {
+  get count(): number {
+    return this.questions.length;
+  }
+
+  public contains(q: Question): boolean {
     return q ? this.questions.some(qq => qq.id_question == q.id_question) :  false;
+  }
+
+  private save(): void {
+    localStorage.setItem("saved_test", JSON.stringify(this.questions));
   }
 }

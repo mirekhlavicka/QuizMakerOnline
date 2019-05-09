@@ -203,10 +203,10 @@ export class QuestionsComponent implements OnInit {
   }
 
   addToTest(): void {
-    this.testService.Add(this.question);
+    this.testService.add(this.question);
   }
 
   removeFromTest(): void {
-    this.testService.Del(this.question);
+    this.testService.del(this.question);
   }
 }
