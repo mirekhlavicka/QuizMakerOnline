@@ -8,39 +8,54 @@
   </mat-form-field>
 
   <mat-form-field class="question-filter-select">
-    <mat-select placeholder="Autor" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_user">
+    <mat-select placeholder="Autor" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_user" multiple>
       <mat-option *ngFor="let user of courseUsers" [value]="user.id_user">
         {{user.name}}
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <button mat-icon-button (click)='filter.id_user=""; onFilterChange()' class="question-filter-select-reset" *ngIf='filter.id_user != ""'>
+    <mat-icon>clear</mat-icon>
+  </button>
+
 
   <mat-form-field class="question-filter-select">
-    <mat-select placeholder="Typ" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_type">
-      <mat-option [value]="0">(nerozhoduje)</mat-option>
+    <mat-select placeholder="Typ" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_type" multiple>
+      <!--<mat-option [value]="0">(nerozhoduje)</mat-option>-->
       <mat-option *ngFor="let key of objectKeys(questionTypes)" [value]="key">
         {{questionTypes[key]}}
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <button mat-icon-button (click)='filter.id_type=""; onFilterChange()' class="question-filter-select-reset" *ngIf='filter.id_type != ""'>
+    <mat-icon>clear</mat-icon>
+  </button>
+
 
   <mat-form-field class="question-filter-select">
-    <mat-select placeholder="Obtížnost" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_difficulty">
-      <mat-option [value]="0">(nerozhoduje)</mat-option>
+    <mat-select placeholder="Obtížnost" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_difficulty" multiple>
+      <!--<mat-option [value]="0">(nerozhoduje)</mat-option>-->
       <mat-option *ngFor="let key of objectKeys(questionDifficulties)" [value]="key">
         {{questionDifficulties[key]}}
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <button mat-icon-button (click)='filter.id_difficulty=""; onFilterChange()' class="question-filter-select-reset" *ngIf='filter.id_difficulty != ""'>
+    <mat-icon>clear</mat-icon>
+  </button>
 
   <mat-form-field class="question-filter-select">
-    <mat-select placeholder="Stav" (selectionChange)="onFilterChange()" [(ngModel)]="filter.state">
-      <mat-option [value]="-1">(nerozhoduje)</mat-option>
+    <mat-select placeholder="Stav" (selectionChange)="onFilterChange()" [(ngModel)]="filter.state" multiple>
+      <!--<mat-option [value]="-1">(nerozhoduje)</mat-option>-->
       <mat-option *ngFor="let key of objectKeys(questionState)" [value]="key">
         {{questionState[key]}}
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <button mat-icon-button (click)='filter.state=""; onFilterChange()' class="question-filter-select-reset" *ngIf='filter.state != ""'>
+    <mat-icon>clear</mat-icon>
+  </button>
+
 
 </mat-card>
 

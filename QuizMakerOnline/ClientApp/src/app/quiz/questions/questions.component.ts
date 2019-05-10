@@ -25,10 +25,10 @@ export class QuestionsComponent implements OnInit {
 
   filter: QuestionsFilter = {
     id_category: 0,
-    id_difficulty: 0,
-    id_user: 0,
-    id_type: 0,
-    state: -1,
+    id_difficulty: "",
+    id_user: "",
+    id_type: "",
+    state: "",
     sortFromOldest: false
   }
 
@@ -96,11 +96,11 @@ export class QuestionsComponent implements OnInit {
 
     this.courseCategories = this.categories.filter(cat => { return cat.id_course == this.id_course });
 
-    this.questionService.getUsers(this.id_course).pipe(tap(users =>
+    this.questionService.getUsers(this.id_course)/*.pipe(tap(users =>
       users.unshift(Object.assign(new User(), {
         id_user: 0,
         name: "(nerozhoduje)"
-      }))))
+      }))))*/
       .subscribe(u => {
         this.courseUsers = u;
 
@@ -115,10 +115,10 @@ export class QuestionsComponent implements OnInit {
             this.filter.id_category = 0;
           }
 
-          this.filter.id_user = 0;
-          this.filter.id_difficulty = 0;
-          this.filter.id_type = 0;
-          this.filter.state = -1;
+          this.filter.id_user = "";
+          this.filter.id_difficulty = "";
+          this.filter.id_type = "";
+          this.filter.state = "";
 
           this.filter.sortFromOldest = false;
         }

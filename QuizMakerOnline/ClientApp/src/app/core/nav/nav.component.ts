@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter, first, switchMap } from 'rxjs/operators';
 import {
   Router,
-  NavigationExtras
+  NavigationExtras,
+  ActivatedRoute,
+  ParamMap,
+  NavigationEnd
 } from '@angular/router';
 
 import { AuthService } from '../auth.service';
@@ -27,6 +30,9 @@ export class NavComponent implements OnInit, OnDestroy {
   fullName: string = "";
 
   courses: Course[];
+  id_course: number = 0;
+  course_title = "";
+
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(['(max-width: 1440px)']/*Breakpoints.Handset*/)
     .pipe(
@@ -37,6 +43,7 @@ export class NavComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
     private questionService: QuestionService,
     private testService: TestService) {
   }
@@ -48,7 +55,36 @@ export class NavComponent implements OnInit, OnDestroy {
     this.refreshAuthStatus();
     this.questionService.getCourses().subscribe(c => {
       this.courses = c;
+
+      this.getActivatedRouteParameter().subscribe(params => {
+        this.id_course = +params.get('id_course');
+
+        //console.log(this.id_course);
+
+        if (this.id_course != 0) {
+          let i = this.courses.findIndex(c => c.id_course == this.id_course);
+          if (i != -1) {
+            this.course_title = " – " + this.courses[i].name;
+          }
+        } else {
+          this.course_title = "";
+        }
+
+      })
     });
+  }
+
+  private getActivatedRouteParameter(): Observable<ParamMap> {
+    return this.router.events.pipe(filter(e => e instanceof NavigationEnd),
+      map((): ActivatedRoute => {
+        let route = this.route;
+        while (route.firstChild) {
+          route = route.firstChild;
+        }
+        return route;
+      }),
+      filter((route: ActivatedRoute) => route.outlet === 'primary'),
+      switchMap((route: ActivatedRoute) => route.paramMap)/*, first()*/);
   }
 
   ngOnDestroy(): void {

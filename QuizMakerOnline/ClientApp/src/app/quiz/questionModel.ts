@@ -38,9 +38,9 @@ export class User {
 
 export class  QuestionsFilter  {
   id_category: number;
-  id_difficulty: number;
-  id_user: number;
-  id_type: number;
-  state: number;
+  id_difficulty: number | string;
+  id_user: number | string;
+  id_type: number | string;
+  state: number | string;
   sortFromOldest: boolean
 }

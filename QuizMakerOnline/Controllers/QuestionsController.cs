@@ -24,7 +24,7 @@ namespace QuizMakerOnline.Controllers
 
         // GET: api/questions
         [HttpGet]
-        public IEnumerable<Object> GetQuestions(int? id_category, int? id_difficulty, int? id_user, int? id_type, int? state)
+        public IEnumerable<Object> GetQuestions(int? id_category, string id_difficulty, string id_user, string id_type, string state)
         {
             var res = _context.Questions.AsQueryable();
 
@@ -33,24 +33,28 @@ namespace QuizMakerOnline.Controllers
                 res = res.Where(q => q.IdCategory == id_category.Value);
             }
 
-            if (id_difficulty != null && id_difficulty != 0)
+            if (!String.IsNullOrEmpty(id_difficulty) && id_difficulty != "0")
             {
-                res = res.Where(q => q.IdQuestionDifficulty == id_difficulty.Value);
+                var tmp = id_difficulty.Split(',').Select(s => Int32.Parse(s)).ToArray();
+                res = res.Where(q =>  tmp.Contains(q.IdQuestionDifficulty));
             }
 
-            if (id_user != null && id_user != 0)
+            if (!String.IsNullOrEmpty(id_user) && id_user != "0")
             {
-                res = res.Where(q => q.IdUser == id_user.Value);
+                var tmp = id_user.Split(',').Select(s => Int32.Parse(s)).ToArray();
+                res = res.Where(q => tmp.Contains(q.IdUser));
             }
 
-            if (id_type != null && id_type != 0)
+            if (!String.IsNullOrEmpty(id_type) && id_type != "0")
             {
-                res = res.Where(q => q.IdQuestionType == id_type.Value);
+                var tmp = id_type.Split(',').Select(s => Int32.Parse(s)).ToArray();
+                res = res.Where(q => tmp.Contains(q.IdQuestionType));
             }
 
-            if (state != null && state != -1)
+            if (!String.IsNullOrEmpty(state) && state != "-1")
             {
-                res = res.Where(q => q.State == state.Value);
+                var tmp = state.Split(',').Select(s => Int32.Parse(s)).ToArray();
+                res = res.Where(q => tmp.Contains(q.State));
             }
 
             res = res.OrderByDescending(q => q.IdQuestion);

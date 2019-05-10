@@ -39,7 +39,7 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <mat-icon matListIcon class="app-nav-list-icon" *ngIf="!(isHandset$ | async)">functions</mat-icon>
-      <span>Quiz maker</span>
+      <span>Quiz maker {{course_title}}</span>
 
       <div fxFlex fxLayout fxLayoutAlign="flex-end">
         <ul fxLayout fxLayoutGap="20px" class="navigation-items">
