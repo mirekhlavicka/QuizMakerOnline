@@ -15,7 +15,7 @@ export class TestComponent implements OnInit {
 
   constructor(
     private questionService: QuestionService,
-    private testService: TestService) { }
+    public testService: TestService) { }
 
   showSolution: boolean = false;
 

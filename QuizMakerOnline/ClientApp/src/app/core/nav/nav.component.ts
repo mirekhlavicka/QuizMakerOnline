@@ -45,7 +45,7 @@ export class NavComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private questionService: QuestionService,
-    private testService: TestService) {
+    public testService: TestService) {
   }
 
   ngOnInit(): void {
