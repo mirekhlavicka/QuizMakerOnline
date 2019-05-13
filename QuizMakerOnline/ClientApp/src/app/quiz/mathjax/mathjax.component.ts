@@ -54,6 +54,8 @@ export class MathjaxComponent implements OnChanges, OnInit {
       this.preparedContent += t;
     }
 
+    this.preparedContent = this.preparedContent.replace(/\\noindent/g, "");
+
     while (this.preprocessLaTeX()) {
 
     };
@@ -62,7 +64,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
 
   private preprocessLaTeX(): boolean  {
 
-    const rExp = /{\s*\\(?<tag1>it|bf|footnotesize)\s*|\\text(?<tag2>it|bf){/;
+    const rExp = /{(\s*\\(?<tag1>it|bf|footnotesize))+\s*|\\text(?<tag2>it|bf){/;
 
     let m = this.preparedContent.match(rExp);
 
