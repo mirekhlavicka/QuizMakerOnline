@@ -2,3 +2,15 @@ div {
   font-size:16px;
   font-weight:400;
 }
+
+span.latex_it {
+  font-style: italic;
+}
+
+span.latex_bf {
+  font-weight: 600;
+}
+
+span.latex_footnotesize {
+  font-size: 12px;
+}
