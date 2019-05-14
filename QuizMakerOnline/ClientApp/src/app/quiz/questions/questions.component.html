@@ -13,11 +13,10 @@
         {{user.name}}
       </mat-option>
     </mat-select>
+    <button mat-icon-button (click)='filter.id_user=""; onFilterChange(); $event.stopPropagation()' *ngIf='filter.id_user != ""' matSuffix aria-label="Clear">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
-  <button mat-icon-button (click)='filter.id_user=""; onFilterChange()' class="question-filter-select-reset" *ngIf='filter.id_user != ""'>
-    <mat-icon>clear</mat-icon>
-  </button>
-
 
   <mat-form-field class="question-filter-select">
     <mat-select placeholder="Typ" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_type" multiple>
@@ -26,10 +25,10 @@
         {{questionTypes[key]}}
       </mat-option>
     </mat-select>
+    <button mat-icon-button (click)='filter.id_type=""; onFilterChange(); $event.stopPropagation()' *ngIf='filter.id_type != ""' matSuffix aria-label="Clear">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
-  <button mat-icon-button (click)='filter.id_type=""; onFilterChange()' class="question-filter-select-reset" *ngIf='filter.id_type != ""'>
-    <mat-icon>clear</mat-icon>
-  </button>
 
 
   <mat-form-field class="question-filter-select">
@@ -39,10 +38,10 @@
         {{questionDifficulties[key]}}
       </mat-option>
     </mat-select>
+    <button mat-icon-button (click)='filter.id_difficulty=""; onFilterChange(); $event.stopPropagation()' *ngIf='filter.id_difficulty != ""' matSuffix aria-label="Clear">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
-  <button mat-icon-button (click)='filter.id_difficulty=""; onFilterChange()' class="question-filter-select-reset" *ngIf='filter.id_difficulty != ""'>
-    <mat-icon>clear</mat-icon>
-  </button>
 
   <mat-form-field class="question-filter-select">
     <mat-select placeholder="Stav" (selectionChange)="onFilterChange()" [(ngModel)]="filter.state" multiple>
@@ -51,10 +50,10 @@
         {{questionState[key]}}
       </mat-option>
     </mat-select>
+    <button mat-icon-button (click)='filter.state=""; onFilterChange(); $event.stopPropagation()' *ngIf='filter.state != ""' matSuffix aria-label="Clear">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
-  <button mat-icon-button (click)='filter.state=""; onFilterChange()' class="question-filter-select-reset" *ngIf='filter.state != ""'>
-    <mat-icon>clear</mat-icon>
-  </button>
 
 
 </mat-card>
@@ -87,10 +86,10 @@
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end">
     <button (click)="addToTest()" mat-stroked-button color="accent" matTooltip="Vložit do testu" [disabled]="testService.contains(question)">
-      <mat-icon>add</mat-icon>
+      <mat-icon>add_shopping_cart</mat-icon>
     </button>&nbsp;
     <button (click)="removeFromTest()" mat-stroked-button color="accent" matTooltip="Odebrat z testu" [disabled]="!testService.contains(question)">
-      <mat-icon>remove</mat-icon>
+      <mat-icon>remove_shopping_cart</mat-icon>
     </button>
   </div>
 </mat-toolbar>

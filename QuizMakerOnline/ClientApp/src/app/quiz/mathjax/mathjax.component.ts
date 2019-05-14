@@ -64,12 +64,12 @@ export class MathjaxComponent implements OnChanges, OnInit {
 
   private preprocessLaTeX(): boolean  {
 
-    const rExp = /{(\s*\\(?<tag1>it|bf|footnotesize))+\s*|\\text(?<tag2>it|bf){/;
+    const rExp = /(?:{(?:\s*\\(?<tag1>it|bf|footnotesize))+\s*)|(?:\\text(?<tag2>it|bf)){/;
 
     let m = this.preparedContent.match(rExp);
 
     if (m && m.index != -1) {
-      let end = this.findClosingBracket(this.preparedContent, m.index);
+      let end = this.findClosingBracket(this.preparedContent, m.index + m[0].length - 1);
 
       if (end != -1) {
         let tmp = this.preparedContent.substr(m.index, end - m.index/* + 1*/);

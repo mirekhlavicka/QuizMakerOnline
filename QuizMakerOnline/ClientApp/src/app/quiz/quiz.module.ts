@@ -16,6 +16,7 @@ import { QuestionsComponent } from './questions/questions.component';
 import { TestComponent } from './test/test.component';
 import { QuestionDetailComponent } from './question-detail/question-detail.component';
 import { MathjaxComponent } from './mathjax/mathjax.component';
+import { MathjaxEditComponent } from './mathjax-edit/mathjax-edit.component';
 
 
 
@@ -23,7 +24,7 @@ import { MathjaxComponent } from './mathjax/mathjax.component';
 //import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [QuestionsComponent, TestComponent, QuestionDetailComponent, MathjaxComponent],
+  declarations: [QuestionsComponent, TestComponent, QuestionDetailComponent, MathjaxComponent, MathjaxEditComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,
@@ -36,6 +37,9 @@ import { MathjaxComponent } from './mathjax/mathjax.component';
   providers: [
     { provide: LOCALE_ID, useValue: "cs-CZ" }, //replace "en-US" with your locale
     //otherProviders...
-  ]
+  ],
+  entryComponents: [
+    MathjaxEditComponent
+  ],
 })
 export class QuizModule { }
