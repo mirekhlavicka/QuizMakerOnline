@@ -1,13 +1,15 @@
 <h2 mat-dialog-title>Editace LaTeX</h2>
 <mat-dialog-content>
-
-  <mat-form-field class="edit-full-width">
-    <textarea matInput placeholder="LaTeX" [ngModel]="text" (ngModelChange)='textChanged($event)' cdkTextareaAutosize
+  <div class="edit_container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.0%" fxLayoutAlign="center">
+    <div fxFlex="50%" class="edit_box">
+        <textarea matInput placeholder="LaTeX" [ngModel]="text" (ngModelChange)='textChanged($event)' cdkTextareaAutosize
             cdkAutosizeMinRows="10"
-            cdkAutosizeMaxRows="20" cdkFocusInitial></textarea>
-  </mat-form-field>
-
-  <mathjax [content]='newtext'></mathjax>
+            cdkFocusInitial></textarea>
+    </div>
+    <div fxFlex="50%" class="edit_box_preview">
+      <mathjax [content]='newtext'></mathjax>
+    </div>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-raised-button color="primary" (click)="onNoClick()">Zrušit</button> <!--mat-dialog-close-->
