@@ -1,4 +1,6 @@
 <mat-toolbar class="test-toolbar">
+  <button mat-button color="accent" (click)="goBack()">go back</button>
+
   <button (click)="showSolution=!showSolution" mat-stroked-button color="primary">
     {{showSolution ? "Skrýt řešení": "Zobrazit řešení"}}
   </button>

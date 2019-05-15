@@ -4,6 +4,7 @@ import { Question, Answer } from '../../quiz/questionModel';
 
 import { QuestionService } from '../../quiz/question.service';
 import { TestService } from '../test.service';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -15,7 +16,8 @@ export class TestComponent implements OnInit {
 
   constructor(
     private questionService: QuestionService,
-    public testService: TestService) { }
+    public testService: TestService,
+    private location: Location) { }
 
   showSolution: boolean = false;
 
@@ -24,5 +26,9 @@ export class TestComponent implements OnInit {
 
   removeFromTest(q: Question) {
     this.testService.del(q);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }
