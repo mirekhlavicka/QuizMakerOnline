@@ -28,25 +28,29 @@ export class MathjaxComponent implements OnChanges, OnInit {
     this.renderMath();
   }
 
-  prepareContent(): string {
+  prepareContent() {
     this.preparedContent = "";
 
-    let terms = this.content.split(/(\$\$|\$|\\\[|\\\])/);
+    let terms = this
+      .content
+      .replace(/\\\\\[.*?\]/g, "\\\\")
+      .split(/(\$\$|\$|\\\[|\\\]|\\begin|\\end)/);
     let inmath = false;
+    let beginCount = 0;
 
     for (let t of terms) {
 
-      if (t == "$$" || t == "$" || t == "\\[" || t == "\\]") {
+      if (t == "\\begin") {
+        beginCount++;
+      } else if (t == "\\end") {
+        beginCount--;
+      } else if (t == "$$" || t == "$" || t == "\\[" || t == "\\]") {
         inmath = !inmath;
-      } else if (!inmath) {
-        if (t.includes("\\begin")) {
-          this.preparedContent = this.content;
-          return;
-        }
-        t = /*'<span class="textnomath">' + */t
-          .replace(new RegExp(/\\\\|\\medskip|\n\n|\r\n\r\n/, 'g'), "<br/>")
-          .replace(new RegExp(/\\q+uad|~/, 'g'), "&nbsp;")
-          /*+ '</span>'*/;
+      } else if (!inmath && beginCount == 0) {
+        t = t
+          .replace(/\\\\|\\(small|med|big)skip|\\newline|\\vspace{.*?}|\n\n|\r\n\r\n/g, "<br/>")
+          .replace(/\\q+uad|~|\\hspace{.*?}|\\hfill/g, "&nbsp;")
+          .replace(/\\noindent/g, "");
       } else {
         t = t
           .replace(new RegExp(/</, 'g'), "< ");
@@ -54,17 +58,27 @@ export class MathjaxComponent implements OnChanges, OnInit {
       this.preparedContent += t;
     }
 
-    this.preparedContent = this.preparedContent.replace(/\\noindent/g, "");
-
-    while (this.preprocessLaTeX()) {
+    while (this.preprocessLaTeXTextStyle()) {
 
     };
 
+    this.preprocessLaTeXEnums();
+
   }
 
-  private preprocessLaTeX(): boolean  {
+  private preprocessLaTeXEnums() {
+    this.preparedContent = this
+      .preparedContent
+      .replace(/\\begin{(enumerate|itemize)}([^]*?)\\end{\1}/g, (m, p1, p2) => {
+        return "<ul class=\"" + p1 + "\">" + p2.replace(/\\item(?:\[(.*?)\])?([^]*?)(?=(?:\\item|$))/g, (m, p1, p2) => {
+          return p1 ? "<li class=\"hasorder\">" + p1 + p2 + "</li>" : "<li>" + p2 + "</li>";
+        }) + "</ul>";
+    });
+  }
 
-    const rExp = /(?:{(?:\s*\\(?<tag1>it|bf|footnotesize))+\s*)|(?:\\text(?<tag2>it|bf)){/;
+  private preprocessLaTeXTextStyle(): boolean  {
+
+    const rExp = /(?:{(?:\s*\\(it|bf|footnotesize))+\s*)|(?:\\(textit|textbf|underline)){/;
 
     let m = this.preparedContent.match(rExp);
 
@@ -75,7 +89,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
         let tmp = this.preparedContent.substr(m.index, end - m.index/* + 1*/);
         tmp = tmp.replace(rExp, '')
 
-        let className = m.groups["tag2"] ? m.groups["tag2"] : m.groups["tag1"];
+        let className = m[1] ? m[1] : m[2].replace('text', '');
 
         this.preparedContent = this.preparedContent.substr(0, m.index) + "<span class=\"latex_" + className + "\">" + tmp + "</span>" + this.preparedContent.substr(end + 1);
         return true;

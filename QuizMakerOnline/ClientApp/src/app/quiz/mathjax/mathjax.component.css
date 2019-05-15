@@ -11,6 +11,22 @@ span.latex_bf {
   font-weight: 600;
 }
 
+span.latex_underline {
+  text-decoration: underline;
+}
+
 span.latex_footnotesize {
   font-size: 12px;
+}
+
+ul.itemize {
+  list-style:disc;
+}
+
+ul.enumerate {
+  list-style-type:lower-roman
+}
+
+li.hasorder {
+  list-style:none;
 }
