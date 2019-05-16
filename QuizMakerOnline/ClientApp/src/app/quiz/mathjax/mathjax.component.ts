@@ -114,8 +114,21 @@ export class MathjaxComponent implements OnChanges, OnInit {
 
   renderMath() {
     setTimeout(() => {
-      window['MathJax']['Hub'].Queue(["Typeset", window['MathJax'].Hub/*, this.el.nativeElement.children[0]*/]);
+      if (globals.isTypesetting) {
+        globals.typesetNeeded = true;
+      } else {
+        globals.isTypesetting = true;
+        window['MathJax']['Hub'].Queue(["Typeset", window['MathJax'].Hub/*, this.el.nativeElement.children[0]*/], () => this.typesetFinished());
+      }      
     }, 0);
+  }
+
+  typesetFinished() {
+    globals.isTypesetting = false;
+    if (globals.typesetNeeded) {
+      globals.typesetNeeded = false;
+      this.renderMath();
+    }
   }
 
   loadMathConfig() {

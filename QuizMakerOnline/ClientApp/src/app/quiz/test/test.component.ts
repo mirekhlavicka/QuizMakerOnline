@@ -28,6 +28,14 @@ export class TestComponent implements OnInit {
     this.testService.del(q);
   }
 
+  moveUp(q: Question) {
+    this.testService.moveUp(q);
+  }
+
+  moveDown(q: Question) {
+    this.testService.moveDown(q);
+  }
+
   goBack(): void {
     this.location.back();
   }

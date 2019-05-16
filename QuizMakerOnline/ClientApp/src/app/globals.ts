@@ -1,3 +1,5 @@
 export const globals = {
-  isMathJaxConfigured: false
+  isMathJaxConfigured: false,
+  isTypesetting: false,
+  typesetNeeded : false
 }

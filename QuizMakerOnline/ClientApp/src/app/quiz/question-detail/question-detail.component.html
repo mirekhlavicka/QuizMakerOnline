@@ -27,12 +27,23 @@
         Podtázky
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <div *ngFor="let answer of question.answers">
+    <div *ngFor="let answer of question.answers" class="answer">
       <mathjax [content]='answer.position + ") " + answer.answer'></mathjax>
       <div class="points">({{answer.points}} {{answer.points == 1 ? "bod" : (answer.points < 5 ? "body" : "bodů")}})</div>
-      <button mat-icon-button color="primary" (click)="editAnswer(answer)" matTooltip="Upravit podotázku">
-        <mat-icon>edit</mat-icon>
-      </button>
+
+      <div fxLayout class="answer_tools">
+        <div fxFlex fxLayoutAlign="center">
+          <button mat-mini-fab color="default" (click)="editAnswer(answer)" matTooltip="Upravit podotázku">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+
+          <!--<button (click)="moveDown(question)" mat-mini-fab color="default" matTooltip="Posunout dolů" class="questionActionButton" [disabled]="i==testService.getQuestions().length-1">
+            <mat-icon>arrow_downward</mat-icon>
+          </button>-->
+        </div>
+      </div>
+
     </div>
   </mat-expansion-panel>
 

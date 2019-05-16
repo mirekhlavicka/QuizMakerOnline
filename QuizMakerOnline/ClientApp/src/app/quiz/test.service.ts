@@ -31,6 +31,26 @@ export class TestService {
     }
   }
 
+  public moveUp(q: Question) {
+    var i = this.questions.findIndex(qq => qq.id_question == q.id_question);
+    if (i > 0) {
+      let tmp = this.questions[i];
+      this.questions[i] = this.questions[i - 1];
+      this.questions[i - 1] = tmp;
+      this.save();
+    }
+  }
+
+  public moveDown(q: Question) {
+    var i = this.questions.findIndex(qq => qq.id_question == q.id_question);
+    if (i >= 0 && i < this.questions.length - 1) {
+      let tmp = this.questions[i];
+      this.questions[i] = this.questions[i + 1];
+      this.questions[i + 1] = tmp;
+      this.save();
+    }
+  }
+
   public getQuestions(): Question[] {
     return this.questions;
   }

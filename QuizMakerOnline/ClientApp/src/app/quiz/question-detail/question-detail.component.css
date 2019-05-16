@@ -37,3 +37,20 @@ mat-panel-description mat-icon {
   /*margin-top: -3px;*/
   margin-right: 5px;
 }
+
+.answer {
+  padding: 5px;
+}
+
+.answer:hover {
+  background-color: #f5f5f5;
+}
+
+.answer .answer_tools {
+  opacity: 0;
+  margin-top: -30px;
+}
+
+.answer:hover .answer_tools {
+  opacity: 1;
+}
