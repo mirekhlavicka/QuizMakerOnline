@@ -23,3 +23,11 @@
 .question:hover {
   background-color: #f0f0f0;
 }
+
+  .question .question_tools {
+    opacity: 0;
+  }
+
+  .question:hover .question_tools {
+    opacity: 1;
+  }

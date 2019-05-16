@@ -4,6 +4,7 @@ import { Question, Answer } from '../../quiz/questionModel';
 
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { MathjaxEditComponent } from '../mathjax-edit/mathjax-edit.component';
+import { QuestionService } from '../question.service';
 
 @Component({
   selector: 'app-question-detail',
@@ -18,7 +19,9 @@ export class QuestionDetailComponent implements OnInit {
   @Input() questionDifficulties: Object;
   @Input() questionState: Object;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    public dialog: MatDialog,
+    private questionService: QuestionService) { }
 
   ngOnInit() {
   }
@@ -28,17 +31,21 @@ export class QuestionDetailComponent implements OnInit {
       width: '70%',
       //minHeight: '500px',
       //height: '80%',
-      data: solution ? this.question.solution : this.question.question
+      data: {
+        type: solution ? 2 : 1,
+        text: solution ? this.question.solution : this.question.question
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed');
       if (result != null) {
         if (solution) {
-          this.question.solution = result;
+          this.question.solution = result.text;
         } else {
-          this.question.question = result;
+          this.question.question = result.text;
         }
+        this.questionService.updateQuestion(this.question).subscribe(_ => { alert("otazka ulozena") });
       }
     });
   }
@@ -46,12 +53,16 @@ export class QuestionDetailComponent implements OnInit {
   editAnswer(answer: Answer): void {
     const dialogRef = this.dialog.open(MathjaxEditComponent, {
       width: '70%',
-      data: answer.answer
+      data: {
+        type: 3,
+        text: answer.answer
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        answer.answer = result;
+        answer.answer = result.text;
+        this.questionService.updateAnswer(answer).subscribe(_ => { alert("podotazka ulozena") });
       }
     });
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Question } from '../questionModel';
+import { Question, EditQAData } from '../questionModel';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -16,8 +16,8 @@ export class MathjaxEditComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<MathjaxEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public text: string) {
-    this.newtext = this.text;
+    @Inject(MAT_DIALOG_DATA) public data: EditQAData) {
+    this.newtext = this.data.text;
     this.textChangedSubject.pipe(
       debounceTime(1000),
       distinctUntilChanged())
@@ -25,7 +25,7 @@ export class MathjaxEditComponent implements OnInit {
   }
 
   textChanged(s: string) {
-    this.text = s;
+    this.data.text = s;
     this.textChangedSubject.next(s);
   }
 

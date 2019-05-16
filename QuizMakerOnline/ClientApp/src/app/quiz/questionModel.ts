@@ -14,6 +14,7 @@ export class Question {
 }
 
 export class Answer {
+  id_question: number;
   position: string;
   answer: string;
   points: number;
@@ -43,4 +44,9 @@ export class  QuestionsFilter  {
   id_type: number | string;
   state: number | string;
   sortFromOldest: boolean
+}
+
+export interface EditQAData {
+  type: number;
+  text: string;
 }

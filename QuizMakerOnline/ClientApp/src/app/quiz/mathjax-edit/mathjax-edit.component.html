@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>Editace LaTeX</h2>
+<h2 mat-dialog-title>Editace {{data.type == 1 ? "otázky" : (data.type == 3 ? "podotázky" : "řešení") }}</h2>
 <mat-dialog-content>
   <div class="edit_container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.0%" fxLayoutAlign="center">
     <div fxFlex="50%" class="edit_box">
-        <textarea matInput placeholder="LaTeX" [ngModel]="text" (ngModelChange)='textChanged($event)' cdkTextareaAutosize
+        <textarea matInput placeholder="LaTeX" [ngModel]="data.text" (ngModelChange)='textChanged($event)' cdkTextareaAutosize
             cdkAutosizeMinRows="10"
             cdkFocusInitial></textarea>
     </div>
@@ -12,6 +12,6 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button color="primary" (click)="onNoClick()">Zrušit</button> <!--mat-dialog-close-->
-  <button mat-raised-button color="primary" [mat-dialog-close]="text">Ok</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data">Uložit</button>
+  <button mat-button (click)="onNoClick()">Zrušit</button> <!--mat-dialog-close-->
 </mat-dialog-actions>

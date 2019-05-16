@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Question, Course, Category, User, QuestionsFilter } from './questionModel';
+import { Question, Course, Category, User, QuestionsFilter, Answer } from './questionModel';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,6 +22,8 @@ export class QuestionService {
   private questiontypesUrl = 'api/questions/questiontypes';
   private questiondifficultiesUrl = 'api/questions/questiondifficulties';
   private questionstateUrl = 'api/questions/questionstate';
+
+  private answersUrl = 'api/answers';
 
   constructor(private http: HttpClient) { }
 
@@ -85,4 +87,42 @@ export class QuestionService {
   getQuestionState(): Observable<Object> {
     return this.http.get<Object>(this.questionstateUrl);
   }
+
+  /** PUT: update the questuion on the server */
+  updateQuestion(question: Question): Observable<any> {
+    return this.http.put(this.questionsUrl, question, httpOptions).pipe(
+      //tap(_ => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('updateQuestion'))
+    );
+  }
+
+  /** PUT: update the questuion on the server */
+  updateAnswer(answer: Answer): Observable<any> {
+    return this.http.put(this.answersUrl, answer, httpOptions).pipe(
+      //tap(_ => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('updatAnswer'))
+    );
+  }
+
+
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      //this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
+
 }

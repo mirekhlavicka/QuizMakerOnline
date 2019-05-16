@@ -76,6 +76,7 @@ namespace QuizMakerOnline.Controllers
                     //.Where(a => a.Answer != "")
                     .Select(a => new
                     {
+                        id_question = a.IdQuestion,
                         position = a.Position,
                         answer = a.Answer,
                         points = a.Points
@@ -197,5 +198,55 @@ namespace QuizMakerOnline.Controllers
                 })
                 .ToDictionary(qs => qs.id, qs => qs.name);
         }
+
+        // PUT: api/questions  bez /5
+        [HttpPut/*("{id}")*/]
+        public IActionResult PutQuestion(ClientQuestion cq)
+        {
+            Questions question = _context.Questions.SingleOrDefault(q => q.IdQuestion == cq.id_question);
+
+            if (question == null)
+            {
+                return BadRequest();
+            }
+            
+            question.Question = cq.question;
+            question.Solution = cq.solution;
+
+            _context.SaveChanges();
+
+            /*if (id != users.IdUser)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(users).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UsersExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }*/
+
+            return NoContent();
+        }
+
+        public class ClientQuestion
+        {
+            public int id_question {get; set;}
+            public string question { get; set; }
+            public string solution { get; set; }
+        }
+
     }
 }
