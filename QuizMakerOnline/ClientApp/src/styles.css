@@ -11,3 +11,13 @@ purple-green.css
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@media print {
+  app-root > * {
+    display: none;
+  }
+
+  app-root app-test-print {
+    display: block;
+  }
+}

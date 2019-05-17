@@ -139,6 +139,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
 
     window['MathJax'].Hub.Config({
       showMathMenu: true,
+      messageStyle: "none",
       jax: ["input/TeX", "output/CommonHTML"],
       tex2jax: {
         inlineMath: [["$", "$"]],

@@ -5,6 +5,7 @@ import { Question, Answer } from '../../quiz/questionModel';
 import { QuestionService } from '../../quiz/question.service';
 import { TestService } from '../test.service';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class TestComponent implements OnInit {
   constructor(
     private questionService: QuestionService,
     public testService: TestService,
-    private location: Location) { }
+    private location: Location,
+    private router: Router) { }
 
   showSolution: boolean = false;
 
@@ -38,5 +40,14 @@ export class TestComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  print(): void {
+    this.router.navigate(['/',
+      {
+        outlets: {
+          'print': ['printtest', { showSolution: this.showSolution}]
+        }
+      }], { skipLocationChange: true });
   }
 }

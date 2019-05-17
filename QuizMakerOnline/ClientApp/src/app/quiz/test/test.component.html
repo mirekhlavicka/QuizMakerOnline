@@ -3,6 +3,10 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
   &nbsp;
+  <button mat-stroked-button color="primary" (click)="print()" matTooltip="Tisk">
+    <mat-icon>print</mat-icon>
+  </button>
+  &nbsp;
   <mat-slide-toggle [(ngModel)]="showSolution" color="primary">Zobrazit řešení</mat-slide-toggle>
 </mat-toolbar>
 

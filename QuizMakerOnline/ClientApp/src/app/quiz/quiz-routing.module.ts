@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NavComponent } from '../core/nav/nav.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { TestComponent } from './test/test.component';
+import { TestPrintComponent } from './test-print/test-print.component';
 import { AuthGuard } from '../core/auth.guard'
 
 const routes: Routes = [
@@ -27,6 +28,9 @@ const routes: Routes = [
   },
   {
     path: 'test', component: TestComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'printtest', outlet: 'print', component: TestPrintComponent, canActivate: [AuthGuard]
   }
 
 ];

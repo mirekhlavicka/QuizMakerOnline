@@ -1,0 +1,27 @@
+.print-test {
+  margin: 0px;;
+}
+
+.answer {
+  padding-left: 20px;
+}
+
+.points {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  text-align: right;
+}
+
+
+.question {
+  padding: 0px;
+  page-break-inside: avoid;
+}
+
+
+@media screen {
+  :host {
+    display: none;
+  }
+}

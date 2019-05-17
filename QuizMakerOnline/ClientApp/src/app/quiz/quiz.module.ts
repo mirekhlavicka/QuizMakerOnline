@@ -17,6 +17,7 @@ import { TestComponent } from './test/test.component';
 import { QuestionDetailComponent } from './question-detail/question-detail.component';
 import { MathjaxComponent } from './mathjax/mathjax.component';
 import { MathjaxEditComponent } from './mathjax-edit/mathjax-edit.component';
+import { TestPrintComponent } from './test-print/test-print.component';
 
 
 
@@ -24,7 +25,7 @@ import { MathjaxEditComponent } from './mathjax-edit/mathjax-edit.component';
 //import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [QuestionsComponent, TestComponent, QuestionDetailComponent, MathjaxComponent, MathjaxEditComponent],
+  declarations: [QuestionsComponent, TestComponent, QuestionDetailComponent, MathjaxComponent, MathjaxEditComponent, TestPrintComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,
