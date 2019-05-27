@@ -8,17 +8,19 @@
   </button>
   &nbsp;
   <mat-slide-toggle [(ngModel)]="showSolution" color="primary">Zobrazit řešení</mat-slide-toggle>
+  &nbsp;
+  <mat-slide-toggle [(ngModel)]="showPoints" color="primary">Zobrazit body</mat-slide-toggle>
 </mat-toolbar>
 
 <mat-card class="test-card">
 
-  <div *ngFor="let question of testService.getQuestions(); let i = index" class="question">
-    <mathjax [content]='"<b>" + (i+1).toString() + ".</b> " +  question.question'></mathjax>
-    <div *ngFor="let answer of question.answers" class="answer">
-      <mathjax [content]='answer.position + ") " +  answer.answer'></mathjax>
-      <div class="points">({{answer.points}} {{answer.points == 1 ? "bod" : (answer.points < 5 ? "body" : "bodů")}})</div>
+  <div *ngFor="let question of testService.getQuestions(); let i = index" class="question" [class.noPoints]="!showPoints">
+    <mathjax *ngIf='question.question != ""' [content]='"<b>" + (i+1).toString() + ".</b> " +  question.question'></mathjax>
+    <div *ngFor="let answer of question.answers" class="answer" [class.noPoints]="!showPoints">
+      <mathjax [content]='(question.question == "" && answer.position =="a"  ? "<b>" + (i+1).toString() + ".</b> " : "") + answer.position + ") " +  answer.answer'></mathjax>
+      <div class="points" [hidden]="!showPoints">({{answer.points}} {{answer.points == 1 ? "bod" : (answer.points < 5 ? "body" : "bodů")}})</div>
     </div>
-    <div class="points">({{question.points}} {{question.points == 1 ? "bod" : (question.points < 5 ? "body" : "bodů")}})</div>
+    <div class="points" [hidden]="!showPoints">({{question.points}} {{question.points == 1 ? "bod" : (question.points < 5 ? "body" : "bodů")}})</div>
 
     <div [hidden]="!showSolution" class="answer">
       <h5>Řešeni:</h5>

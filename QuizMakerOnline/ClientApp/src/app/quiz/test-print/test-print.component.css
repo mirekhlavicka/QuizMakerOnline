@@ -2,9 +2,9 @@
   margin: 0px;;
 }
 
-.answer {
+/*.answer {
   padding-left: 20px;
-}
+}*/
 
 .points {
   margin-top: 5px;
@@ -19,6 +19,9 @@
   page-break-inside: avoid;
 }
 
+.noPoints {
+  margin-bottom: 15px;
+}
 
 @media screen {
   :host {

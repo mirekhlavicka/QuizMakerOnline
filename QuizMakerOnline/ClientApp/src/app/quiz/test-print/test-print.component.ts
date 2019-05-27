@@ -25,9 +25,11 @@ export class TestPrintComponent implements OnInit {
     private router: Router) { }
 
   showSolution: boolean = false;
+  showPoints: boolean = true;
 
   ngOnInit() {
-    this.showSolution =  (this.route.snapshot.paramMap.get('showSolution') == "true");
+    this.showSolution = (this.route.snapshot.paramMap.get('showSolution') == "true");
+    this.showPoints = (this.route.snapshot.paramMap.get('showPoints') == "true");
 
     setTimeout(() => { this.print(); }, 500);
   }

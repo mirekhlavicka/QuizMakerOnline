@@ -22,6 +22,7 @@ export class TestComponent implements OnInit {
     private router: Router) { }
 
   showSolution: boolean = false;
+  showPoints: boolean = true;
 
   ngOnInit() {
   }
@@ -46,7 +47,7 @@ export class TestComponent implements OnInit {
     this.router.navigate(['/',
       {
         outlets: {
-          'print': ['printtest', { showSolution: this.showSolution}]
+          'print': ['printtest', { showSolution: this.showSolution, showPoints: this.showPoints }]
         }
       }], { skipLocationChange: true });
   }
