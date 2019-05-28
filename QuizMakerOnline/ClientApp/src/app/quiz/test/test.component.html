@@ -7,6 +7,10 @@
     <mat-icon>print</mat-icon>
   </button>
   &nbsp;
+  <a mat-stroked-button color="primary" matTooltip="LaTex" [href]='"/api/tests/download?showPoints=" + showPoints'>  <!--target="_blank"-->
+    <mat-icon>save</mat-icon>
+  </a>
+  &nbsp;
   <mat-slide-toggle [(ngModel)]="showSolution" color="primary">Zobrazit řešení</mat-slide-toggle>
   &nbsp;
   <mat-slide-toggle [(ngModel)]="showPoints" color="primary">Zobrazit body</mat-slide-toggle>

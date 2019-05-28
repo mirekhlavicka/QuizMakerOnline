@@ -51,4 +51,8 @@ export class TestComponent implements OnInit {
         }
       }], { skipLocationChange: true });
   }
+
+  //download(): void {
+  //  this.location.go("/api/tests/download");
+  //}
 }
