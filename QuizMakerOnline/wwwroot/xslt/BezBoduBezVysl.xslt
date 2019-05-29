@@ -55,6 +55,9 @@
   <xsl:template match="Questions">
 \bigskip
 {\bf <xsl:value-of select="position()"/>.} <xsl:value-of select="@question"/>
+    <xsl:if test="@question!=''">
+      \\
+    </xsl:if>
     <xsl:if test="@id_question_type!=2">
       <xsl:apply-templates select="Answers"/>
     </xsl:if>

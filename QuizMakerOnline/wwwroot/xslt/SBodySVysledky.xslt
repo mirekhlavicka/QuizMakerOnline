@@ -16,7 +16,24 @@
     \oddsidemargin=-10mm
 
     %Naètení pøeddefinovaných vztahù, které jsou v souboru preddefinovane.sty
-    \usepackage{../sty/preddefinovane}
+    %\usepackage{../sty/preddefinovane}
+    \def\e{{\rm e}}
+    \def\arctg{{\rm arctg}}
+    \def\arccotg{{\rm arccotg}}
+    \def\tg{{\rm tg}}
+    \def\d{{\rm d}}
+    \def\intaabb{\int\limits_\alpha^\beta}
+    \def\intab{\int\limits_a^b}
+    \def\R{{\mathbb{R}}}
+    \def\f{\frac}
+    \def\[{$$}
+    \def\]{$$}
+    \def\lt{\left}
+    \def\rt{\right}
+    \def\ba{\begin{array}}
+    \def\ea{\end{array}}
+    \def\cotg{{\rm cotg}}
+    \def\p{\varphi}
 
     %Uprava sirky a delky textu na strance
     \textheight 27cm
@@ -37,6 +54,9 @@
   <xsl:template match="Questions">
     \bigskip
     {\bf <xsl:value-of select="position()"/>.} <xsl:value-of select="@question"/>
+    <xsl:if test="@question!=''">
+      \\
+    </xsl:if>    
     <xsl:if test="@id_question_type!=2">
       <xsl:apply-templates select="Answers"/>
     </xsl:if>

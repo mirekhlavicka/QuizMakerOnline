@@ -26,32 +26,39 @@ namespace QuizMakerOnline.Controllers
         {
             _env = env;
             _context = context;
+
         }
 
         [HttpGet]
-        public IActionResult Download(bool? showPoints, bool? showSolution, string idList)
+        public IActionResult Download(bool showPoints, bool showSolution, string idList)
         {
             var questions = idList
                 .Split(',')
                 .Select(s => Int32.Parse(s))
-                .Select(id => _context.Questions.Include(q => q.Answers).SingleOrDefault(q => q.IdQuestion == id))
+                .Select(id => _context.Questions
+                    .Include(q => q.Answers)
+                    .Include(q => q.IdCategoryNavigation).ThenInclude(c => c.IdCourseNavigation)
+                .SingleOrDefault(q => q.IdQuestion == id))
                 .ToArray();
 
             XElement xml = new XElement("Tests", 
-                new XAttribute("course_code",  "Testing 1 - 2 - 3 ěščřžýáíé"),
+                new XAttribute("course_code", questions[0].IdCategoryNavigation.IdCourseNavigation.Name),
                 new XAttribute("group", "A"),
                     questions.Select(q => new XElement("Questions", 
                         new XAttribute("question", q.Question),
                         new XAttribute("id_question_type", q.IdQuestionType),
+                        new XAttribute("solution", q.Solution),
+                        new XAttribute("points", q.Points),
                         q.Answers.Select(a => new XElement("Answers",
                             new XAttribute("position", a.Position),
-                            new XAttribute("answer", a.Answer)
+                            new XAttribute("answer", a.Answer),
+                            new XAttribute("points", a.Points)
                         ))
                     ))
                 );
 
 
-            MemoryStream stream = TransformXMLToTex(xml, "BezBoduBezVysl.xslt");
+            MemoryStream stream = TransformXMLToTex(xml, showPoints ? (showSolution ? "SBodySVysledky" : "SBodyBezVysl") : (showSolution ? "BezBoduBezVysl" : "BezBoduBezVysl"));
 
             if (stream == null)
                 return NotFound();
@@ -63,7 +70,7 @@ namespace QuizMakerOnline.Controllers
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             XslCompiledTransform transform = new XslCompiledTransform();
-            var sPath = System.IO.Path.Combine(_env.WebRootPath, @"xslt\" + xsltName); 
+            var sPath = System.IO.Path.Combine(_env.WebRootPath, @"xslt\" + xsltName + ".xslt"); 
             transform.Load(sPath);
 
             MemoryStream stream = new MemoryStream();
