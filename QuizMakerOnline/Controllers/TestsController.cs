@@ -10,6 +10,8 @@ using System.Xml.Xsl;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using QuizMakerOnline.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace QuizMakerOnline.Controllers
 {
@@ -17,47 +19,61 @@ namespace QuizMakerOnline.Controllers
     [ApiController]
     public class TestsController : ControllerBase
     {
+        private readonly QuizMakerContext _context;
+
         private IHostingEnvironment _env;
-        public TestsController(IHostingEnvironment env)
+        public TestsController(IHostingEnvironment env, QuizMakerContext context)
         {
             _env = env;
+            _context = context;
         }
 
         [HttpGet]
-        public IActionResult Download(bool? showPoints)
+        public IActionResult Download(bool? showPoints, bool? showSolution, string idList)
         {
-            XElement x = new XElement("test", "Testing 1 - 2 - 3 ěščřžýáíé " + (showPoints ?? false));
+            var questions = idList
+                .Split(',')
+                .Select(s => Int32.Parse(s))
+                .Select(id => _context.Questions.Include(q => q.Answers).SingleOrDefault(q => q.IdQuestion == id))
+                .ToArray();
 
-            // convert string to stream
-            //var enc1250 = CodePagesEncodingProvider.Instance.GetEncoding(1250);
-            //byte[] byteArray = /*Encoding.Default*/enc1250.GetBytes(TransformXMLToTex(x));
-            //MemoryStream stream = new MemoryStream(byteArray);
+            XElement xml = new XElement("Tests", 
+                new XAttribute("course_code",  "Testing 1 - 2 - 3 ěščřžýáíé"),
+                new XAttribute("group", "A"),
+                    questions.Select(q => new XElement("Questions", 
+                        new XAttribute("question", q.Question),
+                        new XAttribute("id_question_type", q.IdQuestionType),
+                        q.Answers.Select(a => new XElement("Answers",
+                            new XAttribute("position", a.Position),
+                            new XAttribute("answer", a.Answer)
+                        ))
+                    ))
+                );
 
-            MemoryStream stream = TransformXMLToTex(x);
+
+            MemoryStream stream = TransformXMLToTex(xml, "BezBoduBezVysl.xslt");
 
             if (stream == null)
-                return NotFound(); // returns a NotFoundResult with Status404NotFound response.
+                return NotFound();
 
-            return File(stream, "application/octet-stream", "test.tex"); // returns a FileStreamResult
+            return File(stream, "application/octet-stream", "test.tex");
         }
 
-        private MemoryStream TransformXMLToTex(XElement inputXml)
+        private MemoryStream TransformXMLToTex(XElement inputXml, string xsltName)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             XslCompiledTransform transform = new XslCompiledTransform();
-            var sPath = System.IO.Path.Combine(_env.WebRootPath, @"xslt\test.xslt"); 
+            var sPath = System.IO.Path.Combine(_env.WebRootPath, @"xslt\" + xsltName); 
             transform.Load(sPath);
-
-            //StringWriter results = new StringWriter();
 
             MemoryStream stream = new MemoryStream();
 
             using (XmlReader reader = inputXml.CreateReader())
             {
-                transform.Transform(reader, null, /*results*/stream);
+                transform.Transform(reader, null, stream);
                 stream.Seek(0, SeekOrigin.Begin);
             }
-            return stream/*results.ToString()*/;
+            return stream;
         }
     }
 }

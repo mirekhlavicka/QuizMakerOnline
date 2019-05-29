@@ -29,7 +29,20 @@
   </xsl:template>
 
   <xsl:template match="test">
-Špice MemoryStream ne: <xsl:value-of select="."/> a pìknì od zaèátku
+Špice MemoryStream ne: <xsl:value-of select="@name"/> a pìknì od zaèátku
+
+<xsl:apply-templates select="Questions"/>
   </xsl:template>
+
+  <xsl:template match="Questions">
+    \bigskip
+    {\bf <xsl:value-of select="position()"/>.} <xsl:value-of select="@question"/>
+    <!--<xsl:if test="@id_question_type!=2">
+      <xsl:apply-templates select="Answers"/>
+    </xsl:if>-->
+    <xsl:text>
+</xsl:text>
+  </xsl:template>
+
 
 </xsl:stylesheet>

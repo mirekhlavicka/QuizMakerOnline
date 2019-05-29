@@ -55,6 +55,10 @@ export class TestService {
     return this.questions;
   }
 
+  public getQuestionIdList(): string {
+    return this.questions.map(q => q.id_question).join(",");
+  }
+
   get count(): number {
     return this.questions.length;
   }
