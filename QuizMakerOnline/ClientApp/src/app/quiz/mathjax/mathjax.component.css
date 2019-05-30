@@ -3,6 +3,13 @@ div.mathjax {
   font-weight:400;
 }
 
+@media print {
+  div.mathjax {
+    font-size: 14px;
+  }
+}
+
+
 span.latex_it {
   font-style: italic;
 }

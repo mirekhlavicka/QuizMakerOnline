@@ -12,8 +12,8 @@
 }*/
 
 .points {
-  margin-top: 5px;
-  margin-bottom: 10px;
+  margin-top: 0px;
+  margin-bottom: 2px;
   font-size: 12px;
   text-align: right;
 }
@@ -29,7 +29,7 @@
 }
 
 .noPoints {
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 }
 
 

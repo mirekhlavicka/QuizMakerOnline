@@ -7,9 +7,9 @@
 }*/
 
 .points {
-  margin-top: 5px;
-  margin-bottom: 10px;
-  font-size: 12px;
+  margin-top: 0px;
+  margin-bottom: 2px;
+  font-size: 11px;
   text-align: right;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .noPoints {
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 }
 
 @media screen {

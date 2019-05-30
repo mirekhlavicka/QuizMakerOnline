@@ -44,6 +44,8 @@ namespace QuizMakerOnline.Controllers
             XElement xml = new XElement("Tests", 
                 new XAttribute("course_code", questions[0].IdCategoryNavigation.IdCourseNavigation.Name),
                 new XAttribute("group", "A"),
+                new XAttribute("showPoints", showPoints),
+                new XAttribute("showSolution", showSolution),
                     questions.Select(q => new XElement("Questions", 
                         new XAttribute("question", q.Question),
                         new XAttribute("id_question_type", q.IdQuestionType),
@@ -58,7 +60,7 @@ namespace QuizMakerOnline.Controllers
                 );
 
 
-            MemoryStream stream = TransformXMLToTex(xml, showPoints ? (showSolution ? "SBodySVysledky" : "SBodyBezVysl") : (showSolution ? "BezBoduBezVysl" : "BezBoduBezVysl"));
+            MemoryStream stream = TransformXMLToTex(xml, "ToLaTeX1"/*showPoints ? (showSolution ? "SBodySVysledky" : "SBodyBezVysl") : (showSolution ? "BezBoduBezVysl" : "BezBoduBezVysl")*/);
 
             if (stream == null)
                 return NotFound();
