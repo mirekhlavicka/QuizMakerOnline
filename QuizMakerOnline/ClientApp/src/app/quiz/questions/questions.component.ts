@@ -24,6 +24,7 @@ export class QuestionsComponent implements OnInit {
   id_course: number = 0;
 
   filter: QuestionsFilter = {
+    id_course: 0,
     id_category: 0,
     id_difficulty: "",
     id_user: "",
@@ -122,6 +123,7 @@ export class QuestionsComponent implements OnInit {
 
           this.filter.sortFromOldest = false;
         }
+        this.filter.id_course = this.id_course;
 
         this.gotoCurrent = +localStorage.getItem("questions_current_" + this.id_course);
 

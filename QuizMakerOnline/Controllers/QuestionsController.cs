@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuizMakerOnline.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace QuizMakerOnline.Controllers
 {
@@ -24,8 +25,15 @@ namespace QuizMakerOnline.Controllers
 
         // GET: api/questions
         [HttpGet]
-        public IEnumerable<Object> GetQuestions(int? id_category, string id_difficulty, string id_user, string id_type, string state)
+        public IEnumerable<Object> GetQuestions(int id_course, int? id_category, string id_difficulty, string id_user, string id_type, string state)
         {
+            var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (!_context.UserCourseRights.Any(ur => ur.IdUser == current_id_user && ur.IdCourse == id_course && (ur.Rights & 2) != 0))
+            {
+                return new object[] { };
+            }
+
             var res = _context.Questions.AsQueryable();
 
             if (id_category != null && id_category != 0)

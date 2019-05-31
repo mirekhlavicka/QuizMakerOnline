@@ -38,7 +38,7 @@ export class QuestionService {
   getQuestions(filter: QuestionsFilter): Observable<Question[]> {
     //const url = (id_category && id_category != 0) ? `${this.questionsUrl}/?id_category=${id_category}` : this.questionsUrl;
 
-    const url = `${this.questionsUrl}/?id_category=${filter.id_category}&id_difficulty=${filter.id_difficulty}&id_user=${filter.id_user}&id_type=${filter.id_type}&state=${filter.state}`;
+    const url = `${this.questionsUrl}/?id_course=${filter.id_course}&id_category=${filter.id_category}&id_difficulty=${filter.id_difficulty}&id_user=${filter.id_user}&id_type=${filter.id_type}&state=${filter.state}`;
 
     return this.http.get<Question[]>(url);
     //.pipe(

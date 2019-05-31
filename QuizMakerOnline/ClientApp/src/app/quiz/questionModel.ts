@@ -38,6 +38,7 @@ export class User {
 }
 
 export class  QuestionsFilter  {
+  id_course: number;
   id_category: number;
   id_difficulty: number | string;
   id_user: number | string;
