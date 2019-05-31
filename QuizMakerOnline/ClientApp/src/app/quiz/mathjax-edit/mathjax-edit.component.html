@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Editace {{data.type == 1 ? "otázky" : (data.type == 3 ? "podotázky" : "řešení") }}</h2>
 <mat-dialog-content>
-  <form class="editForm" #editForm="ngForm" (ngSubmit)="submit(form)">
+  <form class="editForm" #editForm="ngForm" (ngSubmit)="submit(editForm)">
   <mat-form-field *ngIf="data.type != 2">
     <input matInput placeholder="Počet bodů" [(ngModel)]="data.points" type="number" name="points" required>
   </mat-form-field>
