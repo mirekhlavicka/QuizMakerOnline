@@ -30,7 +30,7 @@ namespace QuizMakerOnline.Controllers
         }
 
         [HttpGet]
-        public IActionResult Download(bool showPoints, bool showSolution, string idList)
+        public IActionResult Download(int style, bool showPoints, bool showSolution, string idList)
         {
             var questions = idList
                 .Split(',')
@@ -60,7 +60,7 @@ namespace QuizMakerOnline.Controllers
                 );
 
 
-            MemoryStream stream = TransformXMLToTex(xml, "ToLaTeX1"/*showPoints ? (showSolution ? "SBodySVysledky" : "SBodyBezVysl") : (showSolution ? "BezBoduBezVysl" : "BezBoduBezVysl")*/);
+            MemoryStream stream = TransformXMLToTex(xml, "ToLaTeX" + style);
 
             if (stream == null)
                 return NotFound();

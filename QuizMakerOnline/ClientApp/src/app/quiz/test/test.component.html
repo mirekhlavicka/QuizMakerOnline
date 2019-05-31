@@ -7,10 +7,22 @@
     <mat-icon>print</mat-icon>
   </button>
   &nbsp;
-  <a mat-stroked-button color="primary" matTooltip="Stáhnout LaTeX" [href]='"/api/tests/download?showPoints=" + showPoints + "&showSolution=" + showSolution + "&idList=" + testService.getQuestionIdList()'>
-    <!--target="_blank"-->
+  <button mat-stroked-button color="primary" [matMenuTriggerFor]="menuDownloadTex" matTooltip="Stáhnout LaTeX">
     <mat-icon>save_alt</mat-icon>
-  </a>
+  </button>
+
+  <mat-menu #menuDownloadTex="matMenu">
+    <a mat-menu-item [href]='"/api/tests/download?style=1&showPoints=" + showPoints + "&showSolution=" + showSolution + "&idList=" + testService.getQuestionIdList()' download>
+      <mat-icon>format_align_left</mat-icon>
+      <span>Výchozí Styl</span>
+    </a>
+    <a mat-menu-item [href]='"/api/tests/download?style=2&showPoints=" + showPoints + "&showSolution=" + showSolution + "&idList=" + testService.getQuestionIdList()' download>
+      <mat-icon>format_list_numbered</mat-icon>
+      <span>Styl enumerate</span>
+    </a>
+  </mat-menu>
+
+
   &nbsp;
   &nbsp;
   <mat-slide-toggle [(ngModel)]="showSolution" color="primary">Zobrazit řešení</mat-slide-toggle>

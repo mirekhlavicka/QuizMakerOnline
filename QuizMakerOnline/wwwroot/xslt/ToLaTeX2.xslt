@@ -47,12 +47,14 @@
 <xsl:template match="Tests">
 {\bf <xsl:value-of select="@course_code"/>} \quad <xsl:value-of select="@group"/>
 \bigskip
+\begin{enumerate}
 <xsl:apply-templates select="Questions"/>
+\end{enumerate}
 </xsl:template>
 
 <xsl:template match="Questions">
-\bigskip
-{\bf <xsl:value-of select="position()"/>.} <xsl:value-of select="@question"/>
+\item
+<xsl:value-of select="@question"/>
 <xsl:if test="@question!='' and @id_question_type!=2">
 \\
 </xsl:if>
@@ -69,6 +71,8 @@
 <xsl:if test="/Tests/@showSolution='true'">
 {\bf Øešení:}
 <xsl:value-of select="@solution"/><xsl:text>
+
+
 </xsl:text>
 </xsl:if>
 </xsl:template>
