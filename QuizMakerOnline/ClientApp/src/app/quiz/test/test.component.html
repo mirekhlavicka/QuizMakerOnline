@@ -22,12 +22,11 @@
     </a>
   </mat-menu>
 
-
-  &nbsp;
-  &nbsp;
-  <mat-slide-toggle [(ngModel)]="showSolution" color="primary">Zobrazit řešení</mat-slide-toggle>
-  &nbsp;
-  <mat-slide-toggle [(ngModel)]="showPoints" color="primary">Zobrazit body</mat-slide-toggle>
+  <div fxFlex fxLayout fxLayoutAlign="flex-end">
+    <mat-slide-toggle [(ngModel)]="showSolution" color="primary">Zobrazit řešení</mat-slide-toggle>
+    &nbsp;
+    <mat-slide-toggle [(ngModel)]="showPoints" color="primary">Zobrazit body</mat-slide-toggle>
+  </div>
 </mat-toolbar>
 
 <mat-card class="test-card">

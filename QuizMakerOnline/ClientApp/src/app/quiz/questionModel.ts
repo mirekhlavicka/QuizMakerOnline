@@ -50,4 +50,5 @@ export class  QuestionsFilter  {
 export interface EditQAData {
   type: number;
   text: string;
+  points: number;
 }

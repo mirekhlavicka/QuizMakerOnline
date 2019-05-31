@@ -220,6 +220,7 @@ namespace QuizMakerOnline.Controllers
             
             question.Question = cq.question;
             question.Solution = cq.solution;
+            question.Points = cq.points;
 
             _context.SaveChanges();
 
@@ -254,6 +255,7 @@ namespace QuizMakerOnline.Controllers
             public int id_question {get; set;}
             public string question { get; set; }
             public string solution { get; set; }
+            public int points { get; set; }
         }
 
     }

@@ -33,6 +33,10 @@ export class MathjaxEditComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  submit(form) {
+    this.dialogRef.close(this.data);
+  }
+
   ngOnInit() {
   }
 

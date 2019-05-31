@@ -33,7 +33,8 @@ export class QuestionDetailComponent implements OnInit {
       //height: '80%',
       data: {
         type: solution ? 2 : 1,
-        text: solution ? this.question.solution : this.question.question
+        text: solution ? this.question.solution : this.question.question,
+        points: this.question.points
       }
     });
 
@@ -44,6 +45,7 @@ export class QuestionDetailComponent implements OnInit {
           this.question.solution = result.text;
         } else {
           this.question.question = result.text;
+          this.question.points = result.points;
         }
         this.questionService.updateQuestion(this.question).subscribe(_ => { alert("otazka ulozena") });
       }
@@ -55,13 +57,15 @@ export class QuestionDetailComponent implements OnInit {
       width: '70%',
       data: {
         type: 3,
-        text: answer.answer
+        text: answer.answer,
+        points: answer.points
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
         answer.answer = result.text;
+        answer.points = result.points;
         this.questionService.updateAnswer(answer).subscribe(_ => { alert("podotazka ulozena") });
       }
     });
