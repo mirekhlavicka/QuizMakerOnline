@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Question, Answer } from '../../quiz/questionModel';
+import { Question, Answer, RelatedLists } from '../../quiz/questionModel';
 
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { MathjaxEditComponent } from '../mathjax-edit/mathjax-edit.component';
@@ -14,10 +14,11 @@ import { QuestionService } from '../question.service';
 export class QuestionDetailComponent implements OnInit {
   @Input() question: Question;
 
-  @Input() allUsers: Object;
-  @Input() questionTypes: Object;
-  @Input() questionDifficulties: Object;
-  @Input() questionState: Object;
+  //@Input() allUsers: Object;
+  //@Input() questionTypes: Object;
+  //@Input() questionDifficulties: Object;
+  //@Input() questionState: Object;
+  @Input() relatedLists: RelatedLists;
 
   constructor(
     public dialog: MatDialog,
@@ -34,7 +35,14 @@ export class QuestionDetailComponent implements OnInit {
       data: {
         type: solution ? 2 : 1,
         text: solution ? this.question.solution : this.question.question,
-        points: this.question.points
+        points: this.question.points,
+        id_category: this.question.id_category,
+        id_user: this.question.id_user,
+        id_question_type: this.question.id_question_type,
+        id_question_difficulty: this.question.id_question_difficulty,
+        right_answer: this.question.right_answer,
+        state: this.question.state,
+        relatedLists: this.relatedLists
       }
     });
 
@@ -46,6 +54,7 @@ export class QuestionDetailComponent implements OnInit {
         } else {
           this.question.question = result.text;
           this.question.points = result.points;
+          this.question.id_question_difficulty = result.id_question_difficulty;
         }
         this.questionService.updateQuestion(this.question).subscribe(_ => { alert("otazka ulozena") });
       }
@@ -58,7 +67,8 @@ export class QuestionDetailComponent implements OnInit {
       data: {
         type: 3,
         text: answer.answer,
-        points: answer.points
+        points: answer.points,
+        relatedLists: this.relatedLists
       }
     });
 

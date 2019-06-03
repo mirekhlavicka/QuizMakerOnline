@@ -50,5 +50,23 @@ export class  QuestionsFilter  {
 export interface EditQAData {
   type: number;
   text: string;
-  points: number;
+   
+  points?: number;
+
+  id_category?: number;
+  id_user?: number;
+  id_question_type?: number;
+  id_question_difficulty?: number;
+  right_answer?: string;
+  state?: number;
+
+  relatedLists: RelatedLists;
+}
+
+export interface RelatedLists {
+  courseCategories: Category[];
+  allUsers: Object;
+  questionTypes: Object;
+  questionDifficulties: Object;
+  questionState: Object;
 }

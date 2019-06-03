@@ -10,6 +10,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./mathjax-edit.component.css']
 })
 export class MathjaxEditComponent implements OnInit {
+  objectKeys = Object.keys;
 
   textChangedSubject: Subject<string> = new Subject<string>();
   newtext: string;

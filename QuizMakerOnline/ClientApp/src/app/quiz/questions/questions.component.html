@@ -94,7 +94,10 @@
   </div>
 </mat-toolbar>
 
-<app-question-detail [question]="question" [allUsers]="allUsers" [questionTypes]="questionTypes" [questionDifficulties]="questionDifficulties" [questionState]="questionState" ></app-question-detail>
+<app-question-detail [question]="question"
+                     [relatedLists]="{courseCategories: courseCategories, allUsers: allUsers, questionTypes: questionTypes, questionDifficulties: questionDifficulties, questionState: questionState}">
+</app-question-detail>
+<!--[allUsers]="allUsers" [questionTypes]="questionTypes" [questionDifficulties]="questionDifficulties" [questionState]="questionState"-->
 
 <mat-card class="question-card" *ngIf="!question">
   Nenalezena žádná otázka
