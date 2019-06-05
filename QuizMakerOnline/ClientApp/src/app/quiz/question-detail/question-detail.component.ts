@@ -55,8 +55,11 @@ export class QuestionDetailComponent implements OnInit {
           this.question.question = result.text;
           this.question.points = result.points;
           this.question.id_question_difficulty = result.id_question_difficulty;
+          this.question.id_category = result.id_category;
+          this.question.id_question_type = result.id_question_type;
+          this.question.state = result.state;
         }
-        this.questionService.updateQuestion(this.question).subscribe(_ => { alert("otazka ulozena") });
+        this.questionService.updateQuestion(this.question).subscribe(_ => { /*alert("otazka ulozena")*/ });
       }
     });
   }

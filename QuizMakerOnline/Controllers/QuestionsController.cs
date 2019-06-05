@@ -221,7 +221,11 @@ namespace QuizMakerOnline.Controllers
             question.Question = cq.question;
             question.Solution = cq.solution;
             question.Points = cq.points;
+            
+            question.IdCategory = cq.id_category;
             question.IdQuestionDifficulty = cq.id_question_difficulty;
+            question.IdQuestionType = cq.id_question_type;
+            question.State = cq.state;
 
             _context.SaveChanges();
 
@@ -258,6 +262,9 @@ namespace QuizMakerOnline.Controllers
             public string solution { get; set; }
             public int points { get; set; }
             public int id_question_difficulty { get; set; }
+            public int id_category { get; set; }
+            public int id_question_type { get; set; }
+            public int state { get; set; }
         }
 
     }

@@ -1,5 +1,6 @@
 <mat-card class="question-filter-card">
-  <mat-form-field class="select-category question-filter-select">
+  <mat-form-field class="select-category question-filter-select" appearance="standard">
+    <mat-label>Kategorie</mat-label>
     <mat-select placeholder="Kategorie" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_category" panelClass="panel-category">
       <mat-option *ngFor="let category of courseCategories" [value]="category.id_category">
         {{category.name}}
@@ -7,7 +8,8 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field class="question-filter-select">
+  <mat-form-field class="question-filter-select" appearance="standard">
+    <mat-label>Autor</mat-label>
     <mat-select placeholder="Autor" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_user" multiple>
       <mat-option *ngFor="let user of courseUsers" [value]="user.id_user">
         {{user.name}}
@@ -18,7 +20,8 @@
     </button>
   </mat-form-field>
 
-  <mat-form-field class="question-filter-select">
+  <mat-form-field class="question-filter-select" appearance="standard">
+    <mat-label>Typ</mat-label>
     <mat-select placeholder="Typ" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_type" multiple>
       <!--<mat-option [value]="0">(nerozhoduje)</mat-option>-->
       <mat-option *ngFor="let key of objectKeys(questionTypes)" [value]="key">
@@ -30,8 +33,8 @@
     </button>
   </mat-form-field>
 
-
-  <mat-form-field class="question-filter-select">
+  <mat-form-field class="question-filter-select" appearance="standard">
+    <mat-label>Obtížnost</mat-label>
     <mat-select placeholder="Obtížnost" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_difficulty" multiple>
       <!--<mat-option [value]="0">(nerozhoduje)</mat-option>-->
       <mat-option *ngFor="let key of objectKeys(questionDifficulties)" [value]="key">
@@ -43,7 +46,8 @@
     </button>
   </mat-form-field>
 
-  <mat-form-field class="question-filter-select">
+  <mat-form-field class="question-filter-select" appearance="standard">
+    <mat-label>Stav</mat-label>
     <mat-select placeholder="Stav" (selectionChange)="onFilterChange()" [(ngModel)]="filter.state" multiple>
       <!--<mat-option [value]="-1">(nerozhoduje)</mat-option>-->
       <mat-option *ngFor="let key of objectKeys(questionState)" [value]="key">

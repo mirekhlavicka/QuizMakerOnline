@@ -2,7 +2,7 @@
   width: 100%;
   min-height: 300px;
   background-color: rgba(0,0,0,.10);
-  padding: 4px;
+  padding: 2px;
 }
 
 .edit_box {
@@ -10,15 +10,37 @@
   padding: 5px;
   border-right-style: solid;
   border-right-width: 1px;
-  border-right-color: #3f51b5;
+  border-right-color: rgba(0,0,0,.10);
+  transition: border-right-color 1s;
 }
+
+  .edit_box:hover {
+    border-right-width: 2px;
+    border-right-color: #000000;
+  }
+
+  .edit_box:focus-within {
+    border-right-width: 2px;
+    border-right-color: #3f51b5;
+  }
+
 
 .edit_box_preview {
   background-color: rgba(255,255,255,.70);
   padding: 5px;
 }
 
-.edit-select {
-  margin-left: 20px;
-  max-width: 180px;
+.edit-field {
+  margin-right: 20px;
+  max-width: 130px;
+}
+
+.select-category {
+  width: 300px;
+  max-width: 300px !important;
+}
+
+.panel-category.mat-select-panel {
+  max-height: 600px;
+  max-width: 800px;
 }

@@ -1,25 +1,57 @@
 <h2 mat-dialog-title>Editace {{data.type == 1 ? "otázky" : (data.type == 3 ? "podotázky" : "řešení") }}</h2>
 <mat-dialog-content>
   <form class="editForm" #editForm="ngForm" (ngSubmit)="submit(editForm)">
-    <mat-form-field *ngIf="data.type != 2">
+
+    <mat-form-field *ngIf="data.type != 2" class="edit-field" appearance="standard">
+      <mat-label>Počet bodů</mat-label>
       <input matInput placeholder="Počet bodů" [(ngModel)]="data.points" type="number" name="points" required>
     </mat-form-field>
-    
-    <mat-form-field *ngIf="data.type == 1" class="edit-select">
-      <mat-select placeholder="Obtížnost" [(ngModel)]="data.id_question_difficulty" name="id_question_difficulty">
-        <!--<mat-option [value]="0">(nerozhoduje)</mat-option>-->
+
+    <mat-form-field *ngIf="data.type == 1" class="edit-field select-category" appearance="standard">
+      <mat-label>Kategorie</mat-label>
+      <mat-select placeholder="Kategorie" [(ngModel)]="data.id_category" name="id_category" panelClass="panel-category" required>
+        <mat-option *ngFor="let category of data.relatedLists.courseCategories" [value]="category.id_category">
+          {{category.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="data.type == 1" class="edit-field" appearance="standard">
+      <mat-label>Typ</mat-label>
+      <mat-select placeholder="Typ" [(ngModel)]="data.id_question_type" name="id_question_type" required>
+        <mat-option *ngFor="let key of objectKeys(data.relatedLists.questionTypes)" [value]="+key">
+          {{data.relatedLists.questionTypes[key]}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="data.type == 1" class="edit-field" appearance="standard">
+      <mat-label>Obtížnost</mat-label>
+      <mat-select placeholder="Obtížnost" [(ngModel)]="data.id_question_difficulty" name="id_question_difficulty" required>
         <mat-option *ngFor="let key of objectKeys(data.relatedLists.questionDifficulties)" [value]="+key">
           {{data.relatedLists.questionDifficulties[key]}}
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <mat-form-field *ngIf="data.type == 1" class="edit-field" appearance="standard">
+      <mat-label>Stav</mat-label>
+      <mat-select placeholder="Stav" [(ngModel)]="data.state" name="state" required>
+        <mat-option *ngFor="let key of objectKeys(data.relatedLists.questionState)" [value]="+key">
+          {{data.relatedLists.questionState[key]}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
   </form>
 
   <div class="edit_container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.0%" fxLayoutAlign="center">
     <div fxFlex="50%" class="edit_box">
       <textarea matInput placeholder="LaTeX" [ngModel]="data.text" (ngModelChange)='textChanged($event)' cdkTextareaAutosize
                 cdkAutosizeMinRows="10"
-                cdkFocusInitial></textarea>
+                cdkFocusInitial
+                spellcheck="false"></textarea>
     </div>
     <div fxFlex="50%" class="edit_box_preview">
       <mathjax [content]='newtext'></mathjax>
