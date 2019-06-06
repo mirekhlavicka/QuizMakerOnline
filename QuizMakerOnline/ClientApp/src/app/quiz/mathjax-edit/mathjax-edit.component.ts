@@ -34,6 +34,10 @@ export class MathjaxEditComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  sumPoints(): void {
+    this.data.points = this.data.question.answers.reduce((sum, current) => sum + current.points, 0);
+  }
+
   submit(form) {
     this.dialogRef.close(this.data);
   }

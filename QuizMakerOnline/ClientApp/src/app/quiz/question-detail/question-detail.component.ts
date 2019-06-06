@@ -42,7 +42,8 @@ export class QuestionDetailComponent implements OnInit {
         id_question_difficulty: this.question.id_question_difficulty,
         right_answer: this.question.right_answer,
         state: this.question.state,
-        relatedLists: this.relatedLists
+        relatedLists: this.relatedLists,
+        question: this.question
       }
     });
 
@@ -58,6 +59,7 @@ export class QuestionDetailComponent implements OnInit {
           this.question.id_category = result.id_category;
           this.question.id_question_type = result.id_question_type;
           this.question.state = result.state;
+          this.question.right_answer = result.right_answer;
         }
         this.questionService.updateQuestion(this.question).subscribe(_ => { /*alert("otazka ulozena")*/ });
       }
@@ -71,7 +73,10 @@ export class QuestionDetailComponent implements OnInit {
         type: 3,
         text: answer.answer,
         points: answer.points,
-        relatedLists: this.relatedLists
+        position: answer.position,
+        id_question_type: this.question.id_question_type,
+        relatedLists: this.relatedLists,
+        question: this.question
       }
     });
 

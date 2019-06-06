@@ -10,7 +10,7 @@
         <mat-icon inline>person</mat-icon><span class="infoItem">{{relatedLists.allUsers[question.id_user]}}</span><span class="infoItemSeparator"></span>
         <mat-icon inline>{{question.id_question_type == 2 ? "remove" : "list"}}</mat-icon><span class="infoItem">{{relatedLists.questionTypes[question.id_question_type]}}</span><span class="infoItemSeparator"></span>
         <mat-icon inline>{{question.id_question_difficulty == 1 ? "star_border" : (question.id_question_difficulty == 2 ? "star_half" : "star")}}</mat-icon><span class="infoItem">{{relatedLists.questionDifficulties[question.id_question_difficulty]}}</span><span class="infoItemSeparator"></span>
-        <mat-icon inline>{{question.state == 1 ? "done" : "pan_tool"}}</mat-icon><span class="infoItem">{{relatedLists.questionState[question.state]}}</span><span class="infoItemSeparator"></span>
+        <mat-icon inline>{{question.state == 0 ? "warning" : (question.state == 1 ? "done" : "pan_tool")}}</mat-icon><span class="infoItem">{{relatedLists.questionState[question.state]}}</span><span class="infoItemSeparator"></span>
         <span class="infoItem">id: {{question.id_question}}</span>
       </mat-panel-description>
     </mat-expansion-panel-header>
@@ -21,15 +21,15 @@
     </button>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]='question.answers.length > 0'>
+  <mat-expansion-panel *ngIf="question.id_question_type!=2" [expanded]='question.answers.length > 0'>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Podtázky
+        {{ question.id_question_type==1 ? "Odpovědi" : "Podtázky"}}
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div *ngFor="let answer of question.answers" class="answer">
       <mathjax [content]='answer.position + ") " + answer.answer'></mathjax>
-      <div class="points">({{answer.points}} {{answer.points == 1 ? "bod" : (answer.points < 5 ? "body" : "bodů")}})</div>
+      <div *ngIf="question.id_question_type != 1" class="points">({{answer.points}} {{answer.points == 1 ? "bod" : (answer.points < 5 ? "body" : "bodů")}})</div>
 
       <div fxLayout class="answer_tools">
         <div fxFlex fxLayoutAlign="center">
@@ -58,7 +58,9 @@
     <button mat-icon-button color="primary" (click)="editQuestion(true)" matTooltip="Upravit řešení">
       <mat-icon>edit</mat-icon>
     </button>
-
+    <div *ngIf="question.id_question_type==1">
+      Správná odpověď: {{question.right_answer}}
+    </div>
   </mat-expansion-panel>
 
 </div>

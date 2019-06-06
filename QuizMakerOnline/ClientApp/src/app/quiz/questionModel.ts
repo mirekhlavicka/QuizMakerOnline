@@ -61,6 +61,8 @@ export interface EditQAData {
   state?: number;
 
   relatedLists: RelatedLists;
+  question: Question;
+  position: string;
 }
 
 export interface RelatedLists {
