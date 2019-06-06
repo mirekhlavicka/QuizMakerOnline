@@ -89,4 +89,39 @@ export class QuestionDetailComponent implements OnInit {
     });
   }
 
+  addAnswer(): void {
+
+    let position = "a";
+    if (this.question.answers.length > 0) {
+      position = String.fromCharCode(this.question.answers[this.question.answers.length - 1].position.charCodeAt(0) + 1);
+    }
+
+    const dialogRef = this.dialog.open(MathjaxEditComponent, {
+      width: '70%',
+      data: {
+        type: 3,
+        text: "",
+        points: 0,
+        position: position,
+        id_question_type: this.question.id_question_type,
+        relatedLists: this.relatedLists,
+        question: this.question
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        let answer: Answer = {
+          id_question: this.question.id_question,
+          answer: result.text,
+          points: result.points,
+          position: result.position
+        };
+
+        this.question.answers.push(answer);
+
+        this.questionService.addAnswer(answer).subscribe(_ => { alert("podotazka pridana") });
+      }
+    });
+  }
 }

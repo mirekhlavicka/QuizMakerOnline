@@ -104,29 +104,56 @@ namespace QuizMakerOnline.Controllers
             return NoContent();
         }
 
+        //// POST: api/Answers
+        //[HttpPost]
+        //public async Task<ActionResult<Answers>> PostAnswers(Answers answers)
+        //{
+        //    _context.Answers.Add(answers);
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateException)
+        //    {
+        //        if (AnswersExists(answers.IdQuestion))
+        //        {
+        //            return Conflict();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return CreatedAtAction("GetAnswers", new { id = answers.IdQuestion }, answers);
+        //}
+
         // POST: api/Answers
         [HttpPost]
-        public async Task<ActionResult<Answers>> PostAnswers(Answers answers)
+        public async Task<ActionResult<Answers>> PostAnswers(ClientAnswer ca)
         {
-            _context.Answers.Add(answers);
+            Answers answer = new Answers { IdQuestion = ca.id_question, Answer = ca.answer, Points = ca.points, Position = ca.position };
+
+            _context.Answers.Add(answer);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (AnswersExists(answers.IdQuestion))
-                {
-                    return Conflict();
-                }
-                else
+                //if (AnswersExists(answer.IdQuestion))
+                //{
+                //    return Conflict();
+                //}
+                //else
                 {
                     throw;
                 }
             }
 
-            return CreatedAtAction("GetAnswers", new { id = answers.IdQuestion }, answers);
+            return CreatedAtAction("GetAnswers", new { id = answer.IdQuestion}, answer);
         }
+
 
         // DELETE: api/Answers/5
         [HttpDelete("{id}")]

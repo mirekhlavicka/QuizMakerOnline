@@ -88,7 +88,7 @@ export class QuestionService {
     return this.http.get<Object>(this.questionstateUrl);
   }
 
-  /** PUT: update the questuion on the server */
+  /** PUT: update the question on the server */
   updateQuestion(question: Question): Observable<any> {
     return this.http.put(this.questionsUrl, question, httpOptions).pipe(
       //tap(_ => this.log(`updated hero id=${hero.id}`)),
@@ -96,7 +96,7 @@ export class QuestionService {
     );
   }
 
-  /** PUT: update the questuion on the server */
+  /** PUT: update the answer on the server */
   updateAnswer(answer: Answer): Observable<any> {
     return this.http.put(this.answersUrl, answer, httpOptions).pipe(
       //tap(_ => this.log(`updated hero id=${hero.id}`)),
@@ -104,6 +104,13 @@ export class QuestionService {
     );
   }
 
+  /** POST: add the answer on the server */
+  addAnswer(answer: Answer): Observable<any> {
+    return this.http.post(this.answersUrl, answer, httpOptions).pipe(
+      //tap(_ => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('updatAnswer'))
+    );
+  }
 
   /**
    * Handle Http operation that failed.
