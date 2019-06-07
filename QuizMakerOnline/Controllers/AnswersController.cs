@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -151,25 +152,116 @@ namespace QuizMakerOnline.Controllers
                 }
             }
 
-            return CreatedAtAction("GetAnswers", new { id = answer.IdQuestion}, answer);
+            //return CreatedAtAction("GetAnswers", new { id = answer.IdQuestion}, answer);
+            return NoContent();
         }
 
 
-        // DELETE: api/Answers/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Answers>> DeleteAnswers(int id)
+        //// DELETE: api/Answers/5
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult<Answers>> DeleteAnswers(int id)
+        //{
+        //    var answers = await _context.Answers.FindAsync(id);
+        //    if (answers == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _context.Answers.Remove(answers);
+        //    await _context.SaveChangesAsync();
+
+        //    return answers;
+        //}
+
+
+        // DELETE: api/Answers/5/c
+        [HttpDelete("{id_question}/{position}")]
+        public async Task<ActionResult<IEnumerable<Object>>> DeleteAnswers(int id_question, string position)
         {
-            var answers = await _context.Answers.FindAsync(id);
-            if (answers == null)
+            var answer = _context.Answers.SingleOrDefault(a => a.IdQuestion == id_question && a.Position == position);
+            if (answer == null)
             {
                 return NotFound();
             }
 
-            _context.Answers.Remove(answers);
+            _context.Answers.Remove(answer);
             await _context.SaveChangesAsync();
 
-            return answers;
+
+            var poslist = _context.Answers
+                .Where(a => a.IdQuestion == id_question)
+                .OrderBy(a => a.Position)
+                .Select(a => a.Position)                
+                .ToArray();
+
+            var pos = 'a';
+
+            foreach (var oldpos in poslist)
+            {
+                await _context.Database.ExecuteSqlCommandAsync(
+                    "UPDATE answers SET position=@newposition WHERE id_question=@id_question AND position=@position",
+                    new SqlParameter("@newposition", pos),
+                    new SqlParameter("@id_question", id_question),
+                    new SqlParameter("@position", oldpos)
+                    );
+
+                pos++;
+            }
+
+            return _context.Answers
+                .Where(a => a.IdQuestion == id_question)
+                .OrderBy(a => a.Position)
+                .Select(a => new
+                {
+                    id_question = a.IdQuestion,
+                    position = a.Position,
+                    answer = a.Answer,
+                    points = a.Points
+                }).ToArray();
         }
+
+        [HttpPut]
+        [Route("move")]
+        public async Task<IEnumerable<Object>> MoveAnswer(ClientAnswer ca, int direction)
+        {
+            int id_question = ca.id_question;
+
+            var pos1 = ca.position[0];
+            var pos2 = (char)(pos1 + direction);
+
+            await _context.Database.ExecuteSqlCommandAsync(
+                "UPDATE answers SET position=@newposition WHERE id_question=@id_question AND position=@position",
+                new SqlParameter("@newposition", 'x'),
+                new SqlParameter("@id_question", id_question),
+                new SqlParameter("@position", pos1)
+                );
+
+            await _context.Database.ExecuteSqlCommandAsync(
+                "UPDATE answers SET position=@newposition WHERE id_question=@id_question AND position=@position",
+                new SqlParameter("@newposition", pos1),
+                new SqlParameter("@id_question", id_question),
+                new SqlParameter("@position", pos2)
+                );
+
+            await _context.Database.ExecuteSqlCommandAsync(
+                "UPDATE answers SET position=@newposition WHERE id_question=@id_question AND position=@position",
+                new SqlParameter("@newposition", pos2),
+                new SqlParameter("@id_question", id_question),
+                new SqlParameter("@position", 'x')
+                );
+
+            return _context.Answers
+                .Where(a => a.IdQuestion == id_question)
+                .OrderBy(a => a.Position)
+                .Select(a => new
+                {
+                    id_question = a.IdQuestion,
+                    position = a.Position,
+                    answer = a.Answer,
+                    points = a.Points
+                }).ToArray();
+        }
+
 
         private bool AnswersExists(int id)
         {

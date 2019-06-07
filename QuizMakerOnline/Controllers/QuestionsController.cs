@@ -81,6 +81,7 @@ namespace QuizMakerOnline.Controllers
                 enter_date = q.EnterDate,
                 state = q.State,
                 answers = q.Answers
+                    .OrderBy(a => a.Position)
                     //.Where(a => a.Answer != "")
                     .Select(a => new
                     {

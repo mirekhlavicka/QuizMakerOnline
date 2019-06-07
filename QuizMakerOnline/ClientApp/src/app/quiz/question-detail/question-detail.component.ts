@@ -84,7 +84,7 @@ export class QuestionDetailComponent implements OnInit {
       if (result != null) {
         answer.answer = result.text;
         answer.points = result.points;
-        this.questionService.updateAnswer(answer).subscribe(_ => { alert("podotazka ulozena") });
+        this.questionService.updateAnswer(answer).subscribe(_ => { /*alert("podotazka ulozena")*/ });
       }
     });
   }
@@ -120,8 +120,22 @@ export class QuestionDetailComponent implements OnInit {
 
         this.question.answers.push(answer);
 
-        this.questionService.addAnswer(answer).subscribe(_ => { alert("podotazka pridana") });
+        this.questionService.addAnswer(answer).subscribe(_ => { /*alert("podotazka pridana")*/ });
       }
+    });
+  }
+
+  delAnswer(answer: Answer): void {
+    if (confirm("Opravdu si přejete smazat " + (this.question.id_question_type == 1 ? "odpověď " : "podtázku ") + answer.position + ") ?")) {
+      this.questionService.delAnswer(answer).subscribe(alist => {
+        this.question.answers = alist
+      });
+    }
+  }
+
+  moveAnswer(answer: Answer, direction: number): void {
+    this.questionService.moveAnswer(answer, direction).subscribe(alist => {
+      this.question.answers = alist
     });
   }
 }

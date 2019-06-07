@@ -44,3 +44,9 @@
   max-height: 600px;
   max-width: 800px;
 }
+
+.mat-dialog-content {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #f0f0f0;
+}

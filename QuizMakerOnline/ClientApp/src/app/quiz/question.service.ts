@@ -112,6 +112,21 @@ export class QuestionService {
     );
   }
 
+  /** DELETE: delete the answer from the server */
+  delAnswer(answer: Answer): Observable<Answer[]> {
+
+    return this.http.delete<Answer[]>(`${this.answersUrl}/${answer.id_question}/${answer.position}`, httpOptions).pipe(
+      //tap(_ => this.log(`deleted hero id=${id}`)),
+      catchError(this.handleError<Answer[]>('delAnswer'))
+    );
+  }
+
+  moveAnswer(answer: Answer, direction: number): Observable<Answer[]> {
+    return this.http.put<Answer[]>(`${this.answersUrl}/move?direction=${direction}`, answer, httpOptions).pipe(
+      catchError(this.handleError<Answer[]>('moveAnswer'))
+    );
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.
