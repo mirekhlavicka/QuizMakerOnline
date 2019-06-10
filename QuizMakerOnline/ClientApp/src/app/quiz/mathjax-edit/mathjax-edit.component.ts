@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Question, EditQAData } from '../questionModel';
 import { Subject } from 'rxjs';
@@ -9,7 +9,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   templateUrl: './mathjax-edit.component.html',
   styleUrls: ['./mathjax-edit.component.css']
 })
-export class MathjaxEditComponent implements OnInit {
+export class MathjaxEditComponent implements OnInit, AfterViewInit {
+  @ViewChild('codemirror') codemirror: any;
   objectKeys = Object.keys;
 
   textChangedSubject: Subject<string> = new Subject<string>();
@@ -45,4 +46,12 @@ export class MathjaxEditComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.codemirror.codeMirror.refresh();
+      this.codemirror.codeMirror.focus();
+      // Set the cursor at the end of existing content
+      this.codemirror.codeMirror.setCursor(this.codemirror.codeMirror.lineCount(), 0);
+    }, 500)
+  }  
 }

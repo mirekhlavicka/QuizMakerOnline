@@ -18,6 +18,7 @@ import { QuestionDetailComponent } from './question-detail/question-detail.compo
 import { MathjaxComponent } from './mathjax/mathjax.component';
 import { MathjaxEditComponent } from './mathjax-edit/mathjax-edit.component';
 import { TestPrintComponent } from './test-print/test-print.component';
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 
 
 
@@ -34,6 +35,7 @@ import { TestPrintComponent } from './test-print/test-print.component';
     FormsModule,
     FlexLayoutModule,
     //ReactiveFormsModule
+    CodemirrorModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "cs-CZ" }, //replace "en-US" with your locale

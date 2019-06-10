@@ -69,10 +69,29 @@
 
   <div class="edit_container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.0%" fxLayoutAlign="center">
     <div fxFlex="50%" class="edit_box">
-      <textarea matInput placeholder="LaTeX" [ngModel]="data.text" (ngModelChange)='textChanged($event)' cdkTextareaAutosize
-                cdkAutosizeMinRows="10"
-                cdkFocusInitial
-                spellcheck="false"></textarea>
+
+      <!--<textarea matInput placeholder="LaTeX" [ngModel]="data.text" (ngModelChange)='textChanged($event)' cdkTextareaAutosize
+    cdkAutosizeMinRows="10"
+    cdkFocusInitial
+    spellcheck="false"></textarea>-->
+
+      <ngx-codemirror #codemirror [ngModel]="data.text" (ngModelChange)='textChanged($event)' [autoFocus]="true"
+                      [options]="{
+      lineNumbers: false,
+      mode: 'stex',
+      inMathMode: false,
+      theme: 'cobalt',
+      lineWrapping: true
+  }"></ngx-codemirror>
+
+      <!--lineNumbers: false,
+    theme: 'material',
+  theme: 'cobalt',
+
+    mode: 'stex',
+    inMathMode: true
+    lineSeparator : '#@',
+        -->
     </div>
     <div fxFlex="50%" class="edit_box_preview">
       <mathjax [content]='newtext'></mathjax>

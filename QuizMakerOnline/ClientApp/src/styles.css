@@ -9,6 +9,18 @@ pink-bluegrey.css
 purple-green.css
 */
 
+@import "~codemirror/lib/codemirror.css";
+@import "~codemirror/theme/cobalt.css";
+
+/*@import "~codemirror/theme/material.css";
+@import "~codemirror/theme/eclipse.css";
+@import "~codemirror/theme/neat.css";*/
+
+.CodeMirror {
+  height: 100% !important;
+}
+
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
