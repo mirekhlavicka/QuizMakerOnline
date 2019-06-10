@@ -8,10 +8,10 @@
 .edit_box {
   background-color: #ffffff;
   padding: 0px;
-  /*border-right-style: solid;
+  border-right-style: solid;
   border-right-width: 1px;
   border-right-color: rgba(0,0,0,.10);
-  transition: border-right-color 1s;*/
+  /*transition: border-right-color 1s;*/
 }
 
   /*.edit_box:hover {
