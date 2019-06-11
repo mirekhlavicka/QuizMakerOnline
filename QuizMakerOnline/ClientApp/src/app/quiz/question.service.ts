@@ -96,11 +96,19 @@ export class QuestionService {
     );
   }
 
+  /** POST: add the question on the server */
+  addQuestion(question: Question): Observable<Question> {
+    return this.http.post(this.questionsUrl, question, httpOptions).pipe(
+      //tap(_ => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('addQuestion'))
+    );
+  }
+
   /** PUT: update the answer on the server */
   updateAnswer(answer: Answer): Observable<any> {
     return this.http.put(this.answersUrl, answer, httpOptions).pipe(
       //tap(_ => this.log(`updated hero id=${hero.id}`)),
-      catchError(this.handleError<any>('updatAnswer'))
+      catchError(this.handleError<any>('updateAnswer'))
     );
   }
 
@@ -108,7 +116,7 @@ export class QuestionService {
   addAnswer(answer: Answer): Observable<any> {
     return this.http.post(this.answersUrl, answer, httpOptions).pipe(
       //tap(_ => this.log(`updated hero id=${hero.id}`)),
-      catchError(this.handleError<any>('updatAnswer'))
+      catchError(this.handleError<any>('addAnswer'))
     );
   }
 

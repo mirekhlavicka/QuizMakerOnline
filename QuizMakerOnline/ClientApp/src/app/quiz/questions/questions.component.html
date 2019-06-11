@@ -62,46 +62,55 @@
 
 </mat-card>
 
-<mat-toolbar class="question-toolbar" *ngIf="question">
+<mat-toolbar class="question-toolbar">
 
-  <button (click)="goto(1)" mat-stroked-button color="primary" matTooltip="Přejít na první otázku">
-    <mat-icon>first_page</mat-icon>
-  </button>&nbsp;
+  <div *ngIf="question" fxFlex fxLayout fxLayoutAlign="flex-start center" style="margin-right:50px">
+    <button (click)="goto(1)" mat-stroked-button color="primary" matTooltip="Přejít na první otázku">
+      <mat-icon>first_page</mat-icon>
+    </button>
 
-  <button (click)="prev()" mat-stroked-button color="primary" matTooltip="Přejít na předchozí otázku">
-    <mat-icon>navigate_before</mat-icon>
-  </button>&nbsp;
+    <button (click)="prev()" mat-stroked-button color="primary" matTooltip="Přejít na předchozí otázku" fxFlexOffset="6px">
+      <mat-icon>navigate_before</mat-icon>
+    </button>
 
-  <input class="inputGoTo" type="text" [value]="current+1" (input)="goto($event.target.value)">&nbsp;/&nbsp;{{questions ? questions.length : 0}}&nbsp;
+    <input class="inputGoTo" type="text" [value]="current+1" (input)="goto($event.target.value)" fxFlexOffset="6px">&nbsp;/&nbsp;{{questions ? questions.length : 0}}
 
-  <button (click)="next()" mat-stroked-button color="primary" matTooltip="Přejít na další otázku">
-    <mat-icon>navigate_next</mat-icon>
-  </button>&nbsp;
+    <button (click)="next()" mat-stroked-button color="primary" matTooltip="Přejít na další otázku" fxFlexOffset="6px">
+      <mat-icon>navigate_next</mat-icon>
+    </button>
 
-  <button (click)="goto(questions ? questions.length : 0)" mat-stroked-button color="primary" matTooltip="Přejít na poslední otázku">
-    <mat-icon>last_page</mat-icon>
-  </button>&nbsp;
+    <button (click)="goto(questions ? questions.length : 0)" mat-stroked-button color="primary" matTooltip="Přejít na poslední otázku" fxFlexOffset="6px">
+      <mat-icon>last_page</mat-icon>
+    </button>
 
-  <mat-slide-toggle [(ngModel)]="filter.sortFromOldest" (change)="onFilterChange()" color="primary">Od nejstarších</mat-slide-toggle>
+    <mat-slide-toggle [(ngModel)]="filter.sortFromOldest" (change)="onFilterChange()" color="primary" fxFlexOffset="10px">Od nejstarších</mat-slide-toggle>
+  </div>
 
-  <div fxFlex fxLayout fxLayoutAlign="center">
+  <div fxFlex fxLayout fxLayoutAlign="flex-start center">
+    <button (click)="questionDetail.question=addQuestion();questionDetail.editQuestion(false)" mat-stroked-button color="accent" matTooltip='Přidat otázku'>
+      <!--fxFlexOffset="50px"-->
+      <mat-icon>add</mat-icon>
+    </button>&nbsp;
+  </div>
+
+  <div fxFlex fxLayout fxLayoutAlign="center center">
     <mat-spinner *ngIf="loading" [diameter]="40"></mat-spinner>
   </div>
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end">
-    <button (click)="addToTest()" mat-stroked-button color="accent" matTooltip="Vložit do testu" [disabled]="testService.contains(question)">
+    <button (click)="addToTest()" mat-stroked-button color="accent" matTooltip="Vložit do testu" [disabled]="!question || testService.contains(question)">
       <mat-icon>add_shopping_cart</mat-icon>
-    </button>&nbsp;
-    <button (click)="removeFromTest()" mat-stroked-button color="accent" matTooltip="Odebrat z testu" [disabled]="!testService.contains(question)">
+    </button>
+    <button (click)="removeFromTest()" mat-stroked-button color="accent" matTooltip="Odebrat z testu" [disabled]="!question || !testService.contains(question)" fxFlexOffset="6px">
       <mat-icon>remove_shopping_cart</mat-icon>
     </button>
   </div>
+
 </mat-toolbar>
 
-<app-question-detail [question]="question"
+<app-question-detail #questionDetail [question]="question" (deleted)="onQuestionDeleted($event)"
                      [relatedLists]="{courseCategories: courseCategories, allUsers: allUsers, questionTypes: questionTypes, questionDifficulties: questionDifficulties, questionState: questionState}">
 </app-question-detail>
-<!--[allUsers]="allUsers" [questionTypes]="questionTypes" [questionDifficulties]="questionDifficulties" [questionState]="questionState"-->
 
 <mat-card class="question-card" *ngIf="!question">
   Nenalezena žádná otázka

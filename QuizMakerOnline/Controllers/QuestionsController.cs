@@ -257,6 +257,57 @@ namespace QuizMakerOnline.Controllers
             return NoContent();
         }
 
+
+        [HttpPost]
+        public object PostQuestion(ClientQuestion cq)
+        {
+            var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            Questions q = new Questions
+            {
+                IdCategory = cq.id_category,
+                IdQuestionDifficulty = cq.id_question_difficulty,
+                IdQuestionType = cq.id_question_type,
+                Points = cq.points,
+                EnterDate = DateTime.Now,
+                RightAnswer = cq.right_answer,
+                Question = cq.question,
+                Solution = cq.solution,
+                State = cq.state,
+                IdUser = current_id_user
+            };
+
+            _context.Questions.Add(q);
+
+            _context.SaveChanges();
+
+            return new
+            {
+                id_question = q.IdQuestion,
+                id_category = q.IdCategory,
+                id_user = q.IdUser,
+                id_question_type = q.IdQuestionType,
+                id_question_difficulty = q.IdQuestionDifficulty,
+                points = q.Points,
+                question = q.Question,
+                right_answer = q.RightAnswer,
+                solution = q.Solution,
+                enter_date = q.EnterDate,
+                state = q.State,
+                answers = q.Answers
+                    .OrderBy(a => a.Position)
+                    //.Where(a => a.Answer != "")
+                    .Select(a => new
+                    {
+                        id_question = a.IdQuestion,
+                        position = a.Position,
+                        answer = a.Answer,
+                        points = a.Points
+                    })
+            };
+        }
+
+
         public class ClientQuestion
         {
             public int id_question {get; set;}

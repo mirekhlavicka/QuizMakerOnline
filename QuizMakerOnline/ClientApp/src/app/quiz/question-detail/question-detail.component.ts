@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Question, Answer, RelatedLists } from '../../quiz/questionModel';
 
@@ -19,6 +19,8 @@ export class QuestionDetailComponent implements OnInit {
   //@Input() questionDifficulties: Object;
   //@Input() questionState: Object;
   @Input() relatedLists: RelatedLists;
+
+  @Output() deleted = new EventEmitter<number>();
 
   constructor(
     public dialog: MatDialog,
@@ -61,7 +63,19 @@ export class QuestionDetailComponent implements OnInit {
           this.question.state = result.state;
           this.question.right_answer = result.right_answer;
         }
-        this.questionService.updateQuestion(this.question).subscribe(_ => { /*alert("otazka ulozena")*/ });
+        if (this.question.id_question == 0) {
+          this.questionService.addQuestion(this.question).subscribe(q => {
+            this.question.id_question = q.id_question;
+            this.question.id_user = q.id_user;
+            this.question.enter_date = q.enter_date;
+          });
+        } else {
+          this.questionService.updateQuestion(this.question).subscribe(_ => { /*alert("otazka ulozena")*/ });
+        }
+      } else {
+        if (this.question.id_question == 0) {
+          this.deleted.emit(0);
+        }
       }
     });
   }

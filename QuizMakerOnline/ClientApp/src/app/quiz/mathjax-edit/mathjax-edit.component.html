@@ -110,6 +110,6 @@
     </mat-button-toggle-group>
   </div>
 
-  <button mat-raised-button color="primary" [mat-dialog-close]="data" [disabled]="editForm.invalid" accesskey="s" matTooltip="Uložit (alt +s)" cdkFocusInitial>Uložit</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data" [disabled]="editForm.invalid" accesskey="s" matTooltip="Uložit (alt +s)" [attr.cdkFocusInitial] = 'data.question.id_question != 0 ? "" : null'>Uložit</button>
   <button mat-button (click)="onNoClick()">Zrušit</button> <!--mat-dialog-close-->
 </mat-dialog-actions>

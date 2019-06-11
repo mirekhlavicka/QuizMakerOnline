@@ -211,4 +211,38 @@ export class QuestionsComponent implements OnInit {
   removeFromTest(): void {
     this.testService.del(this.question);
   }
+
+  addQuestion(): Question {
+    let nq: Question = {
+      id_question: 0,
+      answers: [],
+      id_category: this.filter.id_category == 0 ? null : this.filter.id_category,
+      enter_date: null,
+      id_question_difficulty: null,
+      id_question_type: null,
+      id_user: null,
+      points: 0,
+      question: "",
+      right_answer: "?",
+      solution: "",
+      state: 0      
+    }
+
+    if (this.filter.sortFromOldest) {
+      this.goto(this.questions.push(nq));
+    } else {
+      this.questions.unshift(nq);
+      this.goto(1);
+    }
+
+    return nq;
+  }
+
+  onQuestionDeleted(id: number) {
+    var i = this.questions.findIndex(qq => qq.id_question == id);
+    if (i != -1) {
+      this.questions.splice(i, 1);
+      this.goto(1);
+    }
+  }
 }

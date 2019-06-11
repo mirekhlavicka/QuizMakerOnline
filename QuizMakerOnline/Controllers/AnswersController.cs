@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace QuizMakerOnline.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AnswersController : ControllerBase
     {
         private readonly QuizMakerContext _context;
@@ -131,7 +133,7 @@ namespace QuizMakerOnline.Controllers
 
         // POST: api/Answers
         [HttpPost]
-        public async Task<ActionResult<Answers>> PostAnswers(ClientAnswer ca)
+        public async Task<IActionResult/*ActionResult<Answers>*/> PostAnswers(ClientAnswer ca)
         {
             Answers answer = new Answers { IdQuestion = ca.id_question, Answer = ca.answer, Points = ca.points, Position = ca.position };
 
@@ -198,13 +200,7 @@ namespace QuizMakerOnline.Controllers
 
             foreach (var oldpos in poslist)
             {
-                await _context.Database.ExecuteSqlCommandAsync(
-                    "UPDATE answers SET position=@newposition WHERE id_question=@id_question AND position=@position",
-                    new SqlParameter("@newposition", pos),
-                    new SqlParameter("@id_question", id_question),
-                    new SqlParameter("@position", oldpos)
-                    );
-
+                await SetAnswerPosition(id_question, oldpos[0], pos);
                 pos++;
             }
 
@@ -229,26 +225,9 @@ namespace QuizMakerOnline.Controllers
             var pos1 = ca.position[0];
             var pos2 = (char)(pos1 + direction);
 
-            await _context.Database.ExecuteSqlCommandAsync(
-                "UPDATE answers SET position=@newposition WHERE id_question=@id_question AND position=@position",
-                new SqlParameter("@newposition", 'x'),
-                new SqlParameter("@id_question", id_question),
-                new SqlParameter("@position", pos1)
-                );
-
-            await _context.Database.ExecuteSqlCommandAsync(
-                "UPDATE answers SET position=@newposition WHERE id_question=@id_question AND position=@position",
-                new SqlParameter("@newposition", pos1),
-                new SqlParameter("@id_question", id_question),
-                new SqlParameter("@position", pos2)
-                );
-
-            await _context.Database.ExecuteSqlCommandAsync(
-                "UPDATE answers SET position=@newposition WHERE id_question=@id_question AND position=@position",
-                new SqlParameter("@newposition", pos2),
-                new SqlParameter("@id_question", id_question),
-                new SqlParameter("@position", 'x')
-                );
+            await SetAnswerPosition(id_question, pos1, 'x');
+            await SetAnswerPosition(id_question, pos2, pos1);
+            await SetAnswerPosition(id_question, 'x', pos2);
 
             return _context.Answers
                 .Where(a => a.IdQuestion == id_question)
@@ -262,6 +241,15 @@ namespace QuizMakerOnline.Controllers
                 }).ToArray();
         }
 
+        private async Task<int> SetAnswerPosition(int id_question, char oldpos, char newpos)
+        {
+            return await _context.Database.ExecuteSqlCommandAsync(
+                "UPDATE answers SET position=@newposition WHERE id_question=@id_question AND position=@position",
+                new SqlParameter("@newposition", newpos),
+                new SqlParameter("@id_question", id_question),
+                new SqlParameter("@position", oldpos)
+                );
+        }
 
         private bool AnswersExists(int id)
         {
