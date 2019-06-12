@@ -35,6 +35,12 @@
   max-width: 130px;
 }
 
+.edit-field-left {
+  margin-left: 20px;
+  max-width: 130px;
+}
+
+
 .select-category {
   width: 300px;
   max-width: 300px !important;

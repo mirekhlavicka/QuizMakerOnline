@@ -34,7 +34,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
     let terms = this
       .content
       .replace(/\\\\\[.*?\]/g, "\\\\")
-      .split(/(\$\$|\$|\\\[|\\\]|\\begin|\\end)/);
+      .split(/(\$\$|\$|\\\[|\\\]|\\\(|\\\)|\\begin|\\end)/);
     let inmath = false;
     let beginCount = 0;
 
@@ -44,7 +44,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
         beginCount++;
       } else if (t == "\\end") {
         beginCount--;
-      } else if (t == "$$" || t == "$" || t == "\\[" || t == "\\]") {
+      } else if (t == "$$" || t == "$" || t == "\\[" || t == "\\]" || t == "\\(" || t == "\\)") {
         inmath = !inmath;
       } else if (!inmath && beginCount == 0) {
         t = t
@@ -142,7 +142,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
       messageStyle: "none",
       jax: ["input/TeX", "output/CommonHTML"],
       tex2jax: {
-        inlineMath: [["$", "$"]],
+        inlineMath: [["$", "$"], ["\\(", "\\)"]],
         displayMath: [["$$", "$$"], ["\\[", "\\]"]],
         processEnvironments: true,
         preview: "none"//"TeX"

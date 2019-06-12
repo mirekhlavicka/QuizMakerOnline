@@ -104,6 +104,15 @@ export class QuestionService {
     );
   }
 
+  /** DELETE: update the question on the server */
+  delQuestion(question: Question): Observable<any> {
+    return this.http.delete(`${this.questionsUrl}/${question.id_question }`, httpOptions).pipe(
+      //tap(_ => this.log(`updated hero id=${hero.id}`)),
+      //catchError(this.handleError<any>('delQuestion'))
+    );
+  }
+
+
   /** PUT: update the answer on the server */
   updateAnswer(answer: Answer): Observable<any> {
     return this.http.put(this.answersUrl, answer, httpOptions).pipe(

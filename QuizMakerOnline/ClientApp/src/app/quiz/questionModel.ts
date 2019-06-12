@@ -63,6 +63,8 @@ export interface EditQAData {
   relatedLists: RelatedLists;
   question: Question;
   position: string;
+
+  newitem: boolean;
 }
 
 export interface RelatedLists {

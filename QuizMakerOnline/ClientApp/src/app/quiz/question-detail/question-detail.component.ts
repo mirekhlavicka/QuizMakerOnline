@@ -45,7 +45,8 @@ export class QuestionDetailComponent implements OnInit {
         right_answer: this.question.right_answer,
         state: this.question.state,
         relatedLists: this.relatedLists,
-        question: this.question
+        question: this.question,
+        newitem: this.question.id_question == 0
       }
     });
 
@@ -90,7 +91,8 @@ export class QuestionDetailComponent implements OnInit {
         position: answer.position,
         id_question_type: this.question.id_question_type,
         relatedLists: this.relatedLists,
-        question: this.question
+        question: this.question,
+        newitem: false
       }
     });
 
@@ -119,7 +121,8 @@ export class QuestionDetailComponent implements OnInit {
         position: position,
         id_question_type: this.question.id_question_type,
         relatedLists: this.relatedLists,
-        question: this.question
+        question: this.question,
+        newitem: true
       }
     });
 
@@ -151,5 +154,16 @@ export class QuestionDetailComponent implements OnInit {
     this.questionService.moveAnswer(answer, direction).subscribe(alist => {
       this.question.answers = alist
     });
+  }
+
+  delQuestion(): void {
+    if (confirm("Opravdu si přejete smazat odtázku " + this.question.id_question + " ?")) {
+
+      this.questionService.delQuestion(this.question).subscribe(_ => {
+        this.deleted.emit(this.question.id_question);
+      }, e => {
+        alert(e.error)
+      });
+    }
   }
 }

@@ -1,6 +1,6 @@
 <div *ngIf="question" class="questionDetail">
 
-  <mat-expansion-panel [expanded]='question.question.trim() != ""'>
+  <mat-expansion-panel [expanded]='question.question.trim() != "" || question.id_question_type == 2'>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Otázka
@@ -15,14 +15,19 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <mathjax [content]='question.question'></mathjax>
-    <div class="points">({{question.points}} {{question.points == 1 ? "bod" : (question.points < 5 ? "body" : "bodů")}})</div>
+    <div class="points">({{question.points}} {{question.points == 1 ? "bod" : (question.points < 5 && question.points > 0 ? "body" : "bodů")}})</div>
+
     <button mat-stroked-button color="primary" (click)="editQuestion(false)" matTooltip="Upravit otázku">
       <mat-icon>edit</mat-icon>
     </button>
 
+    <button mat-stroked-button color="warn" (click)="delQuestion()" matTooltip="Smazat otázku" style="margin-left: 6px;">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
+
   </mat-expansion-panel>
 
-  <mat-expansion-panel *ngIf="question.id_question_type!=2" [expanded]='question.answers.length > 0'>
+  <mat-expansion-panel *ngIf="question.id_question_type!=2" [expanded]='question.id_question_type!=2'>
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{ question.id_question_type==1 ? "Odpovědi" : "Podtázky"}}
@@ -47,7 +52,7 @@
           </button>
 
           <button mat-mini-fab color="warn" (click)="delAnswer(answer)" matTooltip='Smazat {{ question.id_question_type==1 ? "odpověď" : "podtázku"}}' class="answerActionButton">
-            <mat-icon>remove</mat-icon>
+            <mat-icon>delete_forever</mat-icon>
           </button>
 
         </div>
@@ -69,7 +74,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <mathjax [content]='question.solution'></mathjax>
-    <button  mat-stroked-button color="primary" (click)="editQuestion(true)" matTooltip="Upravit řešení">
+    <button  mat-stroked-button color="primary" (click)="editQuestion(true)" matTooltip="Upravit řešení" style="margin-top:10px">
       <mat-icon>edit</mat-icon>
     </button>
     <div *ngIf="question.id_question_type==1" style="margin-top:10px">

@@ -307,6 +307,29 @@ namespace QuizMakerOnline.Controllers
             };
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteQuestion(int id)
+        {
+            var question = _context.Questions.Find(id);
+            if (question == null)
+            {
+                return NotFound();
+            }
+
+            _context.Questions.Remove(question);
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch(Exception exc)            
+            {
+                return BadRequest(exc.InnerException.Message);
+            }
+
+            return NoContent();
+        }
+
 
         public class ClientQuestion
         {

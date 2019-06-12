@@ -46,6 +46,7 @@ export class QuestionsComponent implements OnInit {
   question: Question;
   current: number = -1;
   gotoCurrent: number = -1;
+  currentBeforeAdd: number = -1;
 
   loading: boolean = false;
 
@@ -228,6 +229,8 @@ export class QuestionsComponent implements OnInit {
       state: 0      
     }
 
+    this.currentBeforeAdd = this.current;
+
     if (this.filter.sortFromOldest) {
       this.goto(this.questions.push(nq));
     } else {
@@ -242,7 +245,15 @@ export class QuestionsComponent implements OnInit {
     var i = this.questions.findIndex(qq => qq.id_question == id);
     if (i != -1) {
       this.questions.splice(i, 1);
-      this.goto(1);
+      if (this.questions.length == 0) {
+        this.current = -1;
+        this.question = null;
+      } else  if (this.currentBeforeAdd != -1 && id == 0) {
+        this.goto(this.currentBeforeAdd + 1);
+        this.currentBeforeAdd = -1
+      } else {
+        this.goto(1);
+      }
     }
   }
 }
