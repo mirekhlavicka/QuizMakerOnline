@@ -33,7 +33,7 @@ export class MathjaxEditComponent implements OnInit, AfterViewInit {
   }
 
   onNoClick(): void {
-    if (this.confirmDiscarChanges()) {
+    if (this.confirmDiscardChanges()) {
       this.dialogRef.close();
     }
   }
@@ -52,7 +52,7 @@ export class MathjaxEditComponent implements OnInit, AfterViewInit {
   }
 
   @HostListener('window:keyup.esc') onKeyUp() {
-    if (this.confirmDiscarChanges()) {
+    if (this.confirmDiscardChanges()) {
       this.dialogRef.close();
     }
   }
@@ -66,13 +66,13 @@ export class MathjaxEditComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.dialogRef.disableClose = true;
     this.dialogRef.backdropClick().subscribe(_ => {
-      if (this.confirmDiscarChanges()) {
+      if (this.confirmDiscardChanges()) {
         this.dialogRef.close();
       }
     })
   }
 
-  confirmDiscarChanges(): boolean {
+  confirmDiscardChanges(): boolean {
     if (!this.dirty) {
       return true;
     } else {
