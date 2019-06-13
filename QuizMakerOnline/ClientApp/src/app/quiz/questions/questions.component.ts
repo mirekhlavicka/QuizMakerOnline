@@ -49,6 +49,7 @@ export class QuestionsComponent implements OnInit {
   currentBeforeAdd: number = -1;
 
   loading: boolean = false;
+  accessDenied: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -145,6 +146,7 @@ export class QuestionsComponent implements OnInit {
     this.loading = true;
     this.questionService.getQuestions(this.filter)
       .subscribe(q => {
+        this.accessDenied = false;
         setTimeout(() => { this.loading = false; }, 500);
 
         if (this.filter.sortFromOldest) {
@@ -168,6 +170,13 @@ export class QuestionsComponent implements OnInit {
         }
 
         this.saveCurrentPosition();
+      }, e => {
+          this.loading = false;
+          this.current = -1;
+          this.question = null;
+          this.questions = [];
+          this.accessDenied = true;
+        //alert(e.error)
       });
   }
 
@@ -226,7 +235,8 @@ export class QuestionsComponent implements OnInit {
       question: "",
       right_answer: "?",
       solution: "",
-      state: 0      
+      state: 0,
+      canEdit: true
     }
 
     this.currentBeforeAdd = this.current;
@@ -248,7 +258,7 @@ export class QuestionsComponent implements OnInit {
       if (this.questions.length == 0) {
         this.current = -1;
         this.question = null;
-      } else  if (this.currentBeforeAdd != -1 && id == 0) {
+      } else if (this.currentBeforeAdd != -1 && id == 0) {
         this.goto(this.currentBeforeAdd + 1);
         this.currentBeforeAdd = -1
       } else {

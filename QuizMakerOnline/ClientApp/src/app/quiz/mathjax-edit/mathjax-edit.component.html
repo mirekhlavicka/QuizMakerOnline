@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{data.question.id_question == 0 ? "Nová otázka" : (data.newitem ? "Přidání " : "Editace ") + (data.type == 1 ? "otázky" : (data.type == 3 ? ((data.id_question_type == 1 ? "odpovědi " : "podotázky ") + data.position + ")") : "řešení")) }}</h2>
 <mat-dialog-content>
-  <form class="editForm" #editForm="ngForm" (ngSubmit)="submit(editForm)">
+  <form class="editForm" #editForm="ngForm" (ngSubmit)="submit(editForm.invalid)">
 
     <div fxLayout style="min-height:20px">
 
@@ -8,7 +8,7 @@
 
         <mat-form-field *ngIf="data.type == 1" class="edit-field select-category" appearance="standard">
           <mat-label>Téma</mat-label>
-          <mat-select placeholder="Téma" [(ngModel)]="data.id_category" name="id_category" panelClass="panel-category" required>
+          <mat-select placeholder="Téma" [(ngModel)]="data.id_category" name="id_category" panelClass="panel-category" required (selectionChange)="dirty=true">
             <mat-option *ngFor="let category of data.relatedLists.courseCategories" [value]="category.id_category">
               {{category.name}}
             </mat-option>
@@ -17,7 +17,7 @@
 
         <mat-form-field *ngIf="data.type == 1" class="edit-field" appearance="standard">
           <mat-label>Typ</mat-label>
-          <mat-select placeholder="Typ" [(ngModel)]="data.id_question_type" name="id_question_type" required>
+          <mat-select placeholder="Typ" [(ngModel)]="data.id_question_type" name="id_question_type" required (selectionChange)="dirty=true">
             <mat-option *ngFor="let key of objectKeys(data.relatedLists.questionTypes)" [value]="+key">
               {{data.relatedLists.questionTypes[key]}}
             </mat-option>
@@ -26,7 +26,7 @@
 
         <mat-form-field *ngIf="data.type == 1" class="edit-field" appearance="standard">
           <mat-label>Obtížnost</mat-label>
-          <mat-select placeholder="Obtížnost" [(ngModel)]="data.id_question_difficulty" name="id_question_difficulty" required>
+          <mat-select placeholder="Obtížnost" [(ngModel)]="data.id_question_difficulty" name="id_question_difficulty" required (selectionChange)="dirty=true">
             <mat-select-trigger>
               {{data.relatedLists.questionDifficulties[data.id_question_difficulty]}}
             </mat-select-trigger>
@@ -42,7 +42,7 @@
 
         <mat-form-field *ngIf="data.type == 1 || (data.type == 3 && data.id_question_type != 1)" appearance="standard" style="max-width:80px">
           <mat-label>Počet bodů</mat-label>
-          <input matInput placeholder="Počet bodů" [(ngModel)]="data.points" type="number" name="points" required>
+          <input matInput placeholder="Počet bodů" [(ngModel)]="data.points" type="number" name="points" required (input)="dirty=true">
         </mat-form-field>
         <button *ngIf="data.type == 1 && data.id_question_type == 3" type="button" mat-icon-button (click)="sumPoints()" matTooltip="Spočítat">
           <mat-icon>control_point</mat-icon>
@@ -50,7 +50,7 @@
 
         <mat-form-field *ngIf="data.type == 1 && data.id_question_type == 1" class="edit-field-left" appearance="standard">
           <mat-label>Správná odpověď</mat-label>
-          <mat-select placeholder="Správná odpověď" [(ngModel)]="data.right_answer" name="right_answer" required>
+          <mat-select placeholder="Správná odpověď" [(ngModel)]="data.right_answer" name="right_answer" required (selectionChange)="dirty=true">
             <mat-option value="?">?</mat-option>
             <mat-option value="a">a</mat-option>
             <mat-option value="b">b</mat-option>
@@ -103,7 +103,7 @@
 
   <div fxFlex fxLayoutAlign="start center" *ngIf="data.type == 1">
     <mat-button-toggle-group [(ngModel)]="data.state" name="state">
-      <mat-button-toggle *ngFor="let key of objectKeys(data.relatedLists.questionState)" [value]="+key" [matTooltip]="data.relatedLists.questionState[key]">
+      <mat-button-toggle *ngFor="let key of objectKeys(data.relatedLists.questionState)" [value]="+key" [matTooltip]="data.relatedLists.questionState[key]" (change)="dirty=true">
         <mat-icon>{{key == 0 ? "warning" : (key == 1 ? "done" : "pan_tool")}}</mat-icon>
         <!--<small>{{data.relatedLists.questionState[key]}}</small>-->
       </mat-button-toggle>

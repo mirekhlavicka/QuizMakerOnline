@@ -10,6 +10,7 @@ export class Question {
   solution: string;
   enter_date: Date;
   state: number;
+  canEdit: boolean;
   answers: Answer[];
 }
 

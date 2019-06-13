@@ -25,13 +25,13 @@ namespace QuizMakerOnline.Controllers
 
         // GET: api/questions
         [HttpGet]
-        public IEnumerable<Object> GetQuestions(int id_course, int? id_category, string id_difficulty, string id_user, string id_type, string state)
+        public ActionResult<IEnumerable<Object>> GetQuestions(int id_course, int? id_category, string id_difficulty, string id_user, string id_type, string state)
         {
             var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             if (!_context.UserCourseRights.Any(ur => ur.IdUser == current_id_user && ur.IdCourse == id_course && (ur.Rights & 2) != 0))
             {
-                return new object[] { };
+                return BadRequest("Access denied");// new object[] { };
             }
 
             var res = _context.Questions.AsQueryable();
@@ -67,7 +67,7 @@ namespace QuizMakerOnline.Controllers
 
             res = res.OrderByDescending(q => q.IdQuestion);
 
-            return res.Select(q => new
+            return Ok(res.Select(q => new
             {
                 id_question = q.IdQuestion,
                 id_category = q.IdCategory,
@@ -80,6 +80,7 @@ namespace QuizMakerOnline.Controllers
                 solution = q.Solution,
                 enter_date = q.EnterDate,
                 state = q.State,
+                canEdit = (current_id_user == 1 || current_id_user == q.IdUser),
                 answers = q.Answers
                     .OrderBy(a => a.Position)
                     //.Where(a => a.Answer != "")
@@ -93,7 +94,7 @@ namespace QuizMakerOnline.Controllers
             })
             //.AsEnumerable()
             //.Where(q => q.question.Trim() != "")
-            .ToList();
+            .ToList());
         }
 
         // GET: api/questions/courses

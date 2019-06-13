@@ -1,4 +1,4 @@
-<mat-card class="question-filter-card">
+<mat-card class="question-filter-card" *ngIf="!accessDenied">
   <mat-form-field class="select-category question-filter-select" appearance="standard">
     <mat-label>Téma</mat-label>
     <mat-select placeholder="Téma" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_category" panelClass="panel-category">
@@ -62,7 +62,7 @@
 
 </mat-card>
 
-<mat-toolbar class="question-toolbar">
+<mat-toolbar class="question-toolbar" *ngIf="!accessDenied">
 
   <div *ngIf="question" fxFlex fxLayout fxLayoutAlign="flex-start center" style="margin-right:50px">
     <button (click)="goto(1)" mat-stroked-button color="primary" matTooltip="Přejít na první otázku">
@@ -88,13 +88,9 @@
 
   <div fxFlex fxLayout fxLayoutAlign="flex-start center">
     <button (click)="questionDetail.question=addQuestion();questionDetail.editQuestion(false)" mat-stroked-button color="accent" matTooltip='Přidat otázku'>
-      <!--fxFlexOffset="50px"-->
       <mat-icon>add</mat-icon>
     </button>&nbsp;
-  </div>
-
-  <div fxFlex fxLayout fxLayoutAlign="center center">
-    <mat-spinner *ngIf="loading" [diameter]="40"></mat-spinner>
+    <mat-spinner *ngIf="loading" [diameter]="40" fxFlexOffset="50px"></mat-spinner>
   </div>
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end">
@@ -113,5 +109,5 @@
 </app-question-detail>
 
 <mat-card class="question-card" *ngIf="!question">
-  Nenalezena žádná otázka
+  {{ accessDenied ? "Nemáte povolen přístup k tomuto kurzu" : "Nenalezena žádná otázka" }}
 </mat-card>
