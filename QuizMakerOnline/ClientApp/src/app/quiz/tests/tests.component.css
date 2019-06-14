@@ -1,0 +1,15 @@
+table {
+  width: 95%;
+}
+
+.tests-card {
+  margin: 30px 30px 10px 30px;
+}
+
+.mat-row {
+  cursor: pointer;
+}
+
+.mat-row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}

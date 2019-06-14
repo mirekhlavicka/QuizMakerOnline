@@ -13,10 +13,11 @@ using Microsoft.AspNetCore.Mvc;
 using QuizMakerOnline.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace QuizMakerOnline.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")] ///[action]
     [ApiController]
     [Authorize]
     public class TestsController : ControllerBase
@@ -32,6 +33,39 @@ namespace QuizMakerOnline.Controllers
         }
 
         [HttpGet]
+        public ActionResult<IEnumerable<Object>> GetTests(int? id_course)
+        {
+            var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var res = _context.Tests.AsQueryable();
+
+            res = res.Where(t => t.IdUser == current_id_user);
+
+            if (id_course != null && id_course != 0)
+            {
+                res = res.Where(t => t.IdCourse == id_course);
+            }
+
+
+            res = res.OrderByDescending(t => t.IdTest);
+
+            return Ok(res.Select(t => new
+            {
+                id_test = t.IdTest,
+                id_course = t.IdCourse,
+                id_semester = t.IdSemester,
+                group = t.Group,
+                year = t.Year,
+                enter_date = t.EnterDate
+            })
+            .ToList());
+        }
+
+
+
+
+        [HttpGet]
+        [Route("Download")]
         public IActionResult Download(int style, bool showPoints, bool showSolution, string idList)
         {
             var questions = idList

@@ -1,0 +1,46 @@
+<!--<div *ngFor="let test of tests">
+  {{test.id_test}},{{test.group}},{{test.year}},{{test.enter_date}}
+</div>-->
+<table mat-table [dataSource]="tests" class="mat-elevation-z8 tests-card" *ngIf="tests">
+
+  <!--- Note that these columns can be defined in any order.
+  The actual rendered columns are set as a property on the row definition" -->
+  <ng-container matColumnDef="id_test">
+    <th mat-header-cell *matHeaderCellDef> Id. </th>
+    <td mat-cell *matCellDef="let element"> {{element.id_test}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="course">
+    <th mat-header-cell *matHeaderCellDef> Kurz </th>
+    <td mat-cell *matCellDef="let element"> {{courseName(element.id_course)}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="semester">
+    <th mat-header-cell *matHeaderCellDef> Semestr </th>
+    <td mat-cell *matCellDef="let element"> {{element.id_semester}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="group">
+    <th mat-header-cell *matHeaderCellDef> Skupina </th>
+    <td mat-cell *matCellDef="let element"> {{element.group}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="year">
+    <th mat-header-cell *matHeaderCellDef> Rok </th>
+    <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="enter_date">
+    <th mat-header-cell *matHeaderCellDef> Datum </th>
+    <td mat-cell *matCellDef="let element"> {{element.enter_date | date:'mediumDate'}} </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="['id_test', 'course', 'semester', 'group', 'year', 'enter_date']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['id_test', 'course', 'semester','group', 'year', 'enter_date'];" (click)="selected_id_test = row.id_test">></tr>
+</table>
+
+{{selected_id_test}}
+
+
+

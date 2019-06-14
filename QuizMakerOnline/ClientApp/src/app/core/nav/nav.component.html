@@ -17,9 +17,9 @@
       </a>
 
       <!--
-      <a mat-list-item [routerLinkActive]='["active"]' [routerLink]="['/hello',{full: false}]">Hello</a>
-      <a mat-list-item [routerLinkActive]='["active"]' [routerLink]="['/hello1',{full: true}]">Hello 1</a>
-      -->
+  <a mat-list-item [routerLinkActive]='["active"]' [routerLink]="['/hello',{full: false}]">Hello</a>
+  <a mat-list-item [routerLinkActive]='["active"]' [routerLink]="['/hello1',{full: true}]">Hello 1</a>
+  -->
 
       <mat-divider></mat-divider>
 
@@ -27,6 +27,13 @@
         <mat-icon matListIcon class="app-nav-list-icon">shopping_cart</mat-icon>
         Sestavit test
       </a>
+
+      <a mat-list-item [routerLinkActive]='["active"]' routerLink="/tests" (click)="closeSideNav()">
+        <mat-icon matListIcon class="app-nav-list-icon">shopping_cart</mat-icon>
+        Moje testy
+      </a>
+
+
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
