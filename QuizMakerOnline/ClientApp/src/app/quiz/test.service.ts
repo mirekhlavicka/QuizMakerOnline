@@ -15,6 +15,7 @@ const httpOptions = {
 })
 export class TestService {
   private testsUrl = 'api/tests';
+  private semestersUrl = 'api/tests/semesters';
 
   constructor(private http: HttpClient) {
     let saved = localStorage.getItem("saved_test");
@@ -88,6 +89,10 @@ export class TestService {
     //  tap(_ => this.log('fetched heroes')),
       catchError(this.handleError<Test[]>('getTests', []))
     );
+  }
+
+  getSemesters(): Observable<Object> {
+    return this.http.get<Object>(this.semestersUrl);
   }
 
   /**

@@ -34,7 +34,7 @@ export class NavComponent implements OnInit, OnDestroy {
   course_title = "";
 
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(['(max-width: 1440px)']/*Breakpoints.Handset*/)
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(['(max-width: 1650px)']/*Breakpoints.Handset*/)
     .pipe(
       map(result => result.matches)
     );

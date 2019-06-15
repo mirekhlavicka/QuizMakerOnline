@@ -61,8 +61,21 @@ namespace QuizMakerOnline.Controllers
             .ToList());
         }
 
-
-
+        // GET: api/tests/semesters
+        [HttpGet()]
+        [Route("semesters")]
+        public Object GetSemesters()
+        {
+            return _context
+                .Semesters
+                .OrderByDescending(s => s.IdSemester)
+                .Select(s => new
+                {
+                    id = s.IdSemester,
+                    name = s.Name//.ToLower()
+                })
+                .ToDictionary(s => s.id, s => s.name);
+        }
 
         [HttpGet]
         [Route("Download")]
