@@ -13,6 +13,9 @@
 
 </mat-toolbar>
 
+<h2>
+  {{test.id_test}} | {{test.year}} | {{test.group}} | {{test.enter_date | date:'mediumDate'}}
+</h2>
 
 <mat-card class="test-card" *ngIf="test">
 
@@ -31,13 +34,13 @@
 
     <div fxLayout class="question_tools">
       <div fxFlex fxLayoutAlign="center">
-        <button (click)="moveDown(question)" mat-mini-fab color="default" matTooltip="Posunout dolů" class="questionActionButton" [disabled]="i==testService.getQuestions().length-1">
+        <button (click)="moveDown(question)" mat-mini-fab color="primary" matTooltip="Posunout dolů" class="questionActionButton" [disabled]="i==testService.getQuestions().length-1">
           <mat-icon>arrow_downward</mat-icon>
         </button>
-        <button (click)="moveUp(question)" mat-mini-fab color="default" matTooltip="Posunout nahoru" class="questionActionButton" [disabled]="i==0">
+        <button (click)="moveUp(question)" mat-mini-fab color="primary" matTooltip="Posunout nahoru" class="questionActionButton" [disabled]="i==0">
           <mat-icon>arrow_upward</mat-icon>
         </button>
-        <button (click)="removeFromTest(question)" mat-mini-fab color="default" matTooltip="Odebrat z testu" class="questionActionButton">
+        <button (click)="removeFromTest(question)" mat-mini-fab color="warn" matTooltip="Odebrat z testu" class="questionActionButton">
           <mat-icon>remove</mat-icon>
         </button>
       </div>

@@ -2,6 +2,12 @@
   margin: 10px 30px 10px 30px;
 }
 
+h2 {
+  margin: 40px 30px 20px 30px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
 .test-toolbar {
   margin: 10px 30px 10px 30px;
   width: auto;
@@ -26,23 +32,34 @@
 
 .question {
   padding: 5px;
+  border-left-width: 2px;
+  border-left-style: solid;
+  border-left-color: rgba(0, 0, 0, 0);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #e1e1e1;
 }
 
-.noPoints {
+/*.noPoints {
   margin-bottom: 14px;
-}
+}*/
 
 
 .question:hover {
-  background-color: #f5f5f5;
+  background-color: #f7f7f7;
+  border-left-width: 2px;
+  border-left-style: solid;
+  border-left-color: #3f51b5;
 }
 
 .question .question_tools {
   opacity: 0;
-  margin-top: -50px;
+  transition: opacity 0s;
+  margin-top: -18px;
 }
 
 .question:hover .question_tools {
+  transition: opacity 1s;
   opacity: 1;
 }
 

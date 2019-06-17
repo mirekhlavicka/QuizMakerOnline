@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   login(): void {
     this.authService.login(this.username, this.password, this.remember).subscribe(data => {
 
-      let redirect = this.authService.redirectUrl ? this.router.parseUrl(this.authService.redirectUrl) : '/test';
+      let redirect = this.authService.redirectUrl ? this.router.parseUrl(this.authService.redirectUrl) : '/tests';
 
       // Set our navigation extras object
       // that passes on our global query params and fragment
