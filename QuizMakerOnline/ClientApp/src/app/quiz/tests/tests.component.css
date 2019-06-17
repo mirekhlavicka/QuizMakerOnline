@@ -13,3 +13,7 @@ table {
 .mat-row:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
+
+.selected-test {
+  background-color: rgba(0, 0, 0, 0.08);
+}

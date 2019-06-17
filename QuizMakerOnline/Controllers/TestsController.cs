@@ -61,6 +61,52 @@ namespace QuizMakerOnline.Controllers
             .ToList());
         }
 
+        [HttpGet("{id_test}")]
+        public ActionResult<Object> GetTestDetail(int id_test)
+        {
+            var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var res = _context.Tests.AsQueryable();
+
+            res = res.Where(t => t.IdUser == current_id_user && t.IdTest == id_test);
+
+            return Ok(res.Select(t => new
+            {
+                id_test = t.IdTest,
+                id_course = t.IdCourse,
+                id_semester = t.IdSemester,
+                group = t.Group,
+                year = t.Year,
+                enter_date = t.EnterDate,
+                questions = t.TestQuestions.Select(tq => new
+                {
+                    id_question = tq.IdQuestionNavigation.IdQuestion,
+                    id_category = tq.IdQuestionNavigation.IdCategory,
+                    id_user = tq.IdQuestionNavigation.IdUser,
+                    id_question_type = tq.IdQuestionNavigation.IdQuestionType,
+                    id_question_difficulty = tq.IdQuestionNavigation.IdQuestionDifficulty,
+                    points = tq.IdQuestionNavigation.Points,
+                    question = tq.IdQuestionNavigation.Question,
+                    right_answer = tq.IdQuestionNavigation.RightAnswer,
+                    solution = tq.IdQuestionNavigation.Solution,
+                    enter_date = tq.IdQuestionNavigation.EnterDate,
+                    state = tq.IdQuestionNavigation.State,
+                    canEdit = (current_id_user == 1 || current_id_user == tq.IdQuestionNavigation.IdUser),
+                    answers = tq.IdQuestionNavigation.Answers
+                    .OrderBy(a => a.Position)
+                    .Select(a => new
+                    {
+                        id_question = a.IdQuestion,
+                        position = a.Position,
+                        answer = a.Answer,
+                        points = a.Points
+                    })
+                })
+            }).SingleOrDefault());
+        }
+
+
+
         // GET: api/tests/semesters
         [HttpGet()]
         [Route("semesters")]

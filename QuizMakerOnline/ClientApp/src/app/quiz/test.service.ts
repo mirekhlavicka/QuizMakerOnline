@@ -74,7 +74,7 @@ export class TestService {
   }
 
   public contains(q: Question): boolean {
-    return q ? this.questions.some(qq => qq.id_question == q.id_question) :  false;
+    return q ? this.questions.some(qq => qq.id_question == q.id_question) : false;
   }
 
   private save(): void {
@@ -82,13 +82,26 @@ export class TestService {
   }
 
 
-/*************************************************/
+  /*************************************************/
+
+  selected_id_test: number = 0;
+
+  last_pageIndex: number = 0;
+  last_pageSize: number = 0;
+
   getTests(): Observable<Test[]> {
     return this.http.get<Test[]>(this.testsUrl)
-    .pipe(
-    //  tap(_ => this.log('fetched heroes')),
-      catchError(this.handleError<Test[]>('getTests', []))
-    );
+      .pipe(
+        //tap(_ => this.last_pageIndex = 0),
+        catchError(this.handleError<Test[]>('getTests', []))
+      );
+  }
+
+  getTest(id_test: number): Observable<Test> {
+    return this.http.get<Test>(`${this.testsUrl}/${id_test}`)
+      .pipe(
+        catchError(this.handleError<Test>('getTests', null))
+      );
   }
 
   getSemesters(): Observable<Object> {

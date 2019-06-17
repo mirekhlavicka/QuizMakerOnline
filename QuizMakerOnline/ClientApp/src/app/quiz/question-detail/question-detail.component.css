@@ -57,6 +57,7 @@ mat-panel-description mat-icon {
 
   .answer .answer_tools {
     opacity: 0;
+    transition: opacity 0s;
     margin-top: -48px;
   }
 
@@ -65,9 +66,10 @@ mat-panel-description mat-icon {
   }
 
 
-.answer:hover .answer_tools {
-  opacity: 1;
-}
+  .answer:hover .answer_tools {
+    opacity: 1;
+    transition: opacity 1s;
+  }
 
 .answerActionButton {
   margin-right: 8px;

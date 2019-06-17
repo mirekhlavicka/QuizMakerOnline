@@ -20,6 +20,7 @@ import { MathjaxEditComponent } from './mathjax-edit/mathjax-edit.component';
 import { TestPrintComponent } from './test-print/test-print.component';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { TestsComponent } from './tests/tests.component';
+import { TestDetailComponent } from './test-detail/test-detail.component';
 
 
 
@@ -27,7 +28,7 @@ import { TestsComponent } from './tests/tests.component';
 //import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [QuestionsComponent, TestComponent, QuestionDetailComponent, MathjaxComponent, MathjaxEditComponent, TestPrintComponent, TestsComponent],
+  declarations: [QuestionsComponent, TestComponent, QuestionDetailComponent, MathjaxComponent, MathjaxEditComponent, TestPrintComponent, TestsComponent, TestDetailComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,
