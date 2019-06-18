@@ -64,7 +64,7 @@ export class NavComponent implements OnInit, OnDestroy {
         if (this.id_course != 0) {
           let i = this.courses.findIndex(c => c.id_course == this.id_course);
           if (i != -1) {
-            this.course_title = " – " + this.courses[i].name;
+            this.course_title = " – " + this.courses[i].name + (this.testService.currentTestId() != -1 ? " (výběr otázek)" : "");
           }
         } else {
           this.course_title = (this.router.url.lastIndexOf("test") > -1 ? " – Moje testy" : "");          

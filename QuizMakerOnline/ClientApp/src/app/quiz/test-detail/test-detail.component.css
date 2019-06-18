@@ -2,12 +2,6 @@
   margin: 10px 30px 10px 30px;
 }
 
-h2 {
-  margin: 40px 30px 20px 30px;
-  font-size: 18px;
-  font-weight: 500;
-}
-
 .test-toolbar {
   margin: 10px 30px 10px 30px;
   width: auto;
@@ -66,4 +60,23 @@ h2 {
 mat-slide-toggle {
   font-size: 15px;
   font-weight: 400;
+}
+
+.infoBar {
+  margin-bottom: 20px;
+  text-align:center;
+}
+
+.infoItemSeparator {
+  margin-left: 10px;
+  margin-right: 10px;
+  border-right: solid;
+  border-right-width: 1px;
+  border-right-color: #a0a0a0;
+}
+
+.infoItem {
+  font-weight: 500;
+  font-size: 15px;
+  color:rgba(0,0,0,.54) ;
 }

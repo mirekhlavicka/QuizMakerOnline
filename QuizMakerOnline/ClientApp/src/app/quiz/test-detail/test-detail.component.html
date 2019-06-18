@@ -1,23 +1,48 @@
 <mat-toolbar class="test-toolbar">
-
-  <button mat-stroked-button color="primary" (click)="goBack()" matTooltip="Návrat zpět">
+  <button mat-stroked-button color="primary" (click)="goBack()" matTooltip="Návrat zpět na seznam testů">
     <mat-icon>arrow_back</mat-icon>
   </button>
+  &nbsp;
+  <button mat-stroked-button color="accent" (click)="goToQuestions()" matTooltip="Vybrat otázky">
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
+  &nbsp;
+  <button mat-stroked-button color="primary" (click)="print()" matTooltip="Tisk">
+    <mat-icon>print</mat-icon>
+  </button>
+  &nbsp;
+  <button mat-stroked-button color="primary" [matMenuTriggerFor]="menuDownloadTex" matTooltip="Stáhnout LaTeX">
+    <mat-icon>save_alt</mat-icon>
+  </button>
 
+  <mat-menu #menuDownloadTex="matMenu">
+    <a mat-menu-item [href]='"/api/tests/download?style=1&showPoints=" + showPoints + "&showSolution=" + showSolution + "&idList=" + testService.getQuestionIdList()' download>
+      <mat-icon>format_align_left</mat-icon>
+      <span>Výchozí Styl</span>
+    </a>
+    <a mat-menu-item [href]='"/api/tests/download?style=2&showPoints=" + showPoints + "&showSolution=" + showSolution + "&idList=" + testService.getQuestionIdList()' download>
+      <mat-icon>format_list_numbered</mat-icon>
+      <span>Styl enumerate</span>
+    </a>
+  </mat-menu>
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end">
     <mat-slide-toggle [(ngModel)]="showSolution" color="primary">Zobrazit řešení</mat-slide-toggle>
     &nbsp;
     <mat-slide-toggle [(ngModel)]="showPoints" color="primary">Zobrazit body</mat-slide-toggle>
   </div>
-
 </mat-toolbar>
 
-<h2>
-  {{test.id_test}} | {{test.year}} | {{test.group}} | {{test.enter_date | date:'mediumDate'}}
-</h2>
-
 <mat-card class="test-card" *ngIf="test">
+
+  <div class="infoBar">
+    <span class="infoItem">id: {{test.id_test}}</span><span class="infoItemSeparator"></span>
+    <span class="infoItem">{{courseName(test.id_course)}}</span><span class="infoItemSeparator"></span>
+    <span class="infoItem">{{semesters[test.id_semester]}}</span><span class="infoItemSeparator"></span>
+    <span class="infoItem">{{test.year}}</span><span class="infoItemSeparator"></span>
+    <span class="infoItem">{{test.group}}</span><span class="infoItemSeparator"></span>
+    <span class="infoItem">{{test.enter_date | date:'mediumDate'}}</span>
+  </div>
 
   <div *ngFor="let question of test.questions; let i = index" class="question" [class.noPoints]="!showPoints || question.id_question_type != 2">
     <mathjax *ngIf='question.question != ""' [content]='"<b>" + (i+1).toString() + ".</b> " +  question.question'></mathjax>
@@ -34,7 +59,7 @@
 
     <div fxLayout class="question_tools">
       <div fxFlex fxLayoutAlign="center">
-        <button (click)="moveDown(question)" mat-mini-fab color="primary" matTooltip="Posunout dolů" class="questionActionButton" [disabled]="i==testService.getQuestions().length-1">
+        <button (click)="moveDown(question)" mat-mini-fab color="primary" matTooltip="Posunout dolů" class="questionActionButton" [disabled]="i==test.questions.length-1">
           <mat-icon>arrow_downward</mat-icon>
         </button>
         <button (click)="moveUp(question)" mat-mini-fab color="primary" matTooltip="Posunout nahoru" class="questionActionButton" [disabled]="i==0">

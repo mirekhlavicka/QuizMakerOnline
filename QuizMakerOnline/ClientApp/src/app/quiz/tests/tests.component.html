@@ -3,7 +3,7 @@
   <table mat-table [dataSource]="dataSource" *ngIf="tests">
 
     <!--- Note that these columns can be defined in any order.
-    The actual rendered columns are set as a property on the row definition" -->
+  The actual rendered columns are set as a property on the row definition" -->
     <ng-container matColumnDef="id_test">
       <th mat-header-cell *matHeaderCellDef> Id. </th>
       <td mat-cell *matCellDef="let element"> {{element.id_test}} </td>
@@ -19,14 +19,14 @@
       <td mat-cell *matCellDef="let element"> {{semesters[element.id_semester]}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="group">
-      <th mat-header-cell *matHeaderCellDef> Skupina </th>
-      <td mat-cell *matCellDef="let element"> {{element.group}} </td>
-    </ng-container>
-
     <ng-container matColumnDef="year">
       <th mat-header-cell *matHeaderCellDef> Rok </th>
       <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="group">
+      <th mat-header-cell *matHeaderCellDef> Skupina </th>
+      <td mat-cell *matCellDef="let element"> {{element.group}} </td>
     </ng-container>
 
     <ng-container matColumnDef="enter_date">
@@ -36,7 +36,7 @@
 
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToDetail(row.id_test)" [class.selected-test]="testService.selected_id_test == row.id_test" ></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToDetail(row.id_test)" [class.selected-test]="testService.last_currentTestId == row.id_test"></tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[15, 30, 50, 100]" showFirstLastButtons (page) = "pageChanged($event)"></mat-paginator>

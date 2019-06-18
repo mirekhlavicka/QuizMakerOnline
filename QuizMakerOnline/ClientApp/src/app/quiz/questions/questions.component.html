@@ -93,7 +93,7 @@
     <mat-spinner *ngIf="loading" [diameter]="40" fxFlexOffset="50px"></mat-spinner>
   </div>
 
-  <div fxFlex fxLayout fxLayoutAlign="flex-end">
+  <div fxFlex fxLayout fxLayoutAlign="flex-end" *ngIf="testService.currentTestId() != -1">
     <button (click)="addToTest()" mat-stroked-button color="accent" matTooltip="Vložit do testu" [disabled]="!question || testService.contains(question)">
       <mat-icon>add_shopping_cart</mat-icon>
     </button>

@@ -23,13 +23,13 @@
 
       <mat-divider></mat-divider>
 
-      <a mat-list-item [routerLinkActive]='["active"]' routerLink="/test" (click)="closeSideNav()">
+      <!--<a mat-list-item [routerLinkActive]='["active"]' routerLink="/test" (click)="closeSideNav()">
         <mat-icon matListIcon class="app-nav-list-icon">shopping_cart</mat-icon>
         Sestavit test
-      </a>
+      </a>-->
 
       <a mat-list-item [routerLinkActive]='["active"]' routerLink="/tests" (click)="closeSideNav()">
-        <mat-icon matListIcon class="app-nav-list-icon">shopping_cart</mat-icon>
+        <mat-icon matListIcon class="app-nav-list-icon">work</mat-icon>
         Moje testy
       </a>
 
@@ -60,8 +60,8 @@
       <mat-icon>help_outline</mat-icon>
     </button>
   </li>-->
-          <li>
-            <a routerLink="/test" mat-icon-button [matBadge]="testService.count" matBadgePosition="before|below" matBadgeColor="accent" matBadgeSize="medium" matBadgeOverlap="true" [matBadgeHidden]="testService.count == 0">
+          <li *ngIf="testService.currentTestId() != -1">
+            <a routerLink="/tests" mat-icon-button [matBadge]="testService.count" matBadgePosition="before|below" matBadgeColor="accent" matBadgeSize="medium" matBadgeOverlap="true" [matBadgeHidden]="testService.count < 0" matTooltip="Zobrazit test">
               <mat-icon>shopping_cart</mat-icon>
             </a>
           </li>          

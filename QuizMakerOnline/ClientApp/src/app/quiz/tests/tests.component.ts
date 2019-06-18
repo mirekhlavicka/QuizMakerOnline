@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 export class TestsComponent implements OnInit {
   tests: Test[];
   dataSource = null;
-  displayedColumns: string[] = ['id_test', 'course', 'semester', 'group', 'year', 'enter_date'];
+  displayedColumns: string[] = ['id_test', 'course', 'semester', 'year', 'group', 'enter_date'];
 
   @ViewChild(MatPaginator/*, { static: true }*/) paginator: MatPaginator; //!!!!!!
 
@@ -31,6 +31,11 @@ export class TestsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    if (this.testService.currentTestId() != -1) {
+      this.goToDetail(this.testService.currentTestId());
+      return;
+    }
 
     this.paginator._intl.itemsPerPageLabel = "Počet řádků na stránku";
     this.paginator._intl.getRangeLabel = this.getRangeLabel;
@@ -89,7 +94,7 @@ export class TestsComponent implements OnInit {
   }
 
   goToDetail(id_test: number): void {
-    this.testService.selected_id_test = id_test;
+    //this.testService.selected_id_test = id_test;
     this.router.navigate([`/test/${id_test}`]);
   }
 }
