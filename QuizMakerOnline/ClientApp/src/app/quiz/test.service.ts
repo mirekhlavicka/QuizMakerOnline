@@ -19,17 +19,12 @@ export class TestService {
 
   private test: Test = null;
 
-  constructor(private http: HttpClient) {
-    //let saved = localStorage.getItem("saved_test");
-
-    //if (saved) {
-    //  this.questions = JSON.parse(saved);
-    //}
-  }
-
-  //private questions: Question[] = [];
-
+  public last_pageIndex: number = 0;
+  public last_pageSize: number = 0;
   public last_currentTestId: number = -1;
+
+  constructor(private http: HttpClient) {
+  }  
 
   public currentTestId(): number {
     if (this.test) {
@@ -46,11 +41,49 @@ export class TestService {
     }
   }
 
+  getTests(): Observable<Test[]> {
+    return this.http.get<Test[]>(this.testsUrl)
+      .pipe(
+        catchError(this.handleError<Test[]>('getTests', []))
+      );
+  }
+
+  getTest(id_test: number): Observable<Test> {
+    return this.http.get<Test>(`${this.testsUrl}/${id_test}`)
+      .pipe(
+        tap(t => this.test = t),
+        catchError(this.handleError<Test>('getTests', null))
+      );
+  }
+
+  getSemesters(): Observable<Object> {
+    return this.http.get<Object>(this.semestersUrl);
+  }
+
+  private addQuestion(q: Question): Observable<any> {
+    return this.http.put(`${this.testsUrl}/questions/${this.test.id_test}/${q.id_question}`, null, httpOptions).pipe(
+      catchError(this.handleError<any>('addQuestion'))
+    );
+  }
+
+  private delQuestion(q: Question): Observable<any> {
+    return this.http.delete(`${this.testsUrl}/questions/${this.test.id_test}/${q.id_question}`, httpOptions).pipe(
+      catchError(this.handleError<any>('delQuestion'))
+    );
+  }
+
+  private swapQuestions(q1: Question, q2: Question): Observable<any> {
+    return this.http.put(`${this.testsUrl}/swapquestions/${this.test.id_test}/${q1.id_question}/${q2.id_question}`, null, httpOptions).pipe(
+      catchError(this.handleError<any>('addQuestion'))
+    );
+  }
+
+
   public add(q: Question) {
     if (this.test) {
       this.test.questions.push(q);
+      this.addQuestion(q).subscribe(_ => { });
     }
-    //this.save();
   }
 
   public del(q: Question) {
@@ -58,7 +91,7 @@ export class TestService {
       var i = this.test.questions.findIndex(qq => qq.id_question == q.id_question);
       if (i != -1) {
         this.test.questions.splice(i, 1);
-        //this.save();
+        this.delQuestion(q).subscribe(_ => { });
       }
     }
   }
@@ -70,7 +103,7 @@ export class TestService {
         let tmp = this.test.questions[i];
         this.test.questions[i] = this.test.questions[i - 1];
         this.test.questions[i - 1] = tmp;
-        //this.save();
+        this.swapQuestions(this.test.questions[i], this.test.questions[i - 1]).subscribe(_ => { });
       }
     }
   }
@@ -82,7 +115,7 @@ export class TestService {
         let tmp = this.test.questions[i];
         this.test.questions[i] = this.test.questions[i + 1];
         this.test.questions[i + 1] = tmp;
-        //this.save();
+        this.swapQuestions(this.test.questions[i], this.test.questions[i + 1]).subscribe(_ => { });
       }
     }
   }
@@ -90,6 +123,8 @@ export class TestService {
   public getQuestions(): Question[] {
     if (this.test) {
       return this.test.questions;
+    } else {
+      return null;
     }
   }
 
@@ -117,38 +152,6 @@ export class TestService {
     }
   }
 
-  //private save(): void {
-  //  localStorage.setItem("saved_test", JSON.stringify(this.questions));
-  //}
-
-
-  /*************************************************/
-
-  //selected_id_test: number = 0;
-
-  last_pageIndex: number = 0;
-  last_pageSize: number = 0;
-
-  getTests(): Observable<Test[]> {
-    return this.http.get<Test[]>(this.testsUrl)
-      .pipe(
-        //tap(_ => this.last_pageIndex = 0),
-        catchError(this.handleError<Test[]>('getTests', []))
-      );
-  }
-
-  getTest(id_test: number): Observable<Test> {
-    return this.http.get<Test>(`${this.testsUrl}/${id_test}`)
-      .pipe(
-        tap(t => this.test = t),
-        catchError(this.handleError<Test>('getTests', null))
-      );
-  }
-
-  getSemesters(): Observable<Object> {
-    return this.http.get<Object>(this.semestersUrl);
-  }
-
   /**
    * Handle Http operation that failed.
    * Let the app continue.
@@ -168,5 +171,4 @@ export class TestService {
       return of(result as T);
     };
   }
-
 }

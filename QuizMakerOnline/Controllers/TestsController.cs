@@ -78,7 +78,9 @@ namespace QuizMakerOnline.Controllers
                 group = t.Group,
                 year = t.Year,
                 enter_date = t.EnterDate,
-                questions = t.TestQuestions.Select(tq => new
+                questions = t.TestQuestions
+                .OrderBy(tq => tq.Order)
+                .Select(tq => new
                 {
                     id_question = tq.IdQuestionNavigation.IdQuestion,
                     id_category = tq.IdQuestionNavigation.IdCategory,
@@ -105,6 +107,94 @@ namespace QuizMakerOnline.Controllers
             }).SingleOrDefault());
         }
 
+        [HttpPut("questions/{id_test}/{id_question}")]
+        //[Route("questions")]
+        public IActionResult AddQuestion(int id_test, int id_question)
+        {
+            Tests test = _context.Tests.Include(t => t.TestQuestions).SingleOrDefault(t => t.IdTest == id_test);
+
+            if (test == null)
+            {
+                return BadRequest();
+            }
+
+            int order = 1;
+
+            if (test.TestQuestions.Any())
+            {
+                order = test.TestQuestions.Max(tq => tq.Order) + 1;
+            }
+
+            test.TestQuestions.Add(new TestQuestions
+            {
+                IdQuestion = id_question,
+                IdTest = id_test,
+                Order = order,
+                RightAnswer = "?"
+            }); ;
+
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpDelete("questions/{id_test}/{id_question}")]
+        public IActionResult DelQuestion(int id_test, int id_question)
+        {
+            Tests test = _context.Tests.Include(t => t.TestQuestions).SingleOrDefault(t => t.IdTest == id_test);
+
+            if (test == null)
+            {
+                return BadRequest();
+            }
+
+            var testQuestion = test.TestQuestions.SingleOrDefault(tq => tq.IdQuestion == id_question);
+
+            if (testQuestion == null)
+            {
+                return BadRequest();
+            }
+
+
+            test.TestQuestions.Remove(testQuestion);
+
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPut("swapquestions/{id_test}/{id_question1}/{id_question2}")]
+        public IActionResult SwapQuestions(int id_test, int id_question1, int id_question2)
+        {
+            Tests test = _context.Tests.Include(t => t.TestQuestions).SingleOrDefault(t => t.IdTest == id_test);
+
+            if (test == null)
+            {
+                return BadRequest();
+            }
+
+            var testQuestion1 = test.TestQuestions.SingleOrDefault(tq => tq.IdQuestion == id_question1);
+
+            if (testQuestion1 == null)
+            {
+                return BadRequest();
+            }
+
+            var testQuestion2 = test.TestQuestions.SingleOrDefault(tq => tq.IdQuestion == id_question2);
+
+            if (testQuestion2 == null)
+            {
+                return BadRequest();
+            }
+
+            var tmp = testQuestion1.Order;
+            testQuestion1.Order = testQuestion2.Order;
+            testQuestion2.Order = tmp;
+
+            _context.SaveChanges();
+
+            return NoContent();
+        }
 
 
         // GET: api/tests/semesters

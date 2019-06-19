@@ -58,18 +58,20 @@ export class NavComponent implements OnInit, OnDestroy {
 
       this.getActivatedRouteParameter().subscribe(params => {
         this.id_course = +params.get('id_course');
-
-        //console.log(this.id_course);
+        let id_test: number = +params.get('id_test');
 
         if (this.id_course != 0) {
           let i = this.courses.findIndex(c => c.id_course == this.id_course);
           if (i != -1) {
-            this.course_title = " – " + this.courses[i].name + (this.testService.currentTestId() != -1 ? " (výběr otázek)" : "");
+            this.course_title = " – " + this.courses[i].name + (this.testService.currentTestId() != -1 ? " – výběr otázek" + (this.testService.currentTestId() != 0 ? " testu id: " + this.testService.currentTestId() : "") : "");
           }
         } else {
-          this.course_title = (this.router.url.lastIndexOf("test") > -1 ? " – Moje testy" : "");          
+          if (id_test != 0) {
+            this.course_title = " – Editace testu id: " + id_test;          
+          } else {
+            this.course_title = (this.router.url.lastIndexOf("tests") > -1 ? " – Moje testy" : "");          
+          }          
         }
-
       })
     });
   }

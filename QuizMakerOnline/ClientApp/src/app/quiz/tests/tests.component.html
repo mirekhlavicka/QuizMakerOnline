@@ -20,17 +20,17 @@
     </ng-container>
 
     <ng-container matColumnDef="year">
-      <th mat-header-cell *matHeaderCellDef> Rok </th>
+      <th mat-header-cell *matHeaderCellDef> Rok/poznámka </th>
       <td mat-cell *matCellDef="let element"> {{element.year}} </td>
     </ng-container>
 
     <ng-container matColumnDef="group">
-      <th mat-header-cell *matHeaderCellDef> Skupina </th>
+      <th mat-header-cell *matHeaderCellDef> Označení/skupina </th>
       <td mat-cell *matCellDef="let element"> {{element.group}} </td>
     </ng-container>
 
     <ng-container matColumnDef="enter_date">
-      <th mat-header-cell *matHeaderCellDef> Datum </th>
+      <th mat-header-cell *matHeaderCellDef> Datum vytvoření </th>
       <td mat-cell *matCellDef="let element"> {{element.enter_date | date:'mediumDate'}} </td>
     </ng-container>
 

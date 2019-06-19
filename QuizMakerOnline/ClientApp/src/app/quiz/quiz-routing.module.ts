@@ -36,7 +36,7 @@ const routes: Routes = [
     path: 'tests', component: TestsComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'test/:id', component: TestDetailComponent
+    path: 'test/:id_test', component: TestDetailComponent
   },
 
 

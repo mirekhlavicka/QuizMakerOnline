@@ -34,7 +34,7 @@ export class TestDetailComponent implements OnInit {
   }
 
   getData(): void {
-    this.id_test = +this.route.snapshot.paramMap.get('id');
+    this.id_test = +this.route.snapshot.paramMap.get('id_test');
 
     this.questionService.getCourses().pipe(
       flatMap(c => {
@@ -49,7 +49,9 @@ export class TestDetailComponent implements OnInit {
   }
 
   removeFromTest(q: Question) {
-    this.testService.del(q);
+    if (confirm("Opravdu si přejete odebrat otázku z testu ?")) {
+      this.testService.del(q);
+    }
   }
 
   moveUp(q: Question) {

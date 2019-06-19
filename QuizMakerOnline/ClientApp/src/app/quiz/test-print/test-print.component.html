@@ -1,15 +1,18 @@
 <div class="print-test">
-  <div *ngFor="let question of testService.getQuestions(); let i = index" class="question" [class.noPoints]="!showPoints || question.id_question_type != 2">
+  <div *ngFor="let question of testService.getQuestions(); let i = index" class="question" [class.noPoints]="question.points == 0 || !showPoints || question.id_question_type == 3">
     <mathjax *ngIf='question.question != ""' [content]='"<b>" + (i+1).toString() + ".</b> " +  question.question'></mathjax>
-    <div *ngFor="let answer of question.answers" class="answer" [class.noPoints]="!showPoints">
+    <div *ngFor="let answer of question.answers" class="answer" [class.noPoints]="answer.points == 0 || !showPoints">
       <mathjax [content]='(question.question == "" && answer.position =="a"  ? "<b>" + (i+1).toString() + ".</b> " : "") + answer.position + ") " +  answer.answer'></mathjax>
-      <div class="points" [hidden]="!showPoints">({{answer.points}} {{answer.points == 1 ? "bod" : (answer.points < 5 ? "body" : "bodů")}})</div>
+      <div class="points" [hidden]="answer.points == 0 || !showPoints">({{answer.points}} {{answer.points == 1 ? "bod" : (answer.points < 5 ? "body" : "bodů")}})</div>
     </div>
-    <div class="points" [hidden]="!showPoints|| question.id_question_type != 2">({{question.points}} {{question.points == 1 ? "bod" : (question.points < 5 ? "body" : "bodů")}})</div>
+    <div class="points" [hidden]="question.points == 0 || !showPoints || question.id_question_type == 3">({{question.points}} {{question.points == 1 ? "bod" : (question.points < 5 ? "body" : "bodů")}})</div>
 
     <div [hidden]="!showSolution" class="answer">
       <h5>Řešeni:</h5>
       <mathjax [content]='question.solution'></mathjax>
+      <div *ngIf="question.id_question_type==1" style="margin-top:10px">
+        Správná odpověď: {{question.right_answer}})
+      </div>
     </div>
 
   </div>
