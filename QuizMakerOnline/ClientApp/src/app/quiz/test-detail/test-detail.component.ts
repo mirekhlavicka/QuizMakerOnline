@@ -3,8 +3,10 @@ import { Location } from '@angular/common';
 import { QuestionService } from '../question.service';
 import { TestService } from '../test.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Test } from '../testModel';
 import { Course, Question } from '../questionModel';
+import { TestEditComponent } from '../test-edit/test-edit.component';
 import { flatMap } from 'rxjs/operators';
 
 @Component({
@@ -27,7 +29,9 @@ export class TestDetailComponent implements OnInit {
     public testService: TestService,
     private location: Location,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.getData();
@@ -83,5 +87,20 @@ export class TestDetailComponent implements OnInit {
 
   goToQuestions(): void {
     this.router.navigate([`/questions/${this.test.id_course}`]);
-  }  
+  }
+
+  editTest(): void {
+    const dialogRef = this.dialog.open(TestEditComponent, {
+      width: '450px',
+      data: {
+        group: this.test.group
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        this.test.group = result.group;
+      }
+    });
+  }
 }

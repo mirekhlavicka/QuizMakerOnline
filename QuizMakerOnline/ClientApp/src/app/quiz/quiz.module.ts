@@ -21,6 +21,7 @@ import { TestPrintComponent } from './test-print/test-print.component';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { TestsComponent } from './tests/tests.component';
 import { TestDetailComponent } from './test-detail/test-detail.component';
+import { TestEditComponent } from './test-edit/test-edit.component';
 
 
 
@@ -28,7 +29,7 @@ import { TestDetailComponent } from './test-detail/test-detail.component';
 //import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [QuestionsComponent, TestComponent, QuestionDetailComponent, MathjaxComponent, MathjaxEditComponent, TestPrintComponent, TestsComponent, TestDetailComponent],
+  declarations: [QuestionsComponent, TestComponent, QuestionDetailComponent, MathjaxComponent, MathjaxEditComponent, TestPrintComponent, TestsComponent, TestDetailComponent, TestEditComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,
@@ -44,7 +45,8 @@ import { TestDetailComponent } from './test-detail/test-detail.component';
     //otherProviders...
   ],
   entryComponents: [
-    MathjaxEditComponent
+    MathjaxEditComponent,
+    TestEditComponent
   ],
 })
 export class QuizModule { }

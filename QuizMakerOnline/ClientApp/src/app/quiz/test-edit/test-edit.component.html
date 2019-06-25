@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Vlastnosti testu</h2>
+<mat-dialog-content>
+  <form class="editForm" #editForm="ngForm" (ngSubmit)="submit(editForm.invalid)">
+    <mat-form-field appearance="standard" >
+      <mat-label>Skupina</mat-label>
+      <input matInput placeholder="Skupina" [(ngModel)]="data.group" name="group" required (input)="dirty=true">
+    </mat-form-field>
+  </form>
+  </mat-dialog-content>
+
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" [mat-dialog-close]="data" [disabled]="editForm.invalid" accesskey="s" matTooltip="Uložit (alt +s)">Uložit</button>
+  <button mat-button (click)="onNoClick()">Zrušit</button> <!--mat-dialog-close-->
+</mat-dialog-actions>
