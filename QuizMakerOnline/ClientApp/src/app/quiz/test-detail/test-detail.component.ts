@@ -93,13 +93,20 @@ export class TestDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(TestEditComponent, {
       width: '450px',
       data: {
-        group: this.test.group
+        group: this.test.group,
+        year: this.test.year,
+        id_semester: this.test.id_semester,
+        id_course: this.test.id_course,
+        newitem: false,
+        semesters: this.semesters
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
         this.test.group = result.group;
+        this.test.year = result.year;
+        this.test.id_semester = result.id_semester;
       }
     });
   }

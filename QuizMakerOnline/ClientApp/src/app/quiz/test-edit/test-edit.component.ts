@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { EditTest } from '../testModel';
 
 @Component({
   selector: 'app-test-edit',
@@ -7,10 +8,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./test-edit.component.css']
 })
 export class TestEditComponent implements OnInit {
+  objectKeys = Object.keys;
   dirty: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<TestEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: EditTest) { }
 
   @HostListener('window:keyup.esc') onKeyUp() {
     if (this.confirmDiscardChanges()) {
