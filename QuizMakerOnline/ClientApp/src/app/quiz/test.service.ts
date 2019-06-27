@@ -16,6 +16,7 @@ const httpOptions = {
 export class TestService {
   private testsUrl = 'api/tests';
   private semestersUrl = 'api/tests/semesters';
+  private coursesUrl = 'api/tests/courses';
 
   private test: Test = null;
 
@@ -58,6 +59,10 @@ export class TestService {
 
   getSemesters(): Observable<Object> {
     return this.http.get<Object>(this.semestersUrl);
+  }
+
+  getMyCourses(): Observable<Object> {
+    return this.http.get<Object>(this.coursesUrl);
   }
 
   private addQuestion(q: Question): Observable<any> {
@@ -118,6 +123,12 @@ export class TestService {
         this.swapQuestions(this.test.questions[i], this.test.questions[i + 1]).subscribe(_ => { });
       }
     }
+  }
+
+  updateTest(test: Test): Observable<any> {
+    return this.http.put(this.testsUrl, test, httpOptions).pipe(
+      catchError(this.handleError<any>('updateTest'))
+    );
   }
 
   public getQuestions(): Question[] {

@@ -19,7 +19,7 @@ export class TestDetailComponent implements OnInit {
   id_test: number;
   test: Test;
 
-  courses: Course[];
+  courses: Object = {};
   semesters: Object = {};  
 
   showSolution: boolean = false;
@@ -40,7 +40,7 @@ export class TestDetailComponent implements OnInit {
   getData(): void {
     this.id_test = +this.route.snapshot.paramMap.get('id_test');
 
-    this.questionService.getCourses().pipe(
+    this.testService.getMyCourses().pipe(
       flatMap(c => {
         this.courses = c;
         return this.testService.getSemesters();
@@ -75,10 +75,6 @@ export class TestDetailComponent implements OnInit {
       }], { skipLocationChange: true });
   }
 
-  courseName(id: number): string {
-    return this.courses.find(c => c.id_course == id).name;
-  }
-
   goBack(): void {
     //this.location.back();
     this.testService.noCurrentTest();
@@ -98,7 +94,8 @@ export class TestDetailComponent implements OnInit {
         id_semester: this.test.id_semester,
         id_course: this.test.id_course,
         newitem: false,
-        semesters: this.semesters
+        semesters: this.semesters,
+        courses: this.courses
       }
     });
 
@@ -107,6 +104,9 @@ export class TestDetailComponent implements OnInit {
         this.test.group = result.group;
         this.test.year = result.year;
         this.test.id_semester = result.id_semester;
+        this.test.id_course = result.id_course;
+
+        this.testService.updateTest(this.test).subscribe(_ => { /*alert("test ulozen")*/ });
       }
     });
   }

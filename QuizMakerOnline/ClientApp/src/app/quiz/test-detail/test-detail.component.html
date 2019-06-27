@@ -46,7 +46,7 @@
 
   <div class="infoBar">
     <span class="infoItem">id: {{test.id_test}}</span><span class="infoItemSeparator"></span>
-    <span class="infoItem">{{courseName(test.id_course)}}</span><span class="infoItemSeparator"></span>
+    <span class="infoItem">{{courses[test.id_course]}}</span><span class="infoItemSeparator"></span>
     <span class="infoItem">{{semesters[test.id_semester]}}</span><span class="infoItemSeparator"></span>
     <span class="infoItem">{{test.year}}</span><span class="infoItemSeparator" *ngIf='test.year != ""'></span>
     <span class="infoItem">{{test.group}}</span><span class="infoItemSeparator" *ngIf='test.group != ""'></span>

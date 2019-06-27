@@ -17,4 +17,5 @@ export interface EditTest {
   year: string;
   newitem: boolean;
   semesters: Object;
+  courses: Object;
 }

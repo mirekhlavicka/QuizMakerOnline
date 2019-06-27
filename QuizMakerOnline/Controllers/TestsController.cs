@@ -196,6 +196,28 @@ namespace QuizMakerOnline.Controllers
             return NoContent();
         }
 
+        // PUT: api/tests  bez /5
+        [HttpPut/*("{id}")*/]
+        public IActionResult PutTest(ClientTest ct)
+        {
+            Tests test = _context.Tests.SingleOrDefault(t => t.IdTest == ct.id_test);
+
+            if (test == null)
+            {
+                return BadRequest();
+            }
+
+            test.IdSemester = ct.id_semester;
+            test.IdCourse = ct.id_course;
+            test.Group = ct.group;
+            test.Year = ct.year;
+
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+
 
         // GET: api/tests/semesters
         [HttpGet()]
@@ -211,6 +233,24 @@ namespace QuizMakerOnline.Controllers
                     name = s.Name//.ToLower()
                 })
                 .ToDictionary(s => s.id, s => s.name);
+        }
+
+        // GET: api/tests/courses
+        [HttpGet()]
+        [Route("courses")]
+        public Object GetMyCourses()
+        {
+            var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            return _context
+                .Courses
+                .Where(c => _context.UserCourseRights.Any(ur => ur.IdUser == current_id_user && ur.IdCourse == c.IdCourse && (ur.Rights & 4) != 0))
+                .Select(c => new
+                {
+                    id = c.IdCourse,
+                    name = c.Name
+                })
+                .ToDictionary(c => c.id, c => c.name);
         }
 
         [HttpGet]
@@ -268,6 +308,15 @@ namespace QuizMakerOnline.Controllers
                 stream.Seek(0, SeekOrigin.Begin);
             }
             return stream;
+        }
+
+        public class ClientTest
+        {
+            public int id_test { get; set; }
+            public int id_course { get; set; }
+            public int id_semester { get; set; }
+            public string group { get; set; }
+            public string year { get; set; }
         }
     }
 }
