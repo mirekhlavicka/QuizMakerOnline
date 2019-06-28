@@ -1,9 +1,15 @@
+.test-toolbar {
+  margin: 10px 30px 0px 30px;
+  width: auto;
+}
+
+
 table {
   width: 100%;
 }
 
 .tests {
-  margin: 30px 30px 10px 30px;
+  margin: 10px 30px 10px 30px;
 }
 
 .mat-row {

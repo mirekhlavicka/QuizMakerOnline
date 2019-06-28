@@ -217,6 +217,42 @@ namespace QuizMakerOnline.Controllers
             return NoContent();
         }
 
+        [HttpPost]
+        public object PostTest(ClientTest ct)
+        {
+            var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            Tests t = new Tests
+            {
+                IdSemester = ct.id_semester,
+                IdCourse = ct.id_course,
+                EnterDate = DateTime.Now,
+                Group = ct.group,
+                Year  = ct.year,
+                IdUser = current_id_user                
+            };
+
+            _context.Tests.Add(t);
+
+            _context.SaveChanges();
+
+            return new
+            {
+                id_test = t.IdTest,
+                id_course = t.IdCourse,
+                id_semester = t.IdSemester,
+                group = t.Group,
+                year = t.Year,
+                enter_date = t.EnterDate,
+                questions = t.TestQuestions
+                    .Select(q => new
+                    {
+                        id_question = q.IdQuestion
+                    })
+            };
+        }
+
+
 
 
         // GET: api/tests/semesters

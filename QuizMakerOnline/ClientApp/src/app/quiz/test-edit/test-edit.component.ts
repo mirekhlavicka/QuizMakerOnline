@@ -56,4 +56,18 @@ export class TestEditComponent implements OnInit {
       this.dialogRef.close();
     }
   }
+
+  sortedObjectKeys(o: Object, byval: boolean, desc: boolean): string[] {
+    let descFactor: number = 1;
+
+    if (desc) {
+      descFactor = -1;
+    }
+
+    if (byval) {
+      return Object.keys(o).sort(function (a, b) { return o[a] > o[b] ? descFactor : -descFactor })
+    } else {
+      return Object.keys(o).sort(function (a, b) { return +a > +b ? descFactor : -descFactor })
+    }
+  }
 }

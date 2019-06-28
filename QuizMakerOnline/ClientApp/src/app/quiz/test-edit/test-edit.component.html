@@ -8,7 +8,7 @@
       <mat-form-field appearance="standard">
         <mat-label>Kurz</mat-label>
         <mat-select placeholder="Kurz" [(ngModel)]="data.id_course" name="id_course" required (selectionChange)="dirty=true">
-          <mat-option *ngFor="let key of objectKeys(data.courses)" [value]="+key">
+          <mat-option *ngFor="let key of sortedObjectKeys(data.courses, true, false)" [value]="+key">
             {{data.courses[key]}}
           </mat-option>
         </mat-select>
@@ -17,7 +17,7 @@
       <mat-form-field appearance="standard">
         <mat-label>Semestr</mat-label>
         <mat-select placeholder="Semestr" [(ngModel)]="data.id_semester" name="id_semester" required (selectionChange)="dirty=true">
-          <mat-option *ngFor="let key of objectKeys(data.semesters)" [value]="+key">
+          <mat-option *ngFor="let key of sortedObjectKeys(data.semesters, false, true)" [value]="+key">
             {{data.semesters[key]}}
           </mat-option>
         </mat-select>
@@ -36,10 +36,9 @@
     </div>
   </mat-dialog-content>
 
-
   <mat-dialog-actions align="end">
-    <button mat-raised-button color="primary" [mat-dialog-close]="data" [disabled]="editForm.invalid" accesskey="s" matTooltip="Uložit (alt +s)">Uložit</button>
-    <button mat-button (click)="onNoClick()">Zrušit</button> <!--mat-dialog-close-->
+    <button type="submit" mat-raised-button color="primary" [disabled]="editForm.invalid" accesskey="s" matTooltip="Uložit (alt +s)">Uložit</button> <!--[mat-dialog-close]="data"-->
+    <button type="button" mat-button (click)="onNoClick()">Zrušit</button> <!--mat-dialog-close-->
   </mat-dialog-actions>
 
 </form>

@@ -72,7 +72,7 @@
             <mat-menu #auth="matMenu">
               <button *ngIf="isAuthenticated" mat-menu-item (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
-                <span>Odhlásit {{fullName}}</span>
+                <span>Odhlásit uživatele {{fullName}}</span>
               </button>
               <button *ngIf="!isAuthenticated" mat-menu-item (click)="login()">
                 <mat-icon>person</mat-icon>

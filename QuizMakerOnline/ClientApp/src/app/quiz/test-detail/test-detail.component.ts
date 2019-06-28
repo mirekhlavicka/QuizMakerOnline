@@ -49,7 +49,12 @@ export class TestDetailComponent implements OnInit {
         this.semesters = s;
         return this.testService.getTest(this.id_test);
       })
-    ).subscribe(test => this.test = test);
+    ).subscribe(test => {
+      this.test = test;
+      if (this.test.id_test <= 0) {
+        this.editTest()
+      }
+    });
   }
 
   removeFromTest(q: Question) {
@@ -93,7 +98,7 @@ export class TestDetailComponent implements OnInit {
         year: this.test.year,
         id_semester: this.test.id_semester,
         id_course: this.test.id_course,
-        newitem: false,
+        newitem: this.test.id_test == 0,
         semesters: this.semesters,
         courses: this.courses
       }
@@ -106,8 +111,21 @@ export class TestDetailComponent implements OnInit {
         this.test.id_semester = result.id_semester;
         this.test.id_course = result.id_course;
 
-        this.testService.updateTest(this.test).subscribe(_ => { /*alert("test ulozen")*/ });
+        if (this.test.id_test == 0) {
+          this.testService.addTest(this.test).subscribe(t => {
+            this.test.id_test = t.id_test;
+            this.test.enter_date = t.enter_date;
+          });
+        } else {
+          this.testService.updateTest(this.test).subscribe(_ => { /*alert("test ulozen")*/ });
+        }
+      } else if (this.test.id_test <= 0) {
+        this.goBack();
       }
     });
+  }
+
+  delTest(): void {
+    alert("Not implemented");
   }
 }

@@ -50,7 +50,16 @@ export class TestService {
   }
 
   getTest(id_test: number): Observable<Test> {
-    return this.http.get<Test>(`${this.testsUrl}/${id_test}`)
+    return (id_test == 0 ? of(Object.assign(new Test(),
+      {
+        id_test: 0,
+        id_course: null,
+        id_semester: null,
+        group: "",
+        year: new Date().getFullYear().toString(),
+        enter_date: new Date(),
+        questions: []
+      })) : this.http.get<Test>(`${this.testsUrl}/${id_test}`))
       .pipe(
         tap(t => this.test = t),
         catchError(this.handleError<Test>('getTests', null))
@@ -128,6 +137,12 @@ export class TestService {
   updateTest(test: Test): Observable<any> {
     return this.http.put(this.testsUrl, test, httpOptions).pipe(
       catchError(this.handleError<any>('updateTest'))
+    );
+  }
+
+  addTest(test: Test): Observable<Test> {
+    return this.http.post(this.testsUrl, test, httpOptions).pipe(
+      catchError(this.handleError<any>('addTest'))
     );
   }
 
