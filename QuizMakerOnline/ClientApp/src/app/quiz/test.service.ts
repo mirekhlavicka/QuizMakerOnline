@@ -50,9 +50,9 @@ export class TestService {
   }
 
   getTest(id_test: number): Observable<Test> {
-    return (id_test == 0 ? of(Object.assign(new Test(),
+    return (id_test <= 0 ? of(Object.assign(new Test(),
       {
-        id_test: 0,
+        id_test: -1,
         id_course: null,
         id_semester: null,
         group: "",
@@ -143,6 +143,11 @@ export class TestService {
   addTest(test: Test): Observable<Test> {
     return this.http.post(this.testsUrl, test, httpOptions).pipe(
       catchError(this.handleError<any>('addTest'))
+    );
+  }
+
+  delTest(test: Test): Observable<any> {
+    return this.http.delete(`${this.testsUrl}/${test.id_test}`, httpOptions).pipe(
     );
   }
 

@@ -67,7 +67,7 @@ export class NavComponent implements OnInit, OnDestroy {
           }
         } else {
           if (id_test != 0) {
-            this.course_title = " – Editace testu id: " + id_test;          
+            this.course_title = (id_test > 0 ? " – Editace testu id: " + id_test : " – Přidání testu");          
           } else {
             this.course_title = (this.router.url.lastIndexOf("tests") > -1 ? " – Moje testy" : "");          
           }          

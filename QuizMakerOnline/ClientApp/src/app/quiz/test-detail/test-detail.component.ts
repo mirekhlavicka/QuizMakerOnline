@@ -98,7 +98,7 @@ export class TestDetailComponent implements OnInit {
         year: this.test.year,
         id_semester: this.test.id_semester,
         id_course: this.test.id_course,
-        newitem: this.test.id_test == 0,
+        newitem: this.test.id_test <= 0,
         semesters: this.semesters,
         courses: this.courses
       }
@@ -111,10 +111,11 @@ export class TestDetailComponent implements OnInit {
         this.test.id_semester = result.id_semester;
         this.test.id_course = result.id_course;
 
-        if (this.test.id_test == 0) {
+        if (this.test.id_test <= 0) {
           this.testService.addTest(this.test).subscribe(t => {
             this.test.id_test = t.id_test;
             this.test.enter_date = t.enter_date;
+            this.router.navigate([`/test/${t.id_test}`]);
           });
         } else {
           this.testService.updateTest(this.test).subscribe(_ => { /*alert("test ulozen")*/ });
@@ -126,6 +127,13 @@ export class TestDetailComponent implements OnInit {
   }
 
   delTest(): void {
-    alert("Not implemented");
+    if (confirm("Opravdu si přejete smazat test " + this.test.id_test + " ?")) {
+
+      this.testService.delTest(this.test).subscribe(_ => {
+        this.goBack();
+      }, e => {
+        alert(e.error)
+      });
+    }
   }
 }

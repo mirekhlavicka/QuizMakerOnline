@@ -13,7 +13,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { QuizRoutingModule } from './quiz-routing.module';
 
 import { QuestionsComponent } from './questions/questions.component';
-import { TestComponent } from './test/test.component';
 import { QuestionDetailComponent } from './question-detail/question-detail.component';
 import { MathjaxComponent } from './mathjax/mathjax.component';
 import { MathjaxEditComponent } from './mathjax-edit/mathjax-edit.component';
@@ -29,7 +28,7 @@ import { TestEditComponent } from './test-edit/test-edit.component';
 //import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [QuestionsComponent, TestComponent, QuestionDetailComponent, MathjaxComponent, MathjaxEditComponent, TestPrintComponent, TestsComponent, TestDetailComponent, TestEditComponent],
+  declarations: [QuestionsComponent, QuestionDetailComponent, MathjaxComponent, MathjaxEditComponent, TestPrintComponent, TestsComponent, TestDetailComponent, TestEditComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,

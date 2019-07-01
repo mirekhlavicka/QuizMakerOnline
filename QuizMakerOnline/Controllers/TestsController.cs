@@ -252,8 +252,28 @@ namespace QuizMakerOnline.Controllers
             };
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteTest(int id)
+        {
+            var test = _context.Tests.Find(id);
+            if (test == null)
+            {
+                return NotFound();
+            }
 
+            _context.Tests.Remove(test);
 
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.InnerException.Message);
+            }
+
+            return NoContent();
+        }
 
         // GET: api/tests/semesters
         [HttpGet()]

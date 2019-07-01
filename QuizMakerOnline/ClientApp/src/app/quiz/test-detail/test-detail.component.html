@@ -44,7 +44,7 @@
 
 <mat-card class="test-card" *ngIf="test">
 
-  <div class="infoBar">
+  <div class="infoBar" *ngIf="test && test.id_test > 0">
     <span class="infoItem">id: {{test.id_test}}</span><span class="infoItemSeparator"></span>
     <span class="infoItem">{{courses[test.id_course]}}</span><span class="infoItemSeparator"></span>
     <span class="infoItem">{{semesters[test.id_semester]}}</span><span class="infoItemSeparator"></span>
@@ -85,7 +85,7 @@
 
   </div>
 
-  <div *ngIf="test.questions.length == 0">Nejsou vybrány žádné příklady</div>
+  <div *ngIf="test.questions.length == 0">Nejsou vybrány žádné otázky</div>
 
 
 </mat-card>

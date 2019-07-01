@@ -83,21 +83,24 @@
       <mat-icon>last_page</mat-icon>
     </button>
 
-    <mat-slide-toggle [(ngModel)]="filter.sortFromOldest" (change)="onFilterChange()" color="primary" fxFlexOffset="10px">Od nejstarších</mat-slide-toggle>
-  </div>
-
-  <div fxFlex fxLayout fxLayoutAlign="flex-start center">
-    <button (click)="questionDetail.question=addQuestion();questionDetail.editQuestion(false)" mat-stroked-button color="accent" matTooltip='Přidat otázku'>
+    <button (click)="questionDetail.question=addQuestion();questionDetail.editQuestion(false)" mat-stroked-button color="accent" matTooltip='Přidat otázku' fxFlexOffset="6px">
       <mat-icon>add</mat-icon>
     </button>&nbsp;
+
+    <mat-slide-toggle [(ngModel)]="filter.sortFromOldest" (change)="onFilterChange()" color="primary" fxFlexOffset="10px">Od nejstarších</mat-slide-toggle>
+
     <mat-spinner *ngIf="loading" [diameter]="40" fxFlexOffset="50px"></mat-spinner>
   </div>
 
+  <!--<div fxFlex fxLayout fxLayoutAlign="flex-start center">
+    <mat-spinner *ngIf="loading" [diameter]="40"></mat-spinner>
+  </div>-->
+
   <div fxFlex fxLayout fxLayoutAlign="flex-end" *ngIf="testService.currentTestId() != -1">
-    <button (click)="addToTest()" mat-stroked-button color="accent" matTooltip="Vložit do testu" [disabled]="!question || testService.contains(question)">
+    <button (click)="addToTest()" mat-raised-button color="accent" matTooltip="Vložit do testu" [disabled]="!question || testService.contains(question)">
       <mat-icon>add_shopping_cart</mat-icon>
     </button>
-    <button (click)="removeFromTest()" mat-stroked-button color="accent" matTooltip="Odebrat z testu" [disabled]="!question || !testService.contains(question)" fxFlexOffset="6px">
+    <button (click)="removeFromTest()" mat-raised-button color="accent" matTooltip="Odebrat z testu" [disabled]="!question || !testService.contains(question)" fxFlexOffset="6px">
       <mat-icon>remove_shopping_cart</mat-icon>
     </button>
   </div>
