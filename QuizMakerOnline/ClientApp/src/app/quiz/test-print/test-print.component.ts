@@ -7,6 +7,7 @@ import { TestService } from '../test.service';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { globals } from '../../globals';
+import { Test } from '../testModel';
 
 //https://medium.com/@Idan_Co/angular-print-service-290651c721f9
 @Component({
@@ -26,12 +27,20 @@ export class TestPrintComponent implements OnInit {
 
   showSolution: boolean = false;
   showPoints: boolean = true;
+  infoBarItems: number = 0;
+  public test: Test;
 
   ngOnInit() {
+    this.test = this.testService.currentTest();
     this.showSolution = (this.route.snapshot.paramMap.get('showSolution') == "true");
     this.showPoints = (this.route.snapshot.paramMap.get('showPoints') == "true");
+    this.infoBarItems = +this.route.snapshot.paramMap.get('infoBarItems');
 
     setTimeout(() => { this.print(); }, 500);
+  }
+
+  testInfoBarItemsBit(b: number, notlast: boolean = false): boolean {
+    return (this.infoBarItems & b) != 0 && (!notlast || this.infoBarItems >= 2 * b);
   }
 
   print(): void {

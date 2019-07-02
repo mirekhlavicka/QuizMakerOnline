@@ -1,4 +1,14 @@
 <div class="print-test">
+
+  <div class="infoBar" *ngIf="test && test.id_test > 0 && infoBarItems != 0">
+    <span class="infoItem" *ngIf="testInfoBarItemsBit(1)">id: {{test.id_test}}</span><span class="infoItemSeparator" *ngIf="testInfoBarItemsBit(1, true)"></span>
+    <span class="infoItem" *ngIf="testInfoBarItemsBit(2)">{{testService.courses[test.id_course]}}</span><span class="infoItemSeparator" *ngIf="testInfoBarItemsBit(2, true)"></span>
+    <span class="infoItem" *ngIf="testInfoBarItemsBit(4)">{{testService.semesters[test.id_semester]}}</span><span class="infoItemSeparator" *ngIf="testInfoBarItemsBit(4, true)"></span>
+    <span class="infoItem" *ngIf="testInfoBarItemsBit(8)">{{test.year}}</span><span class="infoItemSeparator" *ngIf='test.year != "" && testInfoBarItemsBit(8, true)'></span>
+    <span class="infoItem" *ngIf="testInfoBarItemsBit(16)">{{test.group}}</span><span class="infoItemSeparator" *ngIf='test.group != "" && testInfoBarItemsBit(16, true)'></span>
+    <span class="infoItem" *ngIf="testInfoBarItemsBit(32)">{{test.enter_date | date:'mediumDate'}}</span>
+  </div>
+
   <div *ngFor="let question of testService.getQuestions(); let i = index" class="question" [class.noPoints]="question.points == 0 || !showPoints || question.id_question_type == 3">
     <mathjax *ngIf='question.question != ""' [content]='"<b>" + (i+1).toString() + ".</b> " +  question.question'></mathjax>
     <div *ngFor="let answer of question.answers" class="answer" [class.noPoints]="answer.points == 0 || !showPoints">

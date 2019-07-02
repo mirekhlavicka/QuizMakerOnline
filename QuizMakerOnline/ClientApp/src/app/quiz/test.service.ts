@@ -24,8 +24,19 @@ export class TestService {
   public last_pageSize: number = 0;
   public last_currentTestId: number = -1;
 
+  public courses: Object = {};
+  public semesters: Object = {};  
+
   constructor(private http: HttpClient) {
   }  
+
+  public currentTest(): Test{
+    if (this.test) {
+      return this.test;
+    } else {
+      return null;
+    }
+  }
 
   public currentTestId(): number {
     if (this.test) {
@@ -67,11 +78,19 @@ export class TestService {
   }
 
   getSemesters(): Observable<Object> {
-    return this.http.get<Object>(this.semestersUrl);
+    return this.http.get<Object>(this.semestersUrl)
+      .pipe(
+        tap(s => this.semesters = s),
+        catchError(this.handleError<Object>('getSemesters', null))
+      );
   }
 
   getMyCourses(): Observable<Object> {
-    return this.http.get<Object>(this.coursesUrl);
+    return this.http.get<Object>(this.coursesUrl)
+      .pipe(
+        tap(c => this.courses = c),
+        catchError(this.handleError<Object>('getMyCourses', null))
+      );
   }
 
   private addQuestion(q: Question): Observable<any> {

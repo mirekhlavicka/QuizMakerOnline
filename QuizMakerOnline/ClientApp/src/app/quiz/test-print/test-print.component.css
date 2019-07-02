@@ -28,3 +28,23 @@
     display: none;
   }
 }
+
+.infoBar {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.infoItemSeparator {
+  margin-left: 10px;
+  margin-right: 10px;
+  border-right: solid;
+  border-right-width: 1px;
+  border-right-color: #000;
+}
+
+.infoItem {
+  font-weight: 500;
+  font-size: 15px;
+  /*color: rgba(0,0,0,.54);*/
+}
+

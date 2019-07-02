@@ -24,6 +24,7 @@ export class TestDetailComponent implements OnInit {
 
   showSolution: boolean = false;
   showPoints: boolean = true;
+  infoBarItems: number = 1 | 2 | 4 | 8 | 16 | 32;
 
   constructor(private questionService: QuestionService,
     public testService: TestService,
@@ -34,6 +35,22 @@ export class TestDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let stemp = localStorage.getItem("test_InfoBarItems");
+
+    if (stemp) {
+      this.infoBarItems = +stemp;
+    }
+
+    stemp = localStorage.getItem("test_showSolution");
+    if (stemp) {
+      this.showSolution = (stemp == "true");
+    }
+
+    stemp = localStorage.getItem("test_showPoints");
+    if (stemp) {
+      this.showPoints = (stemp == "true");
+    }
+
     this.getData();
   }
 
@@ -75,7 +92,7 @@ export class TestDetailComponent implements OnInit {
     this.router.navigate(['/',
       {
         outlets: {
-          'print': ['printtest', { showSolution: this.showSolution, showPoints: this.showPoints }]
+          'print': ['printtest', { showSolution: this.showSolution, showPoints: this.showPoints, infoBarItems: this.infoBarItems }]
         }
       }], { skipLocationChange: true });
   }
@@ -135,5 +152,24 @@ export class TestDetailComponent implements OnInit {
         alert(e.error)
       });
     }
+  }
+
+  testInfoBarItemsBit(b: number, notlast: boolean = false): boolean {
+    return (this.infoBarItems & b) != 0 && (!notlast || this.infoBarItems >= 2 * b);
+  }
+
+  setInfoBarItemsBit(b: number, checked: boolean) {
+    if (checked) {
+      this.infoBarItems = this.infoBarItems | b;
+    } else {
+      this.infoBarItems = this.infoBarItems & ~b;
+    }
+
+    localStorage.setItem("test_InfoBarItems", this.infoBarItems.toString());
+  }
+
+  onShowChange(): void {
+    localStorage.setItem("test_showPoints", this.showPoints.toString());
+    localStorage.setItem("test_showSolution", this.showSolution.toString());
   }
 }

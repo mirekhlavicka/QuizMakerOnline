@@ -97,10 +97,10 @@
   </div>-->
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end" *ngIf="testService.currentTestId() != -1">
-    <button (click)="addToTest()" mat-raised-button color="accent" matTooltip="Vložit do testu" [disabled]="!question || testService.contains(question)">
+    <button (click)="addToTest()" mat-raised-button color="accent" matTooltip="Vložit otázku do testu" [disabled]="!question || testService.contains(question)">
       <mat-icon>add_shopping_cart</mat-icon>
     </button>
-    <button (click)="removeFromTest()" mat-raised-button color="accent" matTooltip="Odebrat z testu" [disabled]="!question || !testService.contains(question)" fxFlexOffset="6px">
+    <button (click)="removeFromTest()" mat-raised-button color="accent" matTooltip="Odebrat otázku z testu" [disabled]="!question || !testService.contains(question)" fxFlexOffset="6px">
       <mat-icon>remove_shopping_cart</mat-icon>
     </button>
   </div>
