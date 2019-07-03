@@ -6,7 +6,7 @@
 <xsl:template match="/">\documentclass[12pt]{article}
 \usepackage{amsfonts} %% Kvuli dvojitemu R
 \usepackage[czech]{babel}
-%\usepackage[cp1250]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 
 \pagestyle{empty}
