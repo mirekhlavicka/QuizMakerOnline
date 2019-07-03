@@ -309,6 +309,7 @@ namespace QuizMakerOnline.Controllers
                 .ToDictionary(c => c.id, c => c.name);
         }
 
+        //not used
         [HttpGet]
         [Route("Download")]
         public IActionResult Download(int style, bool showPoints, bool showSolution, string idList)
@@ -349,11 +350,76 @@ namespace QuizMakerOnline.Controllers
             return File(stream, "application/octet-stream", "test.tex");
         }
 
+        [HttpGet]
+        [Route("DownloadTestLaTeX")]
+        public IActionResult DownloadTestLaTeX(int id_test, int style, bool showPoints, bool showSolution, byte infoBarItems)
+        {
+            var test = _context
+                .Tests
+                .Include(t => t.TestQuestions)
+                .ThenInclude(tq => tq.IdQuestionNavigation)
+                .ThenInclude(q => q.Answers)
+                .Include(t => t.IdCourseNavigation)
+                .SingleOrDefault(t => t.IdTest == id_test);
+
+            string[] barItems = 
+                {
+                    id_test.ToString(),
+                    test.IdCourseNavigation.Name,
+                    _context.Semesters.Single(s => s.IdSemester == test.IdSemester).Name,
+                    test.Year,
+                    test.Group,
+                    test.EnterDate.ToString("d")
+                };
+
+            string header = String.Join("~\\textbar~",
+            barItems
+                .Select((item, i) => new { item = item, pos = i })
+                .Where(bi => IsBitSet(infoBarItems, bi.pos))
+                .Select(bi => bi.item));
+
+            XElement xml = new XElement("Tests",
+                new XAttribute("header", header),
+                new XAttribute("course_code", test.IdCourseNavigation.Name),
+                new XAttribute("group", test.Group),
+                new XAttribute("showPoints", showPoints),
+                new XAttribute("showSolution", showSolution),
+                    test.TestQuestions
+                    .OrderBy(tq => tq.Order)
+                    .Select(tq => tq.IdQuestionNavigation)
+                    .Select(q => new XElement("Questions",
+                        new XAttribute("question", q.Question),
+                        new XAttribute("id_question_type", q.IdQuestionType),
+                        new XAttribute("solution", q.Solution),
+                        new XAttribute("points", q.Points),
+                        q.Answers.OrderBy(a => a.Position).Select(a => new XElement("Answers",
+                            new XAttribute("position", a.Position),
+                            new XAttribute("answer", a.Answer),
+                            new XAttribute("points", a.Points)
+                        ))
+                    ))
+                );
+
+
+            MemoryStream stream = TransformXMLToTex(xml, "ToLaTeX" + style);
+
+            if (stream == null)
+                return NotFound();
+
+            return File(stream, "application/octet-stream", "test.tex");
+        }
+
+        private bool IsBitSet(byte b, int pos)
+        {
+            return (b & (1 << pos)) != 0;
+        }
+
+
         private MemoryStream TransformXMLToTex(XElement inputXml, string xsltName)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             XslCompiledTransform transform = new XslCompiledTransform();
-            var sPath = System.IO.Path.Combine(_env.WebRootPath, @"xslt\" + xsltName + ".xslt"); 
+            var sPath = System.IO.Path.Combine(_env.WebRootPath, @"xslt\" + xsltName + "_UTF8.xslt"); //"_UTF8.xslt"
             transform.Load(sPath);
 
             MemoryStream stream = new MemoryStream();

@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="windows-1250"?>
+ď»ż<?xml version="1.0" encoding="utf-8"?>
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-<xsl:output method="text" encoding="windows-1250"/>
+<xsl:output method="text" encoding="utf-8"/>
 
 <xsl:template match="/">\documentclass[12pt]{article}
 \usepackage{amsfonts} %% Kvuli dvojitemu R
 \usepackage[czech]{babel}
-\usepackage[cp1250]{inputenc}
+%\usepackage[cp1250]{inputenc}
 \usepackage{graphicx}
 
 \pagestyle{empty}
@@ -14,7 +14,7 @@
 \topmargin=-30mm
 \oddsidemargin=-10mm
 
-%Načtení předdefinovaných vztahů, které jsou v souboru preddefinovane.sty
+%NaÄŤtenĂ­ pĹ™eddefinovanĂ˝ch vztahĹŻ, kterĂ© jsou v souboru preddefinovane.sty
 %\usepackage{../sty/preddefinovane}
 \def\e{{\rm e}}
 \def\arctg{{\rm arctg}}
@@ -45,16 +45,14 @@
 </xsl:template>
 
 <xsl:template match="Tests">
-{\bf <xsl:value-of select="@course_code"/>} \quad <xsl:value-of select="@group"/>
+  {\bf <xsl:value-of select="@header"/>} <!--\quad <xsl:value-of select="@group"/>-->
 \bigskip
-\begin{enumerate}
 <xsl:apply-templates select="Questions"/>
-\end{enumerate}
 </xsl:template>
 
 <xsl:template match="Questions">
-\item
-<xsl:value-of select="@question"/><xsl:if test="@question!='' and @id_question_type!=2">\\</xsl:if>
+\bigskip
+{\bf <xsl:value-of select="position()"/>.} <xsl:value-of select="@question"/><xsl:if test="@question!='' and @id_question_type!=2">\\</xsl:if>
 <xsl:if test="@id_question_type!=2">
 <xsl:apply-templates select="Answers"/>
 </xsl:if>
@@ -62,14 +60,12 @@
 \hfill(<xsl:value-of select="@points"/><xsl:text> </xsl:text> <xsl:choose>
 <xsl:when test="@points=1">bod</xsl:when>
 <xsl:when test="@points &lt; 5">body</xsl:when>
-<xsl:otherwise>bodů</xsl:otherwise>
+<xsl:otherwise>bodĹŻ</xsl:otherwise>
 </xsl:choose>)
 </xsl:if>
 <xsl:if test="/Tests/@showSolution='true'">
-{\bf Řešení:}
+{\bf ĹeĹˇenĂ­:}
 <xsl:value-of select="@solution"/><xsl:text>
-
-
 </xsl:text>
 </xsl:if>
 </xsl:template>
@@ -79,7 +75,7 @@
 \hfill(<xsl:value-of select="@points"/><xsl:text> </xsl:text> <xsl:choose>
 <xsl:when test="@points=1">bod</xsl:when>
 <xsl:when test="@points &lt; 5">body</xsl:when>
-<xsl:otherwise>bodů</xsl:otherwise>
+<xsl:otherwise>bodĹŻ</xsl:otherwise>
 </xsl:choose>)
 </xsl:if><xsl:if test="position()!=last()">\\</xsl:if>
 </xsl:template>
