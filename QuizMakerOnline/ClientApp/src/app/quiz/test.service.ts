@@ -67,7 +67,7 @@ export class TestService {
         id_course: null,
         id_semester: null,
         group: "",
-        year: new Date().getFullYear().toString(),
+        year: "", //new Date().getFullYear().toString(),
         enter_date: new Date(),
         questions: []
       })) : this.http.get<Test>(`${this.testsUrl}/${id_test}`))

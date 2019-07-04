@@ -107,6 +107,10 @@ export class TestDetailComponent implements OnInit {
     this.router.navigate([`/questions/${this.test.id_course}`]);
   }
 
+  goToQuestion(q: Question): void {
+    this.questionService.getCategories(q.id_category).subscribe(c => this.router.navigate([`/questions/${c[0].id_course}`, { id_question: q.id_question, id_category: q.id_category }]));    
+  }
+
   editTest(): void {
     const dialogRef = this.dialog.open(TestEditComponent, {
       width: '450px',
@@ -132,6 +136,7 @@ export class TestDetailComponent implements OnInit {
           this.testService.addTest(this.test).subscribe(t => {
             this.test.id_test = t.id_test;
             this.test.enter_date = t.enter_date;
+            this.test.year = t.year;
             this.router.navigate([`/test/${t.id_test}`]);
           });
         } else {

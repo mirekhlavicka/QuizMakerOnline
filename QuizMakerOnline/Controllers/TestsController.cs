@@ -236,6 +236,12 @@ namespace QuizMakerOnline.Controllers
 
             _context.SaveChanges();
 
+            if (String.IsNullOrEmpty(t.Year))
+            {
+                t.Year = String.Format("Test {0}", t.IdTest);
+                _context.SaveChanges();
+            }
+
             return new
             {
                 id_test = t.IdTest,
@@ -367,8 +373,8 @@ namespace QuizMakerOnline.Controllers
                     id_test.ToString(),
                     test.IdCourseNavigation.Name,
                     _context.Semesters.Single(s => s.IdSemester == test.IdSemester).Name,
-                    test.Year,
-                    test.Group,
+                    test.Year.Replace("_", " "),
+                    test.Group.Replace("_", " "),
                     test.EnterDate.ToString("d")
                 };
 

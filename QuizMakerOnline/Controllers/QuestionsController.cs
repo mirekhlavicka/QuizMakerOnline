@@ -119,10 +119,14 @@ namespace QuizMakerOnline.Controllers
         // GET: api/questions/categories
         [HttpGet]
         [Route("categories")]
-        public IEnumerable<Object> GetCategories()
+        public IEnumerable<Object> GetCategories(int? id_category)
         {
-            var res = _context.QuestionCategories;
+            var res = _context.QuestionCategories.AsQueryable();
 
+            if (id_category != null && id_category != 0)
+            {
+                res = res.Where(c => c.IdCategory == id_category);
+            }
 
             return res.Select(c => new
             {

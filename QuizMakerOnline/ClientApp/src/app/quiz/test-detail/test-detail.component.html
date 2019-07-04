@@ -25,11 +25,11 @@
 
 
   <mat-menu #menuDownloadTex="matMenu">
-    <a mat-menu-item [href]='"/api/tests/DownloadTestLaTeX?style=1&showPoints=" + showPoints + "&showSolution=" + showSolution + "&id_test=" + test.id_test + "&infoBarItems=" + infoBarItems' download>
+    <a mat-menu-item [href]='"/api/tests/DownloadTestLaTeX?style=1&showPoints=" + showPoints + "&showSolution=" + showSolution + "&id_test=" + test?.id_test + "&infoBarItems=" + infoBarItems' download>
       <mat-icon>format_align_left</mat-icon>
       <span>Výchozí Styl</span>
     </a>
-    <a mat-menu-item [href]='"/api/tests/DownloadTestLaTeX?style=2&showPoints=" + showPoints + "&showSolution=" + showSolution + "&id_test=" + test.id_test + "&infoBarItems=" + infoBarItems' download>
+    <a mat-menu-item [href]='"/api/tests/DownloadTestLaTeX?style=2&showPoints=" + showPoints + "&showSolution=" + showSolution + "&id_test=" + test?.id_test + "&infoBarItems=" + infoBarItems' download>
       <mat-icon>format_list_numbered</mat-icon>
       <span>Styl enumerate</span>
     </a>
@@ -48,8 +48,8 @@
       <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item" [checked]="testInfoBarItemsBit(1)" (change)="setInfoBarItemsBit(1, $event.checked)">ID testu</mat-checkbox>
       <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item" [checked]="testInfoBarItemsBit(2)" (change)="setInfoBarItemsBit(2, $event.checked)">Kurz</mat-checkbox>
       <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item" [checked]="testInfoBarItemsBit(4)" (change)="setInfoBarItemsBit(4, $event.checked)">Semestr</mat-checkbox>
-      <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item" [checked]="testInfoBarItemsBit(8)" (change)="setInfoBarItemsBit(8, $event.checked)">Rok/poznámka</mat-checkbox>
-      <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item" [checked]="testInfoBarItemsBit(16)" (change)="setInfoBarItemsBit(16, $event.checked)">Označení/Skupina</mat-checkbox>
+      <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item" [checked]="testInfoBarItemsBit(8)" (change)="setInfoBarItemsBit(8, $event.checked)">Označení</mat-checkbox>
+      <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item" [checked]="testInfoBarItemsBit(16)" (change)="setInfoBarItemsBit(16, $event.checked)">Skupina</mat-checkbox>
       <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item" [checked]="testInfoBarItemsBit(32)" (change)="setInfoBarItemsBit(32, $event.checked)">Datum vytvoření</mat-checkbox>
 
     </mat-menu>
@@ -90,6 +90,9 @@
         </button>
         <button (click)="moveUp(question)" mat-mini-fab color="primary" matTooltip="Posunout nahoru" class="questionActionButton" [disabled]="i==0">
           <mat-icon>arrow_upward</mat-icon>
+        </button>
+        <button (click)="goToQuestion(question)" mat-mini-fab color="primary"  matTooltip='Upravit otázku' class="questionActionButton">
+          <mat-icon>edit</mat-icon>
         </button>
         <button (click)="removeFromTest(question)" mat-mini-fab color="warn" matTooltip="Odebrat z testu" class="questionActionButton">
           <mat-icon>remove</mat-icon>

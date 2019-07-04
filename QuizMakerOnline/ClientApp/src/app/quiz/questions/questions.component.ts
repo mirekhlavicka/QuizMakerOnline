@@ -48,6 +48,9 @@ export class QuestionsComponent implements OnInit {
   gotoCurrent: number = -1;
   currentBeforeAdd: number = -1;
 
+  goto_id_category: number = 0;
+  goto_id_question: number = 0;
+
   loading: boolean = false;
   accessDenied: boolean = false;
 
@@ -59,6 +62,9 @@ export class QuestionsComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.goto_id_question = +this.route.snapshot.paramMap.get("id_question");
+    this.goto_id_category = +this.route.snapshot.paramMap.get("id_category");
 
     this.questionService.getCategories().pipe(
       flatMap(c => {
@@ -133,13 +139,24 @@ export class QuestionsComponent implements OnInit {
           this.gotoCurrent = -1;
         }
 
+        if (this.goto_id_category != 0) {
+          this.filter.id_category = this.goto_id_category;
+          this.filter.id_user = "";
+          this.filter.id_difficulty = "";
+          this.filter.id_type = "";
+          this.filter.state = "";
+        }
+
         this.onFilterChange();
       });
   }
 
   onFilterChange() {
-    localStorage.setItem("questions_filter_" + this.id_course, JSON.stringify(this.filter));
+    if (this.goto_id_category == 0) {
+      localStorage.setItem("questions_filter_" + this.id_course, JSON.stringify(this.filter));
+    }
     this.getQuestions();
+    this.goto_id_category = 0;
   }
 
   getQuestions(): void {
@@ -154,6 +171,11 @@ export class QuestionsComponent implements OnInit {
         }
 
         this.questions = q;
+
+        if (this.goto_id_question != 0) {
+          this.gotoCurrent = this.questions.findIndex(q => q.id_question == this.goto_id_question);
+          this.goto_id_question = 0;
+        }
 
         if (this.gotoCurrent >= 0 && this.gotoCurrent < this.questions.length) {
           this.current = this.gotoCurrent;

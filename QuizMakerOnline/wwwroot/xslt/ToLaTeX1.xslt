@@ -45,7 +45,7 @@
 </xsl:template>
 
 <xsl:template match="Tests">
-{\bf <xsl:value-of select="@course_code"/>} \quad <xsl:value-of select="@group"/>
+  {\bf <xsl:value-of select="@header"/>} <!--\quad <xsl:value-of select="@group"/>-->
 \bigskip
 <xsl:apply-templates select="Questions"/>
 </xsl:template>
@@ -56,7 +56,7 @@
 <xsl:if test="@id_question_type!=2">
 <xsl:apply-templates select="Answers"/>
 </xsl:if>
-<xsl:if test="@id_question_type=2 and /Tests/@showPoints='true'">
+<xsl:if test="@points!=0 and @id_question_type!=3 and /Tests/@showPoints='true'">
 \hfill(<xsl:value-of select="@points"/><xsl:text> </xsl:text> <xsl:choose>
 <xsl:when test="@points=1">bod</xsl:when>
 <xsl:when test="@points &lt; 5">body</xsl:when>
@@ -71,7 +71,7 @@
 </xsl:template>
 
 <xsl:template match="Answers">
-<xsl:value-of select="@position"/>) <xsl:value-of select="@answer"/><xsl:if test="parent::node()/@id_question_type=3 and /Tests/@showPoints='true'">
+<xsl:value-of select="@position"/>) <xsl:value-of select="@answer"/><xsl:if test="parent::node()/@id_question_type=3 and /Tests/@showPoints='true' and @points!=0">
 \hfill(<xsl:value-of select="@points"/><xsl:text> </xsl:text> <xsl:choose>
 <xsl:when test="@points=1">bod</xsl:when>
 <xsl:when test="@points &lt; 5">body</xsl:when>

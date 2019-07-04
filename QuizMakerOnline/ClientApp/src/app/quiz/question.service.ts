@@ -56,8 +56,13 @@ export class QuestionService {
     //);
   }
 
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.categoriesUrl);
+  getCategories(id_category?: number): Observable<Category[]> {
+    let url = this.categoriesUrl;
+    if (id_category) {
+      url += "?id_category=" + id_category;
+    }
+
+    return this.http.get<Category[]>(url);
     //.pipe(
     //  tap(_ => this.log('fetched heroes')),
     //  catchError(this.handleError<Hero[]>('getHeroes', []))
