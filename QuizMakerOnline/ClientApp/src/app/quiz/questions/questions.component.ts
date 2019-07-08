@@ -174,7 +174,7 @@ export class QuestionsComponent implements OnInit {
 
         if (this.goto_id_question != 0) {
           this.gotoCurrent = this.questions.findIndex(q => q.id_question == this.goto_id_question);
-          this.goto_id_question = 0;
+          //this.goto_id_question = 0;
         }
 
         if (this.gotoCurrent >= 0 && this.gotoCurrent < this.questions.length) {
@@ -191,7 +191,11 @@ export class QuestionsComponent implements OnInit {
           }
         }
 
-        this.saveCurrentPosition();
+        if (this.goto_id_question != 0) {
+          this.goto_id_question = 0;
+        } else {
+          this.saveCurrentPosition();
+        }
       }, e => {
           this.loading = false;
           this.current = -1;

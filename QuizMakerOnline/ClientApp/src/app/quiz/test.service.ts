@@ -23,6 +23,7 @@ export class TestService {
   public last_pageIndex: number = 0;
   public last_pageSize: number = 0;
   public last_currentTestId: number = -1;
+  public last_filter_id_course: number = 0;
 
   public courses: Object = {};
   public semesters: Object = {};  

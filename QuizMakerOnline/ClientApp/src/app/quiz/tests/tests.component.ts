@@ -15,14 +15,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./tests.component.css']
 })
 export class TestsComponent implements OnInit {
+  objectKeys = Object.keys;
+
   tests: Test[];
   dataSource = null;
   displayedColumns: string[] = ['id_test', 'course', 'semester', 'year', 'group', 'enter_date'];
 
   @ViewChild(MatPaginator/*, { static: true }*/) paginator: MatPaginator; //!!!!!!
 
-  courses: Course[];
-  semesters: Object = {};  
+  courses: Object = {};
+  semesters: Object = {};
+
+  filter_id_course: number = 0;
 
   constructor(
     private testService: TestService,
@@ -44,7 +48,7 @@ export class TestsComponent implements OnInit {
     this.paginator._intl.previousPageLabel = "Předchozí stránka";
     this.paginator._intl.lastPageLabel = "Poslední stránka";
 
-    this.questionService.getCourses().pipe(
+    this.testService.getMyCourses().pipe(
       flatMap(c => {
         this.courses = c;
         return this.testService.getSemesters();
@@ -63,12 +67,31 @@ export class TestsComponent implements OnInit {
         this.paginator.pageSize = this.testService.last_pageSize;
       }
 
+      if (this.testService.last_filter_id_course != 0) {
+        this.filter_id_course = this.testService.last_filter_id_course;
+      }
 
       this.tests = t;
       this.dataSource = new MatTableDataSource<Test>(this.tests);
       this.dataSource.paginator = this.paginator;
 
+      this.dataSource.filterPredicate = (data: Test, filter: string) => {
+        if (filter != null && filter != "") {
+          return data.id_course == +filter;
+        } else {
+          return true;
+        }
+      };
+
+      if (this.filter_id_course != 0) {
+        this.dataSource.filter = this.filter_id_course.toString();
+      }
     })
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue;
+    this.testService.last_filter_id_course = (filterValue && filterValue != "" ? +filterValue : 0);
   }
 
   pageChanged(e: PageEvent): void {
@@ -89,12 +112,17 @@ export class TestsComponent implements OnInit {
     return startIndex + 1 + ' - ' + endIndex + ' z ' + length;
   };
 
-  courseName(id: number): string {
-    return this.courses.find(c => c.id_course == id).name;
-  }
+  //courseName(id: number): string {
+  //  return this.courses.find(c => c.id_course == id).name;
+  //}
 
   goToDetail(id_test: number): void {
     //this.testService.selected_id_test = id_test;
     this.router.navigate([`/test/${id_test}`]);
   }
+
+  sortedObjectKeys(o: Object): string[] {
+      return Object.keys(o).sort(function (a, b) { return o[a] > o[b] ? 1 : -1 })
+  }
+
 }
