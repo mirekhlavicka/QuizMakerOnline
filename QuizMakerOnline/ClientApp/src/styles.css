@@ -35,6 +35,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: 13px !important;
 }
 
+.mat-button:hover .mat-button-focus-overlay, .mat-stroked-button:hover .mat-button-focus-overlay {
+  opacity: .2!important;
+}
+
 @media print {
   app-root > * {
     display: none;

@@ -28,8 +28,8 @@
         Sestavit test
       </a>-->
 
-      <a mat-list-item [routerLinkActive]='["active"]' routerLink="/tests" (click)="closeSideNav()">
-        <mat-icon matListIcon class="app-nav-list-icon">work</mat-icon>
+      <a mat-list-item [routerLinkActive]='["active"]' routerLink="/tests" (click)="closeSideNav()" #routerLinkActiveInstance="routerLinkActive">
+        <mat-icon matListIcon class="app-nav-list-icon">{{routerLinkActiveInstance.isActive || id_test != 0 ? "work" : "work_outline" }}</mat-icon>
         Moje testy
       </a>
 

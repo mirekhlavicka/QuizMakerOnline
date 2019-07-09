@@ -31,6 +31,7 @@ export class NavComponent implements OnInit, OnDestroy {
 
   courses: Course[];
   id_course: number = 0;
+  id_test: number = 0;
   course_title = "";
 
 
@@ -58,7 +59,7 @@ export class NavComponent implements OnInit, OnDestroy {
 
       this.getActivatedRouteParameter().subscribe(params => {
         this.id_course = +params.get('id_course');
-        let id_test: number = +params.get('id_test');
+        this.id_test = +params.get('id_test');
 
         if (this.id_course != 0) {
           let i = this.courses.findIndex(c => c.id_course == this.id_course);
@@ -66,8 +67,8 @@ export class NavComponent implements OnInit, OnDestroy {
             this.course_title = " – " + this.courses[i].name + (this.testService.currentTestId() != -1 ? " – výběr otázek" + (this.testService.currentTestId() != 0 ? " testu id: " + this.testService.currentTestId() : "") : "");
           }
         } else {
-          if (id_test != 0) {
-            this.course_title = (id_test > 0 ? " – Editace testu id: " + id_test : " – Přidání testu");          
+          if (this.id_test != 0) {
+            this.course_title = (this.id_test > 0 ? " – Editace testu id: " + this.id_test : " – Přidání testu");          
           } else {
             this.course_title = (this.router.url.lastIndexOf("tests") > -1 ? " – Moje testy" : "");          
           }          
