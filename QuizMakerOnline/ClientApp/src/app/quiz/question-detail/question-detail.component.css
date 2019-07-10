@@ -75,3 +75,7 @@ mat-panel-description mat-icon {
   margin-right: 8px;
   margin-bottom: 5px;
 }
+
+  .answerActionButton:hover {
+    opacity: 0.7;
+  }

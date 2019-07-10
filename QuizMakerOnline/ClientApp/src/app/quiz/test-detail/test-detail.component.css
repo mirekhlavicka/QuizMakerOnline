@@ -24,6 +24,10 @@
   margin-bottom: 5px;
 }
 
+.questionActionButton:hover {
+  opacity: 0.7;
+}
+
 .question {
   padding: 5px;
   border-left-width: 2px;
