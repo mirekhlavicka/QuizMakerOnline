@@ -38,3 +38,11 @@ mat-slide-toggle {
   font-size:15px;
   font-weight:400;
 }
+
+.mat-raised-button {
+  opacity: 1;
+}
+
+.mat-raised-button:hover {
+  opacity: 0.8;
+}

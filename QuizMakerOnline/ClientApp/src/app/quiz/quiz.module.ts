@@ -21,6 +21,7 @@ import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { TestsComponent } from './tests/tests.component';
 import { TestDetailComponent } from './test-detail/test-detail.component';
 import { TestEditComponent } from './test-edit/test-edit.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 
 
@@ -28,7 +29,7 @@ import { TestEditComponent } from './test-edit/test-edit.component';
 //import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [QuestionsComponent, QuestionDetailComponent, MathjaxComponent, MathjaxEditComponent, TestPrintComponent, TestsComponent, TestDetailComponent, TestEditComponent],
+  declarations: [QuestionsComponent, QuestionDetailComponent, MathjaxComponent, MathjaxEditComponent, TestPrintComponent, TestsComponent, TestDetailComponent, TestEditComponent, CategoriesComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,

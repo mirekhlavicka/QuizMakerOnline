@@ -60,6 +60,21 @@
   </mat-form-field>
 
 
+  <div fxFlex fxLayout fxLayoutAlign="flex-end center">
+    <button mat-icon-button [matMenuTriggerFor]="menuOther" aria-label="Další">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menuOther="matMenu">
+      <button mat-menu-item (click)="editCategories()">
+        <mat-icon>view_list</mat-icon>
+        <span>Editace témat</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>how_to_reg</mat-icon>
+        <span>Nastavení práv</span>
+      </button>
+    </mat-menu>
+  </div>
 </mat-card>
 
 <mat-toolbar class="question-toolbar" *ngIf="!accessDenied">

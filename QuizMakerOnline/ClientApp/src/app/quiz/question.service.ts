@@ -56,10 +56,14 @@ export class QuestionService {
     //);
   }
 
-  getCategories(id_category?: number): Observable<Category[]> {
+  getCategories(id_category?: number, id_course?: number): Observable<Category[]> {
     let url = this.categoriesUrl;
     if (id_category) {
       url += "?id_category=" + id_category;
+    }
+
+    if (id_course) {
+      url += "?id_course=" + id_course;
     }
 
     return this.http.get<Category[]>(url);

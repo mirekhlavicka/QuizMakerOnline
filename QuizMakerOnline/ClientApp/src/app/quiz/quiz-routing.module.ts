@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NavComponent } from '../core/nav/nav.component';
 import { QuestionsComponent } from './questions/questions.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 import { TestPrintComponent } from './test-print/test-print.component';
 
@@ -30,7 +31,9 @@ const routes: Routes = [
   {
     path: 'questions/:id_course', component: QuestionsComponent, canActivate: [AuthGuard]
   },
-
+  {
+    path: 'categories/:id_course', component: CategoriesComponent, canActivate: [AuthGuard]
+  },
   {
     path: 'tests', component: TestsComponent, canActivate: [AuthGuard]
   },

@@ -1,0 +1,10 @@
+<mat-card class="categories-card">
+  <!--<div *ngFor="let c of categories; let i = index">
+    {{c.name}}
+  </div>-->
+  <mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let c of categories; let i = index">{{c.name}}</mat-list-item>
+  </mat-list>
+
+
+</mat-card>

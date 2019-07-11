@@ -292,4 +292,8 @@ export class QuestionsComponent implements OnInit {
       }
     }
   }
+
+  editCategories(): void {
+    this.router.navigate([`/categories/${this.id_course}`]);
+  }
 }
