@@ -22,6 +22,7 @@ export class QuestionsComponent implements OnInit {
   objectKeys = Object.keys;
 
   id_course: number = 0;
+  rights: number = 0;
 
   filter: QuestionsFilter = {
     id_course: 0,
@@ -102,6 +103,8 @@ export class QuestionsComponent implements OnInit {
 
   setCurrentCourse(id_course: number): void {
     this.id_course = id_course;
+
+    this.questionService.getRights(this.id_course).subscribe(r => this.rights = r);
 
     this.courseCategories = this.categories.filter(cat => { return cat.id_course == this.id_course });
 
@@ -295,5 +298,9 @@ export class QuestionsComponent implements OnInit {
 
   editCategories(): void {
     this.router.navigate([`/categories/${this.id_course}`]);
+  }
+
+  testRight(right: number): boolean {
+    return (this.rights & right) != 0;
   }
 }

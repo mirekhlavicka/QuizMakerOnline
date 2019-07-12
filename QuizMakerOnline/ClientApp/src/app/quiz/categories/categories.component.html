@@ -1,10 +1,30 @@
+<mat-toolbar class="categories-toolbar">
+  <button mat-stroked-button color="primary" (click)="goBack()" matTooltip="Návrat zpět">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  &nbsp;
+  <button mat-stroked-button color="accent" (click)="addCategory()" matTooltip="Založit nový test">
+    <mat-icon>add</mat-icon>
+  </button>
+
+</mat-toolbar>
+
 <mat-card class="categories-card">
-  <!--<div *ngFor="let c of categories; let i = index">
-    {{c.name}}
-  </div>-->
   <mat-list role="list">
-    <mat-list-item role="listitem" *ngFor="let c of categories; let i = index">{{c.name}}</mat-list-item>
+    <ng-container *ngFor="let c of categories; let i = index; last as last">
+      <mat-list-item role="listitem">
+        <editable (update)="updateCategory(c)">
+          <!--[mode]="c.id_category <=0 ? 'edit' : 'view'"-->
+          <ng-template viewMode>{{c.name}}</ng-template>
+          <ng-template editMode>
+            <input focusable editableOnEnter [(ngModel)]="c.name">
+          </ng-template>
+        </editable>
+        <button mat-mini-fab color="warn" (click)="delCategory(c)" matTooltip='Smazat téma' class="delButton">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </mat-list-item>
+      <mat-divider *ngIf="!last"></mat-divider>
+    </ng-container>
   </mat-list>
-
-
 </mat-card>

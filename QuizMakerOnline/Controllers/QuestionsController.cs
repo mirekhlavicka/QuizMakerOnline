@@ -143,6 +143,24 @@ namespace QuizMakerOnline.Controllers
             .ToList();
         }
 
+        [HttpPut/*("{id}")*/]
+        [Route("categories")]
+        public IActionResult PutCategory(ClientCategory cc)
+        {
+            QuestionCategories category = _context.QuestionCategories.SingleOrDefault(c => c.IdCategory == cc.id_category);
+
+            if (category == null)
+            {
+                return BadRequest();
+            }
+
+            category.Name = cc.name;
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+
         // GET: api/questions/users/id
         [HttpGet()]
         [Route("users/{id_course}")]
@@ -341,6 +359,24 @@ namespace QuizMakerOnline.Controllers
             return NoContent();
         }
 
+        [HttpGet("rights/{id_course}")]
+        //[Route("rights")]
+        public int GetRights(int id_course)
+        {
+            var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var ucr = _context.UserCourseRights.SingleOrDefault(ur => ur.IdUser == current_id_user && ur.IdCourse == id_course);
+
+            if (ucr != null)
+            {
+                return ucr.Rights;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
 
         public class ClientQuestion
         {
@@ -355,5 +391,11 @@ namespace QuizMakerOnline.Controllers
             public string right_answer { get; set; }
         }
 
+        public class ClientCategory
+        {
+            public int id_course { get; set; }
+            public int id_category { get; set; }
+            public string name { get; set; }
+        }
     }
 }

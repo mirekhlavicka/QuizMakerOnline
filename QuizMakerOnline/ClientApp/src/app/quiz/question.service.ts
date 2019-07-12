@@ -27,6 +27,15 @@ export class QuestionService {
 
   constructor(private http: HttpClient) { }
 
+  getRights(id_course: number): Observable<number> {
+    return this.http.get<number>(`${this.questionsUrl}/rights/${id_course}`);
+    //.pipe(
+    //  tap(_ => this.log('fetched heroes')),
+    //  catchError(this.handleError<Hero[]>('getHeroes', []))
+    //);
+  }
+
+
   //getQuestions(): Observable<Question[]> {
   //  return this.http.get<Question[]>(this.questionsUrl);
   //    //.pipe(
@@ -72,6 +81,14 @@ export class QuestionService {
     //  catchError(this.handleError<Hero[]>('getHeroes', []))
     //);
   }
+
+  updateCategory(category: Category): Observable<any> {
+    return this.http.put(this.categoriesUrl, category, httpOptions).pipe(
+      //tap(_ => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('updateCategory'))
+    );
+  }
+
 
   getUsers(id_course: number): Observable<User[]> {
     return this.http.get<User[]>(`${this.usersUrl}/${id_course}`);

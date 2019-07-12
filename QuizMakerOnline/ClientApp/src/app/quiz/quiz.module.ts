@@ -10,6 +10,14 @@ import { FormsModule } from '@angular/forms'
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+
+import { EditableComponent } from './editable/editable.component';
+import { ViewModeDirective } from './editable/view-mode.directive';
+import { EditModeDirective } from './editable/edit-mode.directive';
+import { FocusableDirective } from './editable/focusable.directive';
+import { EditableOnEnterDirective } from './editable/editable-on-enter.directive';
+
+
 import { QuizRoutingModule } from './quiz-routing.module';
 
 import { QuestionsComponent } from './questions/questions.component';
@@ -29,7 +37,21 @@ import { CategoriesComponent } from './categories/categories.component';
 //import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [QuestionsComponent, QuestionDetailComponent, MathjaxComponent, MathjaxEditComponent, TestPrintComponent, TestsComponent, TestDetailComponent, TestEditComponent, CategoriesComponent],
+  declarations: [
+    EditableComponent,
+    ViewModeDirective,
+    EditModeDirective,
+    FocusableDirective,
+    EditableOnEnterDirective,
+    QuestionsComponent,
+    QuestionDetailComponent,
+    MathjaxComponent,
+    MathjaxEditComponent,
+    TestPrintComponent,
+    TestsComponent,
+    TestDetailComponent,
+    TestEditComponent,
+    CategoriesComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,

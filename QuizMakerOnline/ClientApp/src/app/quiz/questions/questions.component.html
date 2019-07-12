@@ -61,15 +61,15 @@
 
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end center">
-    <button mat-icon-button [matMenuTriggerFor]="menuOther" aria-label="Další">
+    <button mat-icon-button [matMenuTriggerFor]="menuOther" aria-label="Nastavení kurzu" matTooltip="Nastavení kurzu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menuOther="matMenu">
-      <button mat-menu-item (click)="editCategories()">
+      <button mat-menu-item (click)="editCategories()" [disabled]="!testRight(1)">
         <mat-icon>view_list</mat-icon>
         <span>Editace témat</span>
       </button>
-      <button mat-menu-item disabled>
+      <button mat-menu-item [disabled]="!testRight(1)">
         <mat-icon>how_to_reg</mat-icon>
         <span>Nastavení práv</span>
       </button>
