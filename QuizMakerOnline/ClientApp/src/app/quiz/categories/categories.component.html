@@ -3,7 +3,7 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
   &nbsp;
-  <button mat-stroked-button color="accent" (click)="addCategory()" matTooltip="Založit nový test">
+  <button mat-stroked-button color="accent" (click)="addCategory()" matTooltip="Založit nové téma">
     <mat-icon>add</mat-icon>
   </button>
 
@@ -13,8 +13,7 @@
   <mat-list role="list">
     <ng-container *ngFor="let c of categories; let i = index; last as last">
       <mat-list-item role="listitem">
-        <editable (update)="updateCategory(c)">
-          <!--[mode]="c.id_category <=0 ? 'edit' : 'view'"-->
+        <editable (update)="updateCategory(c)" (escape)="reloadCategory(c)" [mode]="c.id_category <=0 ? 'edit' : 'view'">          
           <ng-template viewMode>{{c.name}}</ng-template>
           <ng-template editMode>
             <input focusable editableOnEnter [(ngModel)]="c.name">

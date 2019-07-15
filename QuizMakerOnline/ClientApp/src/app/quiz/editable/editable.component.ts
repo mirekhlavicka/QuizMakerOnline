@@ -17,11 +17,12 @@ export class EditableComponent {
   @ContentChild(ViewModeDirective) viewModeTpl: ViewModeDirective;
   @ContentChild(EditModeDirective) editModeTpl: EditModeDirective;
   @Output() update = new EventEmitter();
+  @Output() escape = new EventEmitter();
 
   editMode = new Subject();
   editMode$ = this.editMode.asObservable();
 
-  /*@Input()*/ mode: 'view' | 'edit' = 'view';
+  @Input() mode: 'view' | 'edit' = 'view';
 
 
   constructor(private host: ElementRef) {
@@ -30,10 +31,23 @@ export class EditableComponent {
   ngOnInit() {
     this.viewModeHandler();
     this.editModeHandler();
+
+    if (this.mode == 'edit') {
+
+      setTimeout(() => {
+        this.editMode.next(true);
+      }, 100)
+
+    }
   }
 
   toViewMode() {
     this.update.next();
+    this.mode = 'view';
+  }
+
+  escapeEdit() {
+    this.escape.next();
     this.mode = 'view';
   }
 

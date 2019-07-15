@@ -72,7 +72,7 @@ export class QuestionService {
     }
 
     if (id_course) {
-      url += "?id_course=" + id_course;
+      url += (id_category ? "&" : "?") + "id_course=" + id_course;
     }
 
     return this.http.get<Category[]>(url);

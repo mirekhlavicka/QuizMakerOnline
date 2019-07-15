@@ -25,7 +25,23 @@ export class CategoriesComponent implements OnInit {
   }
 
   updateCategory(c: Category): void {
-    this.questionService.updateCategory(c).subscribe(_ => { });
+    if (c.name == "") {
+      this.reloadCategory(c);
+      return;
+    }
+
+    if (c.id_category > 0) {
+      this.questionService.updateCategory(c).subscribe(_ => { });
+    }
+  }
+
+  reloadCategory(c: Category): void {
+    if (c.id_category > 0) {
+      this.questionService.getCategories(c.id_category, this.id_course).subscribe(cc => c.name = cc[0].name);
+    } else {
+      let i = this.categories.findIndex(cc => cc.id_category == c.id_category);
+      this.categories.splice(i, 1);
+    }
   }
 
   delCategory(c: Category): void {
@@ -39,7 +55,7 @@ export class CategoriesComponent implements OnInit {
         {
           id_course: this.id_course,
           id_category: 0,
-          name: "???"
+          name: ""
         }));
   }
 

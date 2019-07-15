@@ -13,4 +13,8 @@ export class EditableOnEnterDirective {
     this.editable.toViewMode();
   }
 
+  @HostListener('keyup.escape')
+  onEscape() {
+    this.editable.escapeEdit();
+  }
 }
