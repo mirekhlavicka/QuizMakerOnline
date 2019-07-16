@@ -79,30 +79,32 @@
 
 <mat-toolbar class="question-toolbar" *ngIf="!accessDenied">
 
-  <div *ngIf="question" fxFlex fxLayout fxLayoutAlign="flex-start center" style="margin-right:50px">
-    <button (click)="goto(1)" mat-stroked-button color="primary" matTooltip="Přejít na první otázku">
-      <mat-icon>first_page</mat-icon>
-    </button>
+  <div fxFlex fxLayout fxLayoutAlign="flex-start center" style="margin-right:50px">
+    <div *ngIf="question">
+      <button (click)="goto(1)" mat-stroked-button color="primary" matTooltip="Přejít na první otázku">
+        <mat-icon>first_page</mat-icon>
+      </button>
 
-    <button (click)="prev()" mat-stroked-button color="primary" matTooltip="Přejít na předchozí otázku" fxFlexOffset="6px">
-      <mat-icon>navigate_before</mat-icon>
-    </button>
+      <button (click)="prev()" mat-stroked-button color="primary" matTooltip="Přejít na předchozí otázku" fxFlexOffset="6px">
+        <mat-icon>navigate_before</mat-icon>
+      </button>
 
-    <input class="inputGoTo" type="text" [value]="current+1" (input)="goto($event.target.value)" fxFlexOffset="6px">&nbsp;/&nbsp;{{questions ? questions.length : 0}}
+      <input class="inputGoTo" type="text" [value]="current+1" (input)="goto($event.target.value)" fxFlexOffset="6px">&nbsp;/&nbsp;{{questions ? questions.length : 0}}
 
-    <button (click)="next()" mat-stroked-button color="primary" matTooltip="Přejít na další otázku" fxFlexOffset="6px">
-      <mat-icon>navigate_next</mat-icon>
-    </button>
+      <button (click)="next()" mat-stroked-button color="primary" matTooltip="Přejít na další otázku" fxFlexOffset="6px">
+        <mat-icon>navigate_next</mat-icon>
+      </button>
 
-    <button (click)="goto(questions ? questions.length : 0)" mat-stroked-button color="primary" matTooltip="Přejít na poslední otázku" fxFlexOffset="6px">
-      <mat-icon>last_page</mat-icon>
-    </button>
+      <button (click)="goto(questions ? questions.length : 0)" mat-stroked-button color="primary" matTooltip="Přejít na poslední otázku" fxFlexOffset="6px">
+        <mat-icon>last_page</mat-icon>
+      </button>
+    </div>
 
     <button (click)="questionDetail.question=addQuestion();questionDetail.editQuestion(false)" mat-stroked-button color="accent" matTooltip='Přidat novou otázku' fxFlexOffset="6px">
       <mat-icon>add</mat-icon>
     </button>&nbsp;
 
-    <mat-slide-toggle [(ngModel)]="filter.sortFromOldest" (change)="onFilterChange()" color="primary" fxFlexOffset="10px">Od nejstarších</mat-slide-toggle>
+    <mat-slide-toggle *ngIf="question" [(ngModel)]="filter.sortFromOldest" (change)="onFilterChange()" color="primary" fxFlexOffset="10px">Od nejstarších</mat-slide-toggle>
 
     <mat-spinner *ngIf="loading" [diameter]="40" fxFlexOffset="50px"></mat-spinner>
   </div>

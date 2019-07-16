@@ -32,6 +32,8 @@ export class CategoriesComponent implements OnInit {
 
     if (c.id_category > 0) {
       this.questionService.updateCategory(c).subscribe(_ => { });
+    } else {
+      this.questionService.addCategory(c).subscribe(cc => { c.id_category = cc.id_category });
     }
   }
 
@@ -46,6 +48,13 @@ export class CategoriesComponent implements OnInit {
 
   delCategory(c: Category): void {
     if (confirm("Opravdu si přejete smazat téma " + c.name + " ?")) {
+      this.questionService.delCategory(c).subscribe(_ => {
+        let i = this.categories.findIndex(cc => cc.id_category == c.id_category);
+        this.categories.splice(i, 1);
+      }, e => {
+        alert(e.error)
+      });
+
     }
   }
 

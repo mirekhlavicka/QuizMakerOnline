@@ -160,6 +160,56 @@ namespace QuizMakerOnline.Controllers
             return NoContent();
         }
 
+        [HttpPost/*("{id}")*/]
+        [Route("categories")]
+        public object PostCategory(ClientCategory cc)
+        {
+            int newId = _context.QuestionCategories.Max(c => c.IdCategory) + 1;
+
+            QuestionCategories category = new QuestionCategories
+            {
+                IdCourse = cc.id_course,
+                IdCategory = newId,
+                Name = cc.name,
+                CountPerTest = 0,
+                Points = 0                
+            };
+
+            _context.QuestionCategories.Add(category);
+
+            _context.SaveChanges();
+
+            return new
+            {
+                id_course = category.IdCourse,
+                id_category = category.IdCategory,
+                name = category.Name
+            };
+        }
+
+        [HttpDelete("categories/{id}")]
+        public IActionResult DeleteCategory(int id)
+        {
+            var category = _context.QuestionCategories.Find(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            _context.QuestionCategories.Remove(category);
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.InnerException.Message);
+            }
+
+            return NoContent();
+        }
+
 
         // GET: api/questions/users/id
         [HttpGet()]

@@ -89,6 +89,20 @@ export class QuestionService {
     );
   }
 
+  addCategory(category: Category): Observable<Category> {
+    return this.http.post(this.categoriesUrl, category, httpOptions).pipe(
+      //tap(_ => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('addCategory'))
+    );
+  }
+
+  delCategory(category: Category): Observable<any> {
+    return this.http.delete(`${this.categoriesUrl}/${category.id_category}`, httpOptions).pipe(
+      //tap(_ => this.log(`updated hero id=${hero.id}`)),
+      //catchError(this.handleError<any>('delQuestion'))
+    );
+  }
+
 
   getUsers(id_course: number): Observable<User[]> {
     return this.http.get<User[]>(`${this.usersUrl}/${id_course}`);
