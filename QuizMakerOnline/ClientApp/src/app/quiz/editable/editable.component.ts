@@ -60,7 +60,10 @@ export class EditableComponent {
       untilDestroyed(this)
     ).subscribe(() => { 
       this.mode = 'edit';
-      this.editMode.next(true);
+      setTimeout(() => {
+        this.editMode.next(true);
+      }, 100)
+
     });
   }
 

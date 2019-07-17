@@ -64,7 +64,8 @@ export class CategoriesComponent implements OnInit {
         {
           id_course: this.id_course,
           id_category: 0,
-          name: ""
+          name: "",
+          count: 0
         }));
   }
 

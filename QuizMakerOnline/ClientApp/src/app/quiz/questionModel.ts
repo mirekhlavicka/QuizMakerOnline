@@ -31,6 +31,7 @@ export class Category {
   id_course: number;
   id_category: number;
   name: string;
+  count?: number;
 }
 
 export class User {

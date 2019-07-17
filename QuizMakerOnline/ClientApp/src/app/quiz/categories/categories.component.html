@@ -13,15 +13,17 @@
   <mat-list role="list">
     <ng-container *ngFor="let c of categories; let i = index; last as last">
       <mat-list-item role="listitem">
-        <editable (update)="updateCategory(c)" (escape)="reloadCategory(c)" [mode]="c.id_category <=0 ? 'edit' : 'view'">          
-          <ng-template viewMode>{{c.name}}</ng-template>
+        <editable (update)="updateCategory(c)" (escape)="reloadCategory(c)" [mode]="c.id_category <=0 ? 'edit' : 'view'" fxFlex="50" fxLayout fxLayoutAlign="flex-start center">
+          <ng-template viewMode><span [matBadge]="c.count" matBadgeOverlap="false" matBadgePosition="above after" matBadgeColor="primary">{{c.name}}</span></ng-template>
           <ng-template editMode>
             <input focusable editableOnEnter [(ngModel)]="c.name">
           </ng-template>
         </editable>
-        <button mat-mini-fab color="warn" (click)="delCategory(c)" matTooltip='Smazat téma' class="delButton">
-          <mat-icon>delete_forever</mat-icon>
-        </button>
+        <div class="rowTools" fxFlex fxLayout fxLayoutAlign="flex-start center">
+          <button mat-mini-fab color="warn" (click)="delCategory(c)" matTooltip='Smazat téma' class="delButton" [disabled] ="c.count > 0">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </div>
       </mat-list-item>
       <mat-divider *ngIf="!last"></mat-divider>
     </ng-container>

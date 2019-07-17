@@ -120,13 +120,17 @@ export class QuestionsComponent implements OnInit {
 
         if (sfilter) {
           this.filter = JSON.parse(sfilter);
-        } else {
+        }
+
+        if (!sfilter || !this.courseCategories.find(c => c.id_category == this.filter.id_category)) {
           if (this.courseCategories.length > 0) {
             this.filter.id_category = this.courseCategories[0].id_category;
           } else {
             this.filter.id_category = 0;
           }
+        }
 
+        if (!sfilter) {
           this.filter.id_user = "";
           this.filter.id_difficulty = "";
           this.filter.id_type = "";
@@ -134,6 +138,7 @@ export class QuestionsComponent implements OnInit {
 
           this.filter.sortFromOldest = false;
         }
+
         this.filter.id_course = this.id_course;
 
         this.gotoCurrent = +localStorage.getItem("questions_current_" + this.id_course);

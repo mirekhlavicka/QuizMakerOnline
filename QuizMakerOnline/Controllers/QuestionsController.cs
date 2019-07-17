@@ -138,7 +138,8 @@ namespace QuizMakerOnline.Controllers
             {
                 id_course = c.IdCourse,
                 id_category = c.IdCategory,
-                name = c.Name
+                name = c.Name,
+                count = c.Questions.Count()
             })
             .ToList();
         }

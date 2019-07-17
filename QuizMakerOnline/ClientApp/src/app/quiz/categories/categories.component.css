@@ -34,17 +34,19 @@ mat-list-item {
   }
 
 editable {
-  font-size: 14px!important;
-  width: 95%;
+  font-size: 14px !important;
+  /*width: 95%;*/
+  height: 100%;
+  cursor: pointer;
 }
 
-.mat-list-item .delButton {
+.mat-list-item .rowTools {
   opacity: 0;
   transition: opacity 0s;
 }
 
-.mat-list-item:hover .delButton {
-  opacity: 0.7;
+.mat-list-item:hover .rowTools {
+  opacity: 1;
   transition: opacity 1s;
 }
 
@@ -53,5 +55,5 @@ editable {
 }
 
   .delButton:hover {
-    opacity: 1!important;
+    opacity: 1;
   }
