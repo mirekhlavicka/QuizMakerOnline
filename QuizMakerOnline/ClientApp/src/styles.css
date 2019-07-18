@@ -39,6 +39,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   opacity: .2!important;
 }
 
+.mat-icon-button:hover {
+  background-color: rgba(200,200,200,0.5);
+  transition: background-color 1s;
+}
+
 @media print {
   app-root > * {
     display: none;

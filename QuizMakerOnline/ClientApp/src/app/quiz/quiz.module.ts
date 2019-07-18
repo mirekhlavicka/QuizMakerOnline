@@ -30,6 +30,8 @@ import { TestsComponent } from './tests/tests.component';
 import { TestDetailComponent } from './test-detail/test-detail.component';
 import { TestEditComponent } from './test-edit/test-edit.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { QuestionHistoryComponent } from './question-history/question-history.component';
+import { CourseRightsComponent } from './course-rights/course-rights.component';
 
 
 
@@ -51,7 +53,9 @@ import { CategoriesComponent } from './categories/categories.component';
     TestsComponent,
     TestDetailComponent,
     TestEditComponent,
-    CategoriesComponent],
+    CategoriesComponent,
+    QuestionHistoryComponent,
+    CourseRightsComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,

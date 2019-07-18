@@ -10,6 +10,8 @@ import { TestsComponent } from './tests/tests.component';
 import { TestDetailComponent} from './test-detail/test-detail.component';
 
 import { AuthGuard } from '../core/auth.guard'
+import { CourseRightsComponent } from './course-rights/course-rights.component';
+import { QuestionHistoryComponent } from './question-history/question-history.component';
 
 const routes: Routes = [
   //{
@@ -33,6 +35,12 @@ const routes: Routes = [
   },
   {
     path: 'categories/:id_course', component: CategoriesComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'rights/:id_course', component: CourseRightsComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'question-history/:id_question', component: QuestionHistoryComponent, canActivate: [AuthGuard]
   },
   {
     path: 'tests', component: TestsComponent, canActivate: [AuthGuard]

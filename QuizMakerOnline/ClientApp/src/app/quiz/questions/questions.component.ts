@@ -305,6 +305,11 @@ export class QuestionsComponent implements OnInit {
     this.router.navigate([`/categories/${this.id_course}`]);
   }
 
+  editRights(): void {
+    this.router.navigate([`/rights/${this.id_course}`]);
+  }
+
+
   testRight(right: number): boolean {
     return (this.rights & right) != 0;
   }

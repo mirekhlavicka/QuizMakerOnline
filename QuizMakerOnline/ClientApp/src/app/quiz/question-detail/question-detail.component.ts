@@ -5,6 +5,7 @@ import { Question, Answer, RelatedLists } from '../../quiz/questionModel';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { MathjaxEditComponent } from '../mathjax-edit/mathjax-edit.component';
 import { QuestionService } from '../question.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-question-detail',
@@ -24,7 +25,8 @@ export class QuestionDetailComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private questionService: QuestionService) { }
+    private questionService: QuestionService,
+    private router: Router) { }
 
   ngOnInit() {
   }
@@ -165,5 +167,9 @@ export class QuestionDetailComponent implements OnInit {
         alert(e.error)
       });
     }
+  }
+
+  questionHistory(): void {
+    this.router.navigate([`/question-history/${this.question.id_question}`]);
   }
 }

@@ -40,7 +40,19 @@
     &nbsp;
     <mat-slide-toggle [(ngModel)]="showPoints" color="primary" (change)="onShowChange()">Zobrazit body</mat-slide-toggle>
 
-    <button mat-icon-button [matMenuTriggerFor]="menuinfoBarItems" aria-label="Zobrazit v hlavičce testu ..." matTooltip="Zobrazit v hlavičce testu ...">
+  </div>
+</mat-toolbar>
+
+<mat-card class="test-card" *ngIf="test">
+
+  <div class="infoBar" *ngIf="test && test.id_test > 0"> <!--infoBarItems != 0-->
+    <span class="infoItem" *ngIf="testInfoBarItemsBit(1)">id: {{test.id_test}}</span><span class="infoItemSeparator" *ngIf="testInfoBarItemsBit(1, true)"></span>
+    <span class="infoItem" *ngIf="testInfoBarItemsBit(2)">{{courses[test.id_course]}}</span><span class="infoItemSeparator" *ngIf="testInfoBarItemsBit(2, true)"></span>
+    <span class="infoItem" *ngIf="testInfoBarItemsBit(4)">{{semesters[test.id_semester]}}</span><span class="infoItemSeparator" *ngIf="testInfoBarItemsBit(4, true)"></span>
+    <span class="infoItem" *ngIf="testInfoBarItemsBit(8)">{{test.year}}</span><span class="infoItemSeparator" *ngIf='test.year != "" && testInfoBarItemsBit(8, true)'></span>
+    <span class="infoItem" *ngIf="testInfoBarItemsBit(16)">{{test.group}}</span><span class="infoItemSeparator" *ngIf='test.group != "" && testInfoBarItemsBit(16, true)'></span>
+    <span class="infoItem" *ngIf="testInfoBarItemsBit(32)">{{test.enter_date | date:'mediumDate'}}</span>
+    <button mat-icon-button [matMenuTriggerFor]="menuinfoBarItems" aria-label="Zobrazit v hlavičce testu ..." matTooltip="Zobrazit v hlavičce testu ..." style="margin-left:5px;top:-2px">
       <mat-icon>more_vert</mat-icon>
     </button>
 
@@ -53,18 +65,7 @@
       <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item" [checked]="testInfoBarItemsBit(32)" (change)="setInfoBarItemsBit(32, $event.checked)">Datum vytvoření</mat-checkbox>
 
     </mat-menu>
-  </div>
-</mat-toolbar>
 
-<mat-card class="test-card" *ngIf="test">
-
-  <div class="infoBar" *ngIf="test && test.id_test > 0 && infoBarItems != 0">
-    <span class="infoItem" *ngIf="testInfoBarItemsBit(1)">id: {{test.id_test}}</span><span class="infoItemSeparator" *ngIf="testInfoBarItemsBit(1, true)"></span>
-    <span class="infoItem" *ngIf="testInfoBarItemsBit(2)">{{courses[test.id_course]}}</span><span class="infoItemSeparator" *ngIf="testInfoBarItemsBit(2, true)"></span>
-    <span class="infoItem" *ngIf="testInfoBarItemsBit(4)">{{semesters[test.id_semester]}}</span><span class="infoItemSeparator" *ngIf="testInfoBarItemsBit(4, true)"></span>
-    <span class="infoItem" *ngIf="testInfoBarItemsBit(8)">{{test.year}}</span><span class="infoItemSeparator" *ngIf='test.year != "" && testInfoBarItemsBit(8, true)'></span>
-    <span class="infoItem" *ngIf="testInfoBarItemsBit(16)">{{test.group}}</span><span class="infoItemSeparator" *ngIf='test.group != "" && testInfoBarItemsBit(16, true)'></span>
-    <span class="infoItem" *ngIf="testInfoBarItemsBit(32)">{{test.enter_date | date:'mediumDate'}}</span>
   </div>
 
   <div *ngFor="let question of test.questions; let i = index" class="question">
