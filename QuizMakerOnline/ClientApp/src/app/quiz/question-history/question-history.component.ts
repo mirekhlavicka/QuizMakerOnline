@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { QuestionService } from '../question.service';
+import { Test } from '../testModel';
 
 
 @Component({
@@ -9,12 +12,30 @@ import { Location } from '@angular/common';
 })
 export class QuestionHistoryComponent implements OnInit {
 
-  constructor(private location: Location) { }
+  id_question: number;
+  tests: Test[] = [];
+  displayedColumns: string[] = ['id_test', 'user_name', 'course', 'semester', 'year', 'group', 'enter_date'];
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private questionService: QuestionService,
+    private location: Location
+  ) { }
 
   ngOnInit() {
+    this.id_question = +this.route.snapshot.paramMap.get('id_question');
+
+    this.questionService.getHistoryTests(this.id_question).subscribe(t => this.tests = t);
+
   }
 
   goBack(): void {
     this.location.back();
+  }
+
+  goToDetail(id_test: number): void {
+    //this.testService.selected_id_test = id_test;
+    this.router.navigate([`/test/${id_test}`]);
   }
 }

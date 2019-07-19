@@ -6,3 +6,19 @@
   margin: 10px 30px 10px 30px;
   width: auto;
 }
+
+table {
+  width: 100%;
+}
+
+.tests {
+  margin: 10px 30px 10px 30px;
+}
+
+.mat-row {
+  cursor: pointer;
+}
+
+  .mat-row:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }

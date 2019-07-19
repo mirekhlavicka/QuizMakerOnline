@@ -68,7 +68,11 @@ export class TestDetailComponent implements OnInit {
       })
     ).subscribe(test => {
       this.test = test;
-      if (this.test.id_test <= 0) {
+      if (!test) {
+        alert("Test nelze editovat!");
+        this.location.back();
+      }
+      else if (this.test.id_test <= 0) {
         this.editTest()
       }
     });

@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Question, Course, Category, User, QuestionsFilter, Answer } from './questionModel';
+import { Test } from './testModel';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,6 +23,7 @@ export class QuestionService {
   private questiontypesUrl = 'api/questions/questiontypes';
   private questiondifficultiesUrl = 'api/questions/questiondifficulties';
   private questionstateUrl = 'api/questions/questionstate';
+  private questionhistoryUrl = 'api/questions/history';
 
   private answersUrl = 'api/answers';
 
@@ -182,6 +184,13 @@ export class QuestionService {
     return this.http.put<Answer[]>(`${this.answersUrl}/move?direction=${direction}`, answer, httpOptions).pipe(
       catchError(this.handleError<Answer[]>('moveAnswer'))
     );
+  }
+
+  getHistoryTests(id_question: number): Observable<Test[]> {
+    return this.http.get<Test[]>(`${this.questionhistoryUrl}/${id_question}`)
+      .pipe(
+        catchError(this.handleError<Test[]>('getHistoryTests', []))
+      );
   }
 
   /**

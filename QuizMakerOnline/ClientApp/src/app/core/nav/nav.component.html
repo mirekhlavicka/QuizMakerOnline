@@ -10,8 +10,9 @@
     <mat-nav-list>
 
       <a *ngFor="let course of courses" mat-list-item [routerLinkActive]='["active"]' [routerLink]='"/questions/" + course.id_course ' (click)="closeSideNav()" #routerLinkActiveInstance="routerLinkActive">
-        <mat-icon matListIcon class="app-nav-list-icon">
-          {{routerLinkActiveInstance.isActive ? "play_arrow" : "chevron_right" }}
+        <mat-icon matListIcon class="app-nav-list-icon" [class.material-icons-outlined]="!routerLinkActiveInstance.isActive">
+          <!--{{routerLinkActiveInstance.isActive ? "play_arrow" : "chevron_right" }}-->
+          play_arrow
         </mat-icon>
         {{course.name}}
       </a>

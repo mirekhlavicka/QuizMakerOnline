@@ -428,6 +428,36 @@ namespace QuizMakerOnline.Controllers
             }
         }
 
+        [HttpGet("history/{id_question}")]
+        public ActionResult<IEnumerable<Object>> GetHistoryTests(int id_question)
+        {
+            //var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var res = _context.Tests.AsQueryable();
+
+            //res = res.Where(t => t.IdUser == current_id_user);
+
+            res = res.Where(t => t.TestQuestions.Any(tq => tq.IdQuestion == id_question));
+
+
+            res = res.OrderByDescending(t => t.IdTest);
+
+            return Ok(res.Select(t => new
+            {
+                id_user = t.IdUser,
+                id_test = t.IdTest,
+                id_course = t.IdCourse,
+                id_semester = t.IdSemester,
+                group = t.Group,
+                year = t.Year,
+                enter_date = t.EnterDate,
+                user_name = t.IdUserNavigation.FullName,
+                course_name  = t.IdCourseNavigation.Name,
+                semester_name = _context.Semesters.SingleOrDefault(s => s.IdSemester == t.IdSemester).Name
+            })
+            .ToList());
+        }
+
 
         public class ClientQuestion
         {

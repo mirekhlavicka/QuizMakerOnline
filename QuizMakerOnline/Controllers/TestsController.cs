@@ -51,6 +51,7 @@ namespace QuizMakerOnline.Controllers
 
             return Ok(res.Select(t => new
             {
+                id_user = t.IdUser,
                 id_test = t.IdTest,
                 id_course = t.IdCourse,
                 id_semester = t.IdSemester,
@@ -72,6 +73,7 @@ namespace QuizMakerOnline.Controllers
 
             return Ok(res.Select(t => new
             {
+                id_user = t.IdUser,
                 id_test = t.IdTest,
                 id_course = t.IdCourse,
                 id_semester = t.IdSemester,
