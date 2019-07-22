@@ -46,9 +46,9 @@
               *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <mat-icon matListIcon class="app-nav-list-icon" *ngIf="!(isHandset$ | async)">functions</mat-icon>
+      <!--<mat-icon matListIcon class="app-nav-list-icon" *ngIf="!(isHandset$ | async)">functions</mat-icon>-->
+      <a href="https://math.fme.vutbr.cz/" target="_blank" style="height: 30px" matTooltip="Ústav matematiky FSI VUT v Brně"><img src="/vut-logo.png" class="imgLogo" width="30" height="30" /></a>
       <span>Quiz maker {{course_title}}</span>
-
       <div fxFlex fxLayout fxLayoutAlign="flex-end">
         <ul fxLayout fxLayoutGap="20px" class="navigation-items">
           <!--<li fxHide.xs>

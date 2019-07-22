@@ -34,8 +34,10 @@ export class QuestionHistoryComponent implements OnInit {
     this.location.back();
   }
 
-  goToDetail(id_test: number): void {
+  goToDetail(t: Test): void {
     //this.testService.selected_id_test = id_test;
-    this.router.navigate([`/test/${id_test}`]);
+    if (t.canEdit) {
+      this.router.navigate([`/test/${t.id_test}`]);
+    }
   }
 }

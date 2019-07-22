@@ -6,6 +6,7 @@
 
 table {
   width: 100%;
+  border-collapse:collapse;
 }
 
 .tests {
@@ -14,11 +15,15 @@ table {
 
 .mat-row {
   cursor: pointer;
+  border-left-width: 2px;
+  border-left-style: solid;
+  border-left-color: rgba(0, 0, 0, 0);
 }
 
-.mat-row:hover {
-  background-color: rgba(0, 0, 0, 0.04);
-}
+  .mat-row:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-left-color: #3f51b5;
+  }
 
 .selected-test {
   background-color: rgba(0, 0, 0, 0.08);

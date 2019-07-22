@@ -431,7 +431,7 @@ namespace QuizMakerOnline.Controllers
         [HttpGet("history/{id_question}")]
         public ActionResult<IEnumerable<Object>> GetHistoryTests(int id_question)
         {
-            //var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             var res = _context.Tests.AsQueryable();
 
@@ -453,7 +453,8 @@ namespace QuizMakerOnline.Controllers
                 enter_date = t.EnterDate,
                 user_name = t.IdUserNavigation.FullName,
                 course_name  = t.IdCourseNavigation.Name,
-                semester_name = _context.Semesters.SingleOrDefault(s => s.IdSemester == t.IdSemester).Name
+                semester_name = _context.Semesters.SingleOrDefault(s => s.IdSemester == t.IdSemester).Name,
+                canEdit = t.IdUser == current_id_user
             })
             .ToList());
         }

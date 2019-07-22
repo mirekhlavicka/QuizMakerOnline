@@ -30,3 +30,14 @@
 .app-nav-list-icon {
   margin: 0 12px 0 0;
 }
+
+.imgLogo {
+  margin-left:5px;
+  margin-right:10px;
+  opacity:0.8;
+  border-radius:4px;
+}
+
+.imgLogo:hover {
+  opacity: 1;
+}

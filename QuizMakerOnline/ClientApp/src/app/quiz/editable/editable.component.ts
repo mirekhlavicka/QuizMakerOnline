@@ -2,7 +2,7 @@ import { Component, ContentChild, HostListener, ElementRef, EventEmitter, Output
 import { ViewModeDirective } from './view-mode.directive';
 import { EditModeDirective } from './edit-mode.directive';
 import { NgControl } from '@angular/forms';
-import { fromEvent, Subject } from 'rxjs';
+import { fromEvent, Subject, Observable, Subscription } from 'rxjs';
 import { switchMap, takeUntil, filter, take, switchMapTo } from 'rxjs/operators';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
@@ -22,6 +22,9 @@ export class EditableComponent {
   editMode = new Subject();
   editMode$ = this.editMode.asObservable();
 
+  clickOutside$: Observable<Event> = null;
+  clickOutsideSubscription: Subscription;
+
   @Input() mode: 'view' | 'edit' = 'view';
 
 
@@ -33,22 +36,32 @@ export class EditableComponent {
     this.editModeHandler();
 
     if (this.mode == 'edit') {
-
-      setTimeout(() => {
-        this.editMode.next(true);
-      }, 100)
-
+      this.toEditMode();
     }
   }
 
   toViewMode() {
-    this.update.next();
+    if (this.mode == 'edit') {
+      this.update.next();
+    }
     this.mode = 'view';
+    this.clickOutsideSubscription.unsubscribe();
+  }
+
+  toEditMode() {
+    this.mode = 'edit';
+    this.clickOutsideSubscription = this.clickOutside$.subscribe(event => this.toViewMode());
+    setTimeout(() => {
+      this.editMode.next(true);
+    }, 100)
   }
 
   escapeEdit() {
-    this.escape.next();
+    if (this.mode == 'edit') {
+      this.escape.next();
+    }
     this.mode = 'view';
+    this.clickOutsideSubscription.unsubscribe();
   }
 
   private get element() {
@@ -58,25 +71,21 @@ export class EditableComponent {
   private viewModeHandler() {
     fromEvent(this.element, 'click').pipe( //dblclick
       untilDestroyed(this)
-    ).subscribe(() => { 
-      this.mode = 'edit';
-      setTimeout(() => {
-        this.editMode.next(true);
-      }, 100)
-
+    ).subscribe(() => {
+      this.toEditMode();
     });
   }
 
   private editModeHandler() {
     const clickOutside$ = fromEvent(document, 'click').pipe(
-      filter(({ target }) => this.element.contains(target) === false),
+      filter(({ target }) => /*(target as any).parentNode &&*/ this.element.contains(target) === false ),
       take(1)
     )
 
-    this.editMode$.pipe(
+    this.clickOutside$ =  this.editMode$.pipe(
       switchMapTo(clickOutside$),
       untilDestroyed(this)
-    ).subscribe(event => this.toViewMode());
+    );//.subscribe(event => this.toViewMode());
   }
 
   get currentView() {

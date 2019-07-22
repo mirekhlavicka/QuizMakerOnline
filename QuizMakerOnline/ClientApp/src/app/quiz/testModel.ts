@@ -13,6 +13,7 @@ export class Test {
   user_name?: string;
   course_name?: string;
   semester_name?: string;
+  canEdit?: boolean;
 }
 
 export interface EditTest {
