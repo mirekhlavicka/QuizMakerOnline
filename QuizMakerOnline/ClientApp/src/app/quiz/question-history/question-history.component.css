@@ -17,7 +17,7 @@ table {
 }
 
 .mat-row {  
-  border-left-width: 2px;
+  border-left-width: 3px;
   border-left-style: solid;
   border-left-color: rgba(0, 0, 0, 0);
   opacity:0.6;
