@@ -44,6 +44,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   transition: background-color 1s;
 }
 
+.mat-snack-bar-container {
+  text-align: center;
+}
+
+.mat-simple-snackbar {
+  display: inline-block !important;
+}
+
 @media print {
   app-root > * {
     display: none;

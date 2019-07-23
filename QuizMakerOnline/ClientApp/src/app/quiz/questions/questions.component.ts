@@ -7,6 +7,7 @@ import { switchMap, map, tap, flatMap, filter } from 'rxjs/operators';
 import { Course, Category, Question, Answer, User, QuestionsFilter } from '../../quiz/questionModel';
 import { QuestionService } from '../../quiz/question.service';
 import { TestService } from '../test.service';
+import { MatSnackBar } from '@angular/material';
 
 
 
@@ -59,7 +60,8 @@ export class QuestionsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private questionService: QuestionService,
-    private testService: TestService) {
+    private testService: TestService,
+    private _snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -250,10 +252,12 @@ export class QuestionsComponent implements OnInit {
 
   addToTest(): void {
     this.testService.add(this.question);
+    this._snackBar.open("Otázka byla do testu přidána", null, { duration: 3000 });
   }
 
   removeFromTest(): void {
     this.testService.del(this.question);
+    this._snackBar.open("Otázka byla z testu odebrána", null, { duration: 3000 });
   }
 
   addQuestion(): Question {

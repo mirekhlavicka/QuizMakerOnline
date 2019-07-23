@@ -3,6 +3,7 @@ import { Category } from '../questionModel';
 import { QuestionService } from '../question.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-categories',
@@ -16,7 +17,8 @@ export class CategoriesComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private questionService: QuestionService,
-    private location: Location) { }
+    private location: Location,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.id_course = +this.route.snapshot.paramMap.get('id_course');
@@ -31,10 +33,10 @@ export class CategoriesComponent implements OnInit {
     }
 
     if (c.id_category > 0) {
-      this.questionService.updateCategory(c).subscribe(_ => { });
+      this.questionService.updateCategory(c).subscribe(_ => { this._snackBar.open("Téma " + c.name + " bylo uloženo", null, { duration: 3000 })});
     } else {
-      this.questionService.addCategory(c).subscribe(cc => { c.id_category = cc.id_category });
-    }
+      this.questionService.addCategory(c).subscribe(cc => { c.id_category = cc.id_category; this._snackBar.open("Téma " + c.name + " bylo přidáno", null, { duration: 3000 }) });
+    }    
   }
 
   reloadCategory(c: Category): void {

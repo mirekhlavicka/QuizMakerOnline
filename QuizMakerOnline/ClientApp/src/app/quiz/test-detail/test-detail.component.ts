@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { QuestionService } from '../question.service';
 import { TestService } from '../test.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Test } from '../testModel';
 import { Course, Question } from '../questionModel';
 import { TestEditComponent } from '../test-edit/test-edit.component';
@@ -31,7 +31,8 @@ export class TestDetailComponent implements OnInit {
     private location: Location,
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -81,15 +82,18 @@ export class TestDetailComponent implements OnInit {
   removeFromTest(q: Question) {
     if (confirm("Opravdu si přejete odebrat otázku z testu ?")) {
       this.testService.del(q);
+      this._snackBar.open("Otázka byla z testu odebrána", null, { duration: 3000 });
     }
   }
 
   moveUp(q: Question) {
     this.testService.moveUp(q);
+    this._snackBar.open("Otázka byla přesunuta", null, { duration: 3000 });
   }
 
   moveDown(q: Question) {
     this.testService.moveDown(q);
+    this._snackBar.open("Otázka byla přesunuta", null, { duration: 3000 });
   }
 
   print(): void {
@@ -142,9 +146,10 @@ export class TestDetailComponent implements OnInit {
             this.test.enter_date = t.enter_date;
             this.test.year = t.year;
             this.router.navigate([`/test/${t.id_test}`]);
+            this._snackBar.open("Test byl přidán", null, { duration: 3000 })
           });
         } else {
-          this.testService.updateTest(this.test).subscribe(_ => { /*alert("test ulozen")*/ });
+          this.testService.updateTest(this.test).subscribe(_ => { this._snackBar.open("Test byl uložen", null, { duration: 3000 }) });
         }
       } else if (this.test.id_test <= 0) {
         this.goBack();
@@ -157,6 +162,7 @@ export class TestDetailComponent implements OnInit {
 
       this.testService.delTest(this.test).subscribe(_ => {
         this.goBack();
+        this._snackBar.open("Test byl smazán", null, { duration: 3000 });
       }, e => {
         alert(e.error)
       });

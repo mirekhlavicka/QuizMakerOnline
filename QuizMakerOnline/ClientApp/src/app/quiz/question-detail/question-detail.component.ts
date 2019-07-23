@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Question, Answer, RelatedLists } from '../../quiz/questionModel';
 
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import { MathjaxEditComponent } from '../mathjax-edit/mathjax-edit.component';
 import { QuestionService } from '../question.service';
 import { Router } from '@angular/router';
@@ -26,7 +26,8 @@ export class QuestionDetailComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private questionService: QuestionService,
-    private router: Router) { }
+    private router: Router,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -71,9 +72,10 @@ export class QuestionDetailComponent implements OnInit {
             this.question.id_question = q.id_question;
             this.question.id_user = q.id_user;
             this.question.enter_date = q.enter_date;
+            this._snackBar.open("Otázka byla přidána", null, { duration: 3000 })
           });
         } else {
-          this.questionService.updateQuestion(this.question).subscribe(_ => { /*alert("otazka ulozena")*/ });
+          this.questionService.updateQuestion(this.question).subscribe(_ => { this._snackBar.open("Otázka byla uložena", null, { duration: 3000 }) });
         }
       } else {
         if (this.question.id_question == 0) {
@@ -102,7 +104,7 @@ export class QuestionDetailComponent implements OnInit {
       if (result != null) {
         answer.answer = result.text;
         answer.points = result.points;
-        this.questionService.updateAnswer(answer).subscribe(_ => { /*alert("podotazka ulozena")*/ });
+        this.questionService.updateAnswer(answer).subscribe(_ => { this._snackBar.open((this.question.id_question_type == 1 ? "Odpověď " : "Podtázka ") + "byla uložena", null, { duration: 3000 }) });
       }
     });
   }
@@ -139,7 +141,7 @@ export class QuestionDetailComponent implements OnInit {
 
         this.question.answers.push(answer);
 
-        this.questionService.addAnswer(answer).subscribe(_ => { /*alert("podotazka pridana")*/ });
+        this.questionService.addAnswer(answer).subscribe(_ => { this._snackBar.open((this.question.id_question_type == 1 ? "Odpověď " : "Podtázka ") + "byla přidána", null, { duration: 3000 }) });
       }
     });
   }
@@ -147,14 +149,16 @@ export class QuestionDetailComponent implements OnInit {
   delAnswer(answer: Answer): void {
     if (confirm("Opravdu si přejete smazat " + (this.question.id_question_type == 1 ? "odpověď " : "podtázku ") + answer.position + ") ?")) {
       this.questionService.delAnswer(answer).subscribe(alist => {
-        this.question.answers = alist
+        this.question.answers = alist;
+        this._snackBar.open((this.question.id_question_type == 1 ? "Odpověď " : "Podtázka ") + "byla smazána", null, { duration: 3000 })
       });
     }
   }
 
   moveAnswer(answer: Answer, direction: number): void {
     this.questionService.moveAnswer(answer, direction).subscribe(alist => {
-      this.question.answers = alist
+      this.question.answers = alist;
+      this._snackBar.open((this.question.id_question_type == 1 ? "Odpověď " : "Podtázka ") + "byla přesunuta", null, { duration: 3000 })
     });
   }
 
@@ -163,6 +167,7 @@ export class QuestionDetailComponent implements OnInit {
 
       this.questionService.delQuestion(this.question).subscribe(_ => {
         this.deleted.emit(this.question.id_question);
+        this._snackBar.open("Otázka byla smazána", null, { duration: 3000 })
       }, e => {
         alert(e.error)
       });
