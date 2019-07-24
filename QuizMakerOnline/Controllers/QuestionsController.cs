@@ -428,6 +428,22 @@ namespace QuizMakerOnline.Controllers
             }
         }
 
+        [HttpGet("usersrights/{id_course}")]
+        //[Route("rights")]
+        public ActionResult<IEnumerable<Object>> GetUsersRights(int id_course)
+        {
+            var res = _context.Users.OrderBy(u => u.FullName);
+
+            return Ok(res.Select(u => new
+            {
+                id_course = id_course,
+                id_user = u.IdUser,
+                user_name = u.FullName,
+                rights = _context.UserCourseRights.Where(ur => ur.IdUser == u.IdUser && ur.IdCourse == id_course).Select(ur => ur.Rights).SingleOrDefault()
+            }));
+        }
+
+
         [HttpGet("history/{id_question}")]
         public ActionResult<IEnumerable<Object>> GetHistoryTests(int id_question)
         {

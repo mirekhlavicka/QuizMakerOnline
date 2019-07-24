@@ -34,6 +34,13 @@ export class Category {
   count?: number;
 }
 
+export class UserCourseRights {
+  id_user: number;
+  id_course: number;
+  user_name: string;
+  rights: number;
+}
+
 export class User {
   id_user: number;
   name: string;

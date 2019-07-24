@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Question, Course, Category, User, QuestionsFilter, Answer } from './questionModel';
+import { Question, Course, Category, User, QuestionsFilter, Answer, UserCourseRights } from './questionModel';
 import { Test } from './testModel';
 
 const httpOptions = {
@@ -20,6 +20,7 @@ export class QuestionService {
   private categoriesUrl = 'api/questions/categories';
   private usersUrl = 'api/questions/users';
   private allUsersUrl = 'api/questions/allusers';
+  private usersrightsUrl = 'api/questions/usersrights';
   private questiontypesUrl = 'api/questions/questiontypes';
   private questiondifficultiesUrl = 'api/questions/questiondifficulties';
   private questionstateUrl = 'api/questions/questionstate';
@@ -113,6 +114,15 @@ export class QuestionService {
     //  catchError(this.handleError<Hero[]>('getHeroes', []))
     //);
   }
+
+  getUsersRights(id_course: number): Observable<UserCourseRights[]> {
+    return this.http.get<UserCourseRights[]>(`${this.usersrightsUrl}/${id_course}`);
+    //.pipe(
+    //  tap(_ => this.log('fetched heroes')),
+    //  catchError(this.handleError<Hero[]>('getHeroes', []))
+    //);
+  }
+
 
   getAllUsers(): Observable<Object> {
     return this.http.get<Object>(this.allUsersUrl);

@@ -5,5 +5,14 @@
 </mat-toolbar>
 
 <mat-card class="rights-card">
-  Ještě není.
+  <table>
+    <tr *ngFor="let ur of userCourseRights; let i = index; last as last">
+      <td width="400">{{ur.user_name}}</td>
+      <td>{{ur.rights}}</td>
+      <td><mat-checkbox [checked]="testRight(ur.rights, 1)" (change)="setRight(ur, 1, $event.checked)">Témata</mat-checkbox></td>
+      <td><mat-checkbox [checked]="testRight(ur.rights, 2)" (change)="setRight(ur, 2, $event.checked)">Příklady</mat-checkbox></td>
+      <td><mat-checkbox [checked]="testRight(ur.rights, 4)" (change)="setRight(ur, 4, $event.checked)">Písemeky</mat-checkbox></td>
+      <td><mat-checkbox [checked]="testRight(ur.rights, 8)" (change)="setRight(ur, 8, $event.checked)">Práva</mat-checkbox></td>
+    </tr>
+  </table>
 </mat-card>

@@ -6,3 +6,29 @@
   margin: 10px 30px 10px 30px;
   width: auto;
 }
+
+table {
+  border-spacing: 0px;
+  border-collapse:collapse;
+  width:100%;
+}
+
+td {
+  padding-left: 20px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(0,0,0,.12);
+  font-size: 14px;
+}
+
+tr {
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-left-color: rgba(0, 0, 0, 0);
+  height:40px;
+}
+
+  tr:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-left-color: #3f51b5;
+  }
