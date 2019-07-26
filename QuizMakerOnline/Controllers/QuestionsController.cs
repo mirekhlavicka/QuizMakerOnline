@@ -443,6 +443,34 @@ namespace QuizMakerOnline.Controllers
             }));
         }
 
+        [HttpPut/*("{id}")*/]
+        [Route("usersrights")]
+        public IActionResult PutUsersRights(ClientUserCourseRights cucr)
+        {
+            UserCourseRights ucr = _context.UserCourseRights.SingleOrDefault(r => r.IdCourse == cucr.id_course && r.IdUser == cucr.id_user);
+
+            if (ucr == null)
+            {
+                ucr = new UserCourseRights
+                {
+                    IdCourse = cucr.id_course,
+                    IdUser = cucr.id_user,
+                    Rights = cucr.rights
+                };
+
+                _context.UserCourseRights.Add(ucr);
+            }
+            else
+            {
+                ucr.Rights = cucr.rights;
+            }
+
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+
 
         [HttpGet("history/{id_question}")]
         public ActionResult<IEnumerable<Object>> GetHistoryTests(int id_question)
@@ -494,6 +522,14 @@ namespace QuizMakerOnline.Controllers
             public int id_course { get; set; }
             public int id_category { get; set; }
             public string name { get; set; }
+        }
+
+        public class ClientUserCourseRights
+        {
+            public int id_course { get; set; }
+            public int id_user { get; set; }
+            public string user_name { get; set; }
+            public int rights { get; set; }
         }
     }
 }

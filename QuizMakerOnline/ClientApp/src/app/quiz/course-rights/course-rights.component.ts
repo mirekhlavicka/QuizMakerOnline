@@ -4,6 +4,8 @@ import { UserCourseRights } from '../questionModel';
 import { ActivatedRoute } from '@angular/router';
 import { QuestionService } from '../question.service';
 import { MatSnackBar } from '@angular/material';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
@@ -14,7 +16,9 @@ import { MatSnackBar } from '@angular/material';
 export class CourseRightsComponent implements OnInit {
   id_course: number;
   userCourseRights: UserCourseRights[] = [];
+  filteredUserCourseRights: UserCourseRights[] = [];
 
+  private searchTerms = new Subject<string>();
 
   constructor(
     private route: ActivatedRoute,
@@ -22,14 +26,49 @@ export class CourseRightsComponent implements OnInit {
     private location: Location,
     private _snackBar: MatSnackBar) { }
 
+
+  rightChangedSubject: Subject<UserCourseRights> = new Subject<UserCourseRights>();
+  changedUCR: Set<UserCourseRights> = new Set<UserCourseRights>();
+
   ngOnInit() {
     this.id_course = +this.route.snapshot.paramMap.get('id_course');
 
-    this.questionService.getUsersRights(this.id_course).subscribe(ur => this.userCourseRights = ur);
+    this.questionService.getUsersRights(this.id_course).subscribe(ur => {
+      this.userCourseRights = ur;
+      this.filteredUserCourseRights = this.userCourseRights
+    });
 
+    this.rightChangedSubject.pipe(
+      debounceTime(1600))
+      .subscribe(() => {
+        let list: string[] = [];
+        this.changedUCR.forEach(ucr => {
+          //console.log(ucr.user_name);
+          this.questionService.updateUsersRights(ucr).subscribe(_ => { });
+          list.push(ucr.user_name);
+        });
+        this._snackBar.open("Práva " + list.join(", ") + " uložena", null, { duration: 3000 });
+        this.changedUCR.clear()
+      });
+
+    this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(s => {
+      if (s != "") {
+        this.filteredUserCourseRights = this.userCourseRights.filter(ucr => {
+          return ucr.user_name
+            .toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .startsWith(s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+        })
+      } else {
+        this.filteredUserCourseRights = this.userCourseRights;
+      }
+    });
   }
 
-  testRight(rights:number, right: number): boolean {
+  testRight(rights: number, right: number): boolean {
     return (rights & right) != 0;
   }
 
@@ -39,9 +78,16 @@ export class CourseRightsComponent implements OnInit {
     } else {
       ucr.rights = ucr.rights & ~right;
     }
+
+    this.changedUCR.add(ucr);
+    this.rightChangedSubject.next(ucr);
   }
+
+  search(term: string): void {
+    this.searchTerms.next(term);
+  }
+
   goBack(): void {
     this.location.back();
   }
-
 }

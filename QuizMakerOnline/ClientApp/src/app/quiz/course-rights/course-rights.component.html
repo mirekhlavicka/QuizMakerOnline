@@ -5,14 +5,21 @@
 </mat-toolbar>
 
 <mat-card class="rights-card">
+  <mat-form-field class="searchBox">
+    <input matInput placeholder="Hledat" #searchBox (input)="search(searchBox.value)">
+    <button mat-button *ngIf="searchBox.value" matSuffix mat-icon-button aria-label="Clear" (click)="searchBox.value=''; search('')">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+
   <table>
-    <tr *ngFor="let ur of userCourseRights; let i = index; last as last">
-      <td width="400">{{ur.user_name}}</td>
-      <td>{{ur.rights}}</td>
-      <td><mat-checkbox [checked]="testRight(ur.rights, 1)" (change)="setRight(ur, 1, $event.checked)">Témata</mat-checkbox></td>
-      <td><mat-checkbox [checked]="testRight(ur.rights, 2)" (change)="setRight(ur, 2, $event.checked)">Příklady</mat-checkbox></td>
-      <td><mat-checkbox [checked]="testRight(ur.rights, 4)" (change)="setRight(ur, 4, $event.checked)">Písemeky</mat-checkbox></td>
-      <td><mat-checkbox [checked]="testRight(ur.rights, 8)" (change)="setRight(ur, 8, $event.checked)">Práva</mat-checkbox></td>
+    <tr *ngFor="let ur of filteredUserCourseRights">
+      <td width="400" class="userName">{{ur.user_name}}</td>
+      <td><mat-checkbox [checked]="testRight(ur.rights, 1)" (change)="setRight(ur, 1, $event.checked)">Editovat témata</mat-checkbox></td>
+      <td><mat-checkbox [checked]="testRight(ur.rights, 2)" (change)="setRight(ur, 2, $event.checked)">Vkládat otázky</mat-checkbox></td>
+      <td><mat-checkbox [checked]="testRight(ur.rights, 4)" (change)="setRight(ur, 4, $event.checked)">Sestavovat testy</mat-checkbox></td>
+      <td><mat-checkbox [checked]="testRight(ur.rights, 8)" (change)="setRight(ur, 8, $event.checked)">Nastavovat práva</mat-checkbox></td>
     </tr>
   </table>
 </mat-card>

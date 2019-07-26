@@ -21,15 +21,13 @@ input {
 }
 
 mat-list-item {  
-  border-left-width: 2px;
+  border-left-width: 3px;
   border-left-style: solid;
   border-left-color: rgba(0, 0, 0, 0);
 }
 
   mat-list-item:hover {
     background-color: #f7f7f7;
-    border-left-width: 2px;
-    border-left-style: solid;
     border-left-color: #3f51b5;
   }
 
@@ -49,6 +47,17 @@ editable {
   opacity: 1;
   transition: opacity 1s;
 }
+
+.mat-list-item .inplaceEditIcon {
+  margin-left: 50px;
+  opacity: 0;
+}
+
+.mat-list-item:hover .inplaceEditIcon {
+  opacity: 1;
+  transition: opacity 1s;
+}
+
 
 .delButton {
   opacity: 0.7;

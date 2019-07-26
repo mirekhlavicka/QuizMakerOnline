@@ -117,12 +117,13 @@ export class QuestionService {
 
   getUsersRights(id_course: number): Observable<UserCourseRights[]> {
     return this.http.get<UserCourseRights[]>(`${this.usersrightsUrl}/${id_course}`);
-    //.pipe(
-    //  tap(_ => this.log('fetched heroes')),
-    //  catchError(this.handleError<Hero[]>('getHeroes', []))
-    //);
   }
 
+  updateUsersRights(ucr: UserCourseRights): Observable<any> {
+    return this.http.put(this.usersrightsUrl, ucr, httpOptions).pipe(
+      catchError(this.handleError<any>('updateUsersRights'))
+    );
+  }
 
   getAllUsers(): Observable<Object> {
     return this.http.get<Object>(this.allUsersUrl);
