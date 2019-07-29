@@ -9,8 +9,10 @@
 
     <mat-nav-list>
 
-      <a *ngFor="let course of courses" mat-list-item [routerLinkActive]='["active"]' [routerLink]='"/questions/" + course.id_course ' (click)="closeSideNav()" #routerLinkActiveInstance="routerLinkActive">
-        <mat-icon matListIcon class="app-nav-list-icon" [class.material-icons-outlined]="!routerLinkActiveInstance.isActive">
+      <a *ngFor="let course of courses" mat-list-item [class.active]="id_course==course.id_course" [routerLink]='"/questions/" + course.id_course ' (click)="closeSideNav()">
+        <!--#routerLinkActiveInstance="routerLinkActive", [routerLinkActive]='["active"]'-->
+        <mat-icon matListIcon class="app-nav-list-icon" [class.material-icons-outlined]="id_course!=course.id_course">
+          <!--!routerLinkActiveInstance.isActive-->
           <!--{{routerLinkActiveInstance.isActive ? "play_arrow" : "chevron_right" }}-->
           play_arrow
         </mat-icon>
@@ -29,7 +31,7 @@
         Sestavit test
       </a>-->
 
-      <a mat-list-item [routerLinkActive]='["active"]' routerLink="/tests" (click)="closeSideNav()" #routerLinkActiveInstance="routerLinkActive">
+      <a mat-list-item routerLinkActive [class.active]="routerLinkActiveInstance.isActive || id_test != 0" routerLink="/tests" (click)="closeSideNav()" #routerLinkActiveInstance="routerLinkActive">
         <mat-icon matListIcon class="app-nav-list-icon">{{routerLinkActiveInstance.isActive || id_test != 0 ? "work" : "work_outline" }}</mat-icon>
         Moje testy
       </a>

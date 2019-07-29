@@ -18,17 +18,17 @@ export class CourseRightsComponent implements OnInit {
   userCourseRights: UserCourseRights[] = [];
   filteredUserCourseRights: UserCourseRights[] = [];
 
-  private searchTerms = new Subject<string>();
+  searchTerms = new Subject<string>();
+
+  rightChangedSubject: Subject<UserCourseRights> = new Subject<UserCourseRights>();
+  changedUCR: Set<UserCourseRights> = new Set<UserCourseRights>();
+
 
   constructor(
     private route: ActivatedRoute,
     private questionService: QuestionService,
     private location: Location,
     private _snackBar: MatSnackBar) { }
-
-
-  rightChangedSubject: Subject<UserCourseRights> = new Subject<UserCourseRights>();
-  changedUCR: Set<UserCourseRights> = new Set<UserCourseRights>();
 
   ngOnInit() {
     this.id_course = +this.route.snapshot.paramMap.get('id_course');

@@ -100,7 +100,7 @@
       </button>
     </div>
 
-    <button (click)="questionDetail.question=addQuestion();questionDetail.editQuestion(false)" mat-stroked-button color="accent" matTooltip='Přidat novou otázku' fxFlexOffset="6px">
+    <button (click)="questionDetail.question=addQuestion();questionDetail.editQuestion(false)" mat-stroked-button color="accent" matTooltip='Přidat novou otázku' fxFlexOffset="6px" [disabled]="!testRight(2)">
       <mat-icon>add</mat-icon>
     </button>&nbsp;
 
@@ -114,7 +114,7 @@
   </div>-->
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end" *ngIf="testService.currentTestId() != -1">
-    <button (click)="addToTest()" mat-raised-button color="accent" matTooltip="Vložit otázku do testu" [disabled]="!question || testService.contains(question)">
+    <button (click)="addToTest()" mat-raised-button color="accent" matTooltip="Vložit otázku do testu" [disabled]="!question || testService.contains(question) || !testRight(4)">
       <mat-icon>add_shopping_cart</mat-icon>
     </button>
     <button (click)="removeFromTest()" mat-raised-button color="accent" matTooltip="Odebrat otázku z testu" [disabled]="!question || !testService.contains(question)" fxFlexOffset="6px">

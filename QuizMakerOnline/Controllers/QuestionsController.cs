@@ -29,7 +29,7 @@ namespace QuizMakerOnline.Controllers
         {
             var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            if (!_context.UserCourseRights.Any(ur => ur.IdUser == current_id_user && ur.IdCourse == id_course && (ur.Rights & 2) != 0))
+            if (!_context.UserCourseRights.Any(ur => ur.IdUser == current_id_user && ur.IdCourse == id_course && (ur.Rights & 6) != 0))
             {
                 return BadRequest("Access denied");// new object[] { };
             }
