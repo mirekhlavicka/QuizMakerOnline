@@ -23,7 +23,13 @@ export class CategoriesComponent implements OnInit {
   ngOnInit() {
     this.id_course = +this.route.snapshot.paramMap.get('id_course');
 
-    this.questionService.getCategories(null, this.id_course).subscribe(c => this.categories = c);
+    this.questionService.getRights(this.id_course).subscribe(r => {
+      if (r & 1) {
+        this.questionService.getCategories(null, this.id_course).subscribe(c => this.categories = c);
+      } else {
+        this.goBack();
+      }
+    });
   }
 
   updateCategory(c: Category): void {

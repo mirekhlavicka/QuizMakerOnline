@@ -14,18 +14,29 @@ import { forEach } from '@angular/router/src/utils/collection';
 export class MathjaxComponent implements OnChanges, OnInit {
   @Input() content: string;
   preparedContent: string;
+  typesetting: boolean = false;
 
   constructor(private el: ElementRef) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['content']) {
+      this.hideContent();
       this.prepareContent();
       this.renderMath()
     }
   }
+
   ngOnInit() {
     this.loadMathConfig()
-    this.renderMath();
+    //this.hideContent();
+    //this.renderMath();
+  }
+
+  hideContent() {
+    this.typesetting = true;
+    setTimeout(() => {
+      this.typesetting = false;
+    }, 250);
   }
 
   prepareContent() {

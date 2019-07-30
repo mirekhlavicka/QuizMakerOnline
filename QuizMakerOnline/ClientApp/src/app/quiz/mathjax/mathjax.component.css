@@ -1,6 +1,13 @@
 div.mathjax {
-  font-size:16px;
-  font-weight:400;
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.typesetting {
+  opacity: 0!important;
+  transition: opacity 0s!important;
 }
 
 @media print {

@@ -33,9 +33,15 @@ export class CourseRightsComponent implements OnInit {
   ngOnInit() {
     this.id_course = +this.route.snapshot.paramMap.get('id_course');
 
-    this.questionService.getUsersRights(this.id_course).subscribe(ur => {
-      this.userCourseRights = ur;
-      this.filteredUserCourseRights = this.userCourseRights
+    this.questionService.getRights(this.id_course).subscribe(r => {
+      if (r & 8) {
+        this.questionService.getUsersRights(this.id_course).subscribe(ur => {
+          this.userCourseRights = ur;
+          this.filteredUserCourseRights = this.userCourseRights
+        });
+      } else {
+        this.goBack();
+      }
     });
 
     this.rightChangedSubject.pipe(
