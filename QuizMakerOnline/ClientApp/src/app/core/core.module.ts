@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AngularMaterialModule } from '../shared/angular-material.module';
+import { EditableModule } from '../shared/editable.module';
 import { CoreRoutingModule } from './core-routing.module';
 import { FormsModule } from '@angular/forms'
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -19,6 +20,7 @@ import { NavComponent } from './nav/nav.component';
     CoreRoutingModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
+    EditableModule,
     FormsModule,
     FlexLayoutModule
   ],

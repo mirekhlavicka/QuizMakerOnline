@@ -6,17 +6,10 @@ registerLocaleData(localeCs);
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from '../shared/angular-material.module';
+import { EditableModule } from '../shared/editable.module';
 import { FormsModule } from '@angular/forms'
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-
-
-import { EditableComponent } from './editable/editable.component';
-import { ViewModeDirective } from './editable/view-mode.directive';
-import { EditModeDirective } from './editable/edit-mode.directive';
-import { FocusableDirective } from './editable/focusable.directive';
-import { EditableOnEnterDirective } from './editable/editable-on-enter.directive';
-
 
 import { QuizRoutingModule } from './quiz-routing.module';
 
@@ -40,11 +33,6 @@ import { CourseRightsComponent } from './course-rights/course-rights.component';
 
 @NgModule({
   declarations: [
-    EditableComponent,
-    ViewModeDirective,
-    EditModeDirective,
-    FocusableDirective,
-    EditableOnEnterDirective,
     QuestionsComponent,
     QuestionDetailComponent,
     MathjaxComponent,
@@ -61,6 +49,7 @@ import { CourseRightsComponent } from './course-rights/course-rights.component';
     QuizRoutingModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
+    EditableModule,
     FormsModule,
     FlexLayoutModule,
     //ReactiveFormsModule
