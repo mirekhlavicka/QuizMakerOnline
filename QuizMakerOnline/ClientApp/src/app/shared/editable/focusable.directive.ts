@@ -9,7 +9,7 @@ export class FocusableDirective {
 
   ngAfterViewInit() {
 
-    setTimeout(() => { this.host.nativeElement.focus();  }, 500);
+    setTimeout(() => { this.host.nativeElement.focus();  }, 100);
 
     
   }

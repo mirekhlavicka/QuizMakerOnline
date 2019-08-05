@@ -35,9 +35,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: 13px !important;
 }
 
-.mat-button:hover .mat-button-focus-overlay, .mat-stroked-button:hover .mat-button-focus-overlay {
-  opacity: .2!important;
+.mat-button:hover .mat-button-focus-overlay, .mat-stroked-button:hover .mat-button-focus-overlay, .mat-raised-button:hover .mat-button-focus-overlay {
+  opacity: .2 !important;
 }
+
+.mat-raised-button {
+  opacity: 1;
+}
+
+  .mat-raised-button:hover {
+    opacity: 0.8;
+  }
+
 
 .mat-icon-button:hover {
   background-color: rgba(200,200,200,0.5);

@@ -1,13 +1,15 @@
+<div class="cover"></div>
+
 <div fxLayout="row" fxLayoutAlign="center center" class="login-main">
   <form class="loginForm" #loginForm="ngForm" action="" (submit)="login()" autocomplete="off" method="POST">
     <mat-card>
       <mat-card-header>
         <div mat-card-avatar><mat-icon matListIcon class="app-nav-list-icon">lock</mat-icon></div>
-        <mat-card-title>Přihlášení</mat-card-title>
+        <mat-card-title style="margin-left:-20px;">Přihlášení</mat-card-title>
       </mat-card-header>
       <mat-card-content fxLayout="column">
         <mat-form-field>
-          <input matInput placeholder="Uživatel" [(ngModel)]="username" name="username" required focusable>
+          <input matInput placeholder="Uživatel" [(ngModel)]="username" name="username" required focusable spellcheck="false">
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Heslo" [(ngModel)]="password" type="password" name="password" required>

@@ -2,7 +2,7 @@
   <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
                [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                [mode]="(isHandset$ | async) ? 'over' : 'side'"
-               [opened]="!(isHandset$ | async)">
+               [opened]="!(isHandset$ | async) && isAuthenticated">
     <mat-toolbar>
       <mat-icon matListIcon class="app-nav-list-icon">school</mat-icon>Kurzy
     </mat-toolbar>
@@ -45,7 +45,7 @@
               aria-label="Toggle sidenav"
               mat-icon-button
               (click)="drawer.toggle()"
-              *ngIf="isHandset$ | async">
+              *ngIf="(isHandset$ | async) && isAuthenticated">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <!--<mat-icon matListIcon class="app-nav-list-icon" *ngIf="!(isHandset$ | async)">functions</mat-icon>-->

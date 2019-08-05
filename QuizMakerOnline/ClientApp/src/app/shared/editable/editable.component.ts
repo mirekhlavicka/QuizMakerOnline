@@ -49,6 +49,10 @@ export class EditableComponent {
   }
 
   toEditMode() {
+    if (this.mode == 'edit') {
+      return;
+    }
+
     this.mode = 'edit';
     this.clickOutsideSubscription = this.clickOutside$.subscribe(event => this.toViewMode());
     setTimeout(() => {
