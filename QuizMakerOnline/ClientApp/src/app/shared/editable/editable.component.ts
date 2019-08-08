@@ -36,7 +36,7 @@ export class EditableComponent {
     this.editModeHandler();
 
     if (this.mode == 'edit') {
-      this.toEditMode();
+      this.toEditMode(true);
     }
   }
 
@@ -48,8 +48,8 @@ export class EditableComponent {
     this.clickOutsideSubscription.unsubscribe();
   }
 
-  toEditMode() {
-    if (this.mode == 'edit') {
+  toEditMode(force: boolean = false) {
+    if (!force && this.mode == 'edit') {
       return;
     }
 

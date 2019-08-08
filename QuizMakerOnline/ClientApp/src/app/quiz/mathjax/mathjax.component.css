@@ -2,7 +2,7 @@ div.mathjax {
   font-size: 16px;
   font-weight: 400;
   opacity: 1;
-  transition: opacity 500ms, max-height 1500ms;
+  transition: opacity 500ms ease-out, max-height 1500ms ease-out;
   max-height:1000px;
 }
 
