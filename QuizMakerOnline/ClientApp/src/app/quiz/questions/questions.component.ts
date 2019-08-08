@@ -203,6 +203,7 @@ export class QuestionsComponent implements OnInit {
 
         if (this.goto_id_question != 0) {
           this.goto_id_question = 0;
+          this.saveCurrentPosition(); //!!! 
         } else {
           this.saveCurrentPosition();
         }
@@ -303,6 +304,15 @@ export class QuestionsComponent implements OnInit {
         this.goto(1);
       }
     }
+  }
+
+  copyQuestion() {
+    this.questionService.copyQuestion(this.question.id_question).subscribe(id => {
+      this.goto_id_question = id;
+      this.filter.id_user = "";
+      this.getQuestions();
+      this._snackBar.open("Byla vytvořena kopie otázky", null, { duration: 3000 });
+    });
   }
 
   editCategories(): void {

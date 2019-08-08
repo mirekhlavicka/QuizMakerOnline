@@ -6,6 +6,7 @@ import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import { MathjaxEditComponent } from '../mathjax-edit/mathjax-edit.component';
 import { QuestionService } from '../question.service';
 import { Router } from '@angular/router';
+import { QuestionsComponent } from '../questions/questions.component';
 
 @Component({
   selector: 'app-question-detail',
@@ -27,7 +28,9 @@ export class QuestionDetailComponent implements OnInit {
     public dialog: MatDialog,
     private questionService: QuestionService,
     private router: Router,
-    private _snackBar: MatSnackBar) { }
+    private _snackBar: MatSnackBar,
+    public questionsComponent: QuestionsComponent
+  ) { }
 
   ngOnInit() {
   }

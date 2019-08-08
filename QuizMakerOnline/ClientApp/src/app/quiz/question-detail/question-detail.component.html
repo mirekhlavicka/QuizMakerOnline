@@ -24,6 +24,9 @@
       <mat-icon>history</mat-icon>
     </button>
 
+    <button mat-stroked-button color="primary" (click)="questionsComponent.copyQuestion()" matTooltip="Vytvořit kopii otázky" style="margin-left: 6px;" [disabled]="!questionsComponent.testRight(2)">
+      <mat-icon>file_copy</mat-icon>
+    </button>
 
     <button mat-stroked-button color="warn" (click)="delQuestion()" matTooltip="Smazat otázku" style="margin-left: 6px;" [disabled]="!question.canEdit">
       <mat-icon>delete_forever</mat-icon>

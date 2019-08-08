@@ -2,12 +2,14 @@ div.mathjax {
   font-size: 16px;
   font-weight: 400;
   opacity: 1;
-  transition: opacity 500ms;
+  transition: opacity 500ms, max-height 1500ms;
+  max-height:1000px;
 }
 
 .typesetting {
   opacity: 0!important;
-  transition: opacity 0s!important;
+  max-height: 0px !important;
+  transition: opacity 0s, max-height 0s !important;
 }
 
 @media print {

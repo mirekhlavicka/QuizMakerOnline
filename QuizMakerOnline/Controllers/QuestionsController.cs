@@ -387,6 +387,51 @@ namespace QuizMakerOnline.Controllers
             };
         }
 
+        [HttpGet()]
+        [Route("copy/{id_question}")]
+        public ActionResult<int> CopyQuestion(int id_question)
+        {
+            Questions question = _context.Questions.Include(q => q.Answers).SingleOrDefault(q => q.IdQuestion == id_question);
+
+            if (question == null)
+            {
+                return BadRequest();
+            }
+
+            var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            Questions nq = new Questions
+            {
+                IdCategory = question.IdCategory,
+                IdQuestionDifficulty = question.IdQuestionDifficulty,
+                IdQuestionType = question.IdQuestionType,
+                Points = question.Points,
+                EnterDate = DateTime.Now,
+                RightAnswer = question.RightAnswer,
+                Question = question.Question,
+                Solution = question.Solution,
+                State = question.State,
+                IdUser = current_id_user
+            };
+
+            foreach (Answers a in question.Answers)
+            {
+                nq.Answers.Add(new Answers
+                {
+                    Answer = a.Answer,
+                    Points = a.Points,
+                    Position = a.Position
+                });
+            }
+
+            _context.Questions.Add(nq);
+
+            _context.SaveChanges();
+
+            return Ok(nq.IdQuestion);
+        }
+
+
         [HttpDelete("{id}")]
         public IActionResult DeleteQuestion(int id)
         {

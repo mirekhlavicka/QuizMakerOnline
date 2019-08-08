@@ -165,6 +165,9 @@ export class QuestionService {
     );
   }
 
+  copyQuestion(id_question: number): Observable<number> {
+    return this.http.get<number>(`${this.questionsUrl}/copy/${id_question}`);
+  }
 
   /** PUT: update the answer on the server */
   updateAnswer(answer: Answer): Observable<any> {
