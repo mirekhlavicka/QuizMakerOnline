@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, HostListener } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { switchMap, map, tap, flatMap, filter } from 'rxjs/operators';
 
 import { Course, Category, Question, Answer, User, QuestionsFilter } from '../../quiz/questionModel';
@@ -61,7 +62,8 @@ export class QuestionsComponent implements OnInit {
     private router: Router,
     private questionService: QuestionService,
     private testService: TestService,
-    private _snackBar: MatSnackBar) {
+    private _snackBar: MatSnackBar,
+    private location: Location) {
   }
 
   ngOnInit() {
@@ -235,6 +237,24 @@ export class QuestionsComponent implements OnInit {
     this.saveCurrentPosition();
   }
 
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    let targetTagName = (event.target instanceof Element ?  (<Element>event.target).tagName.toLowerCase() : "");
+    //console.log(targetTagName);
+
+    if (targetTagName == "input" || targetTagName == "textarea" || targetTagName == "mat-select") {
+      return;
+    }
+
+    if (event.key === 'Left' || event.key === 'ArrowLeft') {
+      this.prev();
+    }
+
+    if (event.key === 'Right' || event.key === 'ArrowRight') {
+      this.next();
+    }
+  }
+
   goto(val: string | number): void {
     let n = Number(val.toString());
 
@@ -249,6 +269,14 @@ export class QuestionsComponent implements OnInit {
 
   saveCurrentPosition(): void {
     localStorage.setItem("questions_current_" + this.id_course, this.current.toString());
+    //this.router.navigate([`/questions/${this.id_course}`, { id_question: this.question.id_question, id_category: this.question.id_category }], { relativeTo: this.route })
+
+    const url = this
+      .router
+      .createUrlTree([{ id_question: this.question.id_question, id_category: this.question.id_category }], { relativeTo: this.route })
+      .toString();
+
+    this.location./*go*/replaceState(url);
   }
 
   addToTest(): void {

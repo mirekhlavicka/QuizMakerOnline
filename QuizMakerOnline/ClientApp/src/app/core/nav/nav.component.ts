@@ -66,19 +66,21 @@ export class NavComponent implements OnInit, OnDestroy {
         if (this.id_course != 0) {
           let i = this.courses.findIndex(c => c.id_course == this.id_course);
           if (i != -1) {
-            this.course_title = " – " + this.courses[i].name;
+            this.course_title = " » " + this.courses[i].name;
             if (this.router.url.lastIndexOf("categories") > -1) {
-              this.course_title += " – Editace témat";
+              this.course_title += " » Editace témat";
             } else if (this.router.url.lastIndexOf("rights") > -1) {
-              this.course_title += " – Nastavení práv";
+              this.course_title += " » Nastavení práv";
             } else if (this.testService.currentTestId() != -1) {
-              this.course_title += " – výběr otázek" + (this.testService.currentTestId() != 0 ? " testu id: " + this.testService.currentTestId() : "");
+              this.course_title += " » Výběr otázek" + (this.testService.currentTestId() != 0 ? " testu " + this.testService.currentTest().year : "");
             }
           }
         } else if (this.id_test != 0) {
-          this.course_title = (this.id_test > 0 ? " – Editace testu id: " + this.id_test : " – Přidání testu");
+          setTimeout(() => {
+            this.course_title = (this.id_test > 0 ? " » Editace testu " + (this.testService.currentTestId() != -1 ? " testu " + this.testService.currentTest().year : "") : " » Přidání testu");
+          }, 500);          
         } else {
-          this.course_title = (this.router.url.lastIndexOf("tests") > -1 ? " – Moje testy" : (this.id_question != 0 ? " – Historie použití otázky " + this.id_question : ""));
+          this.course_title = (this.router.url.lastIndexOf("tests") > -1 ? " » Moje testy" : (this.id_question != 0 ? " » Historie použití otázky " + this.id_question : ""));
         }
       })
     });

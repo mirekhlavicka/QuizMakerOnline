@@ -64,7 +64,7 @@
     </button>
   </li>-->
           <li *ngIf="testService.currentTestId() != -1">
-            <a routerLink="/tests" mat-icon-button [matBadge]="testService.count" matBadgePosition="before|below" matBadgeColor="accent" matBadgeSize="medium" matBadgeOverlap="true" [matBadgeHidden]="testService.count < 0" matTooltip="Zobrazit test {{this.testService.currentTestId()}}">
+            <a routerLink="/tests" mat-icon-button [matBadge]="testService.count" matBadgePosition="before|below" matBadgeColor="accent" matBadgeSize="medium" matBadgeOverlap="true" [matBadgeHidden]="testService.count < 0" matTooltip='Přejít na test {{testService.currentTestId() > 0 ? testService.currentTest().year : ""}}'>
               <mat-icon>shopping_cart</mat-icon>
             </a>
           </li>          

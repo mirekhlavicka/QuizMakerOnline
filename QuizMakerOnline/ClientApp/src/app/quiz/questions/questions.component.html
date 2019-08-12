@@ -81,21 +81,21 @@
 
   <div fxFlex fxLayout fxLayoutAlign="flex-start center" style="margin-right:50px">
     <div *ngIf="question">
-      <button (click)="goto(1)" mat-stroked-button color="primary" matTooltip="Přejít na první otázku">
+      <button (click)="goto(1)" mat-stroked-button color="primary" matTooltip="První otázka">
         <mat-icon>first_page</mat-icon>
       </button>
 
-      <button (click)="prev()" mat-stroked-button color="primary" matTooltip="Přejít na předchozí otázku" fxFlexOffset="6px">
+      <button (click)="prev()" mat-stroked-button color="primary" matTooltip="Předchozí otázka (klávesa &#8592;)" fxFlexOffset="6px">
         <mat-icon>navigate_before</mat-icon>
       </button>
 
       <input class="inputGoTo" type="text" [value]="current+1" (input)="goto($event.target.value)" fxFlexOffset="6px" matTooltip="Přejít na zadanou otázku">&nbsp;/&nbsp;{{questions ? questions.length : 0}}
 
-      <button (click)="next()" mat-stroked-button color="primary" matTooltip="Přejít na další otázku" fxFlexOffset="6px">
+      <button (click)="next()" mat-stroked-button color="primary" matTooltip="Další otázka (klávesa &#8594;)" fxFlexOffset="6px">
         <mat-icon>navigate_next</mat-icon>
       </button>
 
-      <button (click)="goto(questions ? questions.length : 0)" mat-stroked-button color="primary" matTooltip="Přejít na poslední otázku" fxFlexOffset="6px">
+      <button (click)="goto(questions ? questions.length : 0)" mat-stroked-button color="primary" matTooltip="Poslední otázka" fxFlexOffset="6px">
         <mat-icon>last_page</mat-icon>
       </button>
     </div>
