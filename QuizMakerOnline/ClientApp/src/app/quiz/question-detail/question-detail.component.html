@@ -20,16 +20,16 @@
       <mat-icon>edit</mat-icon>
     </button>
 
-    <button mat-stroked-button color="primary" (click)="questionHistory()" matTooltip="Historie použití" style="margin-left: 6px;">
-      <mat-icon>history</mat-icon>
-    </button>
-
     <button mat-stroked-button color="primary" (click)="questionsComponent.copyQuestion()" matTooltip="Vytvořit kopii otázky" style="margin-left: 6px;" [disabled]="!questionsComponent.testRight(2)">
       <mat-icon>file_copy</mat-icon>
     </button>
 
-    <button mat-stroked-button color="warn" (click)="delQuestion()" matTooltip="Smazat otázku" style="margin-left: 6px;" [disabled]="!question.canEdit">
+    <button mat-stroked-button color="warn" (click)="delQuestion()" matTooltip="Smazat otázku" style="margin-left: 6px;" [disabled]="!question.canEdit || question['useCount'] != 0">
       <mat-icon>delete_forever</mat-icon>
+    </button>
+
+    <button mat-stroked-button color="primary" (click)="questionHistory()" matTooltip="Historie použití" style="margin-left: 6px;" [matBadge]="question['useCount']" matBadgePosition="above after" matBadgeColor="primary" matBadgeSize="medium" matBadgeOverlap="true" [matBadgeHidden]="false">
+      <mat-icon>history</mat-icon>
     </button>
 
   </mat-expansion-panel>

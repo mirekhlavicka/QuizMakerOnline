@@ -47,3 +47,13 @@ mat-slide-toggle {
 .mat-raised-button:hover {
   opacity: 0.8;
 }*/
+
+.mat-form-field-prefix,
+.mat-form-field-suffix {
+  display: inline-flex;
+  align-items: center;
+}
+
+.mat-form-field-flex {
+  align-items: center;
+}

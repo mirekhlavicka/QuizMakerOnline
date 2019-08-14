@@ -33,6 +33,7 @@ export class QuestionsComponent implements OnInit {
     id_user: "",
     id_type: "",
     state: "",
+    notUsedFrom: null,
     sortFromOldest: false
   }
 
@@ -139,6 +140,7 @@ export class QuestionsComponent implements OnInit {
           this.filter.id_difficulty = "";
           this.filter.id_type = "";
           this.filter.state = "";
+          this.filter.notUsedFrom = null;
 
           this.filter.sortFromOldest = false;
         }
@@ -157,6 +159,7 @@ export class QuestionsComponent implements OnInit {
           this.filter.id_difficulty = "";
           this.filter.id_type = "";
           this.filter.state = "";
+          this.filter.notUsedFrom = null;
         }
 
         this.onFilterChange();
@@ -271,12 +274,14 @@ export class QuestionsComponent implements OnInit {
     localStorage.setItem("questions_current_" + this.id_course, this.current.toString());
     //this.router.navigate([`/questions/${this.id_course}`, { id_question: this.question.id_question, id_category: this.question.id_category }], { relativeTo: this.route })
 
-    const url = this
-      .router
-      .createUrlTree([{ id_question: this.question.id_question, id_category: this.question.id_category }], { relativeTo: this.route })
-      .toString();
+    //if (this.question) {
+    //  const url = this
+    //    .router
+    //    .createUrlTree([{ id_question: this.question.id_question, id_category: this.question.id_category }], { relativeTo: this.route })
+    //    .toString();
 
-    this.location./*go*/replaceState(url);
+    //  this.location./*go*/replaceState(url);
+    //}
   }
 
   addToTest(): void {

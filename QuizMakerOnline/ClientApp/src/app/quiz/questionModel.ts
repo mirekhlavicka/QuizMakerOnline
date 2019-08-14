@@ -53,6 +53,7 @@ export class  QuestionsFilter  {
   id_user: number | string;
   id_type: number | string;
   state: number | string;
+  notUsedFrom: Date;
   sortFromOldest: boolean
 }
 

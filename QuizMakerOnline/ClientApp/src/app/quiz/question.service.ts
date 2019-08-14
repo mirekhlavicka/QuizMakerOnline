@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Question, Course, Category, User, QuestionsFilter, Answer, UserCourseRights } from './questionModel';
 import { Test } from './testModel';
+import { formatDate } from '@angular/common';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -50,7 +51,13 @@ export class QuestionService {
   getQuestions(filter: QuestionsFilter): Observable<Question[]> {
     //const url = (id_category && id_category != 0) ? `${this.questionsUrl}/?id_category=${id_category}` : this.questionsUrl;
 
-    const url = `${this.questionsUrl}/?id_course=${filter.id_course}&id_category=${filter.id_category}&id_difficulty=${filter.id_difficulty}&id_user=${filter.id_user}&id_type=${filter.id_type}&state=${filter.state}`;
+    let nuf = "";
+
+    if (filter.notUsedFrom) {
+      nuf = formatDate(filter.notUsedFrom, 'yyyy-MM-dd', 'en-US');
+    }
+
+    const url = `${this.questionsUrl}/?id_course=${filter.id_course}&id_category=${filter.id_category}&id_difficulty=${filter.id_difficulty}&id_user=${filter.id_user}&id_type=${filter.id_type}&state=${filter.state}&nuf=${nuf}`;
 
     return this.http.get<Question[]>(url);
     //.pipe(

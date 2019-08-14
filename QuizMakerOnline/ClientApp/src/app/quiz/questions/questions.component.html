@@ -59,6 +59,15 @@
     </button>
   </mat-form-field>
 
+  <mat-form-field class="question-filter-select" appearance="standard">
+    <mat-label>Nepoužito od</mat-label>
+    <input matInput [matDatepicker]="picker" placeholder="Nepoužito od" (dateChange)="onFilterChange()" [(ngModel)]="filter.notUsedFrom" readonly (focus)="picker.open()"  (click)="picker.open()" style="cursor:pointer">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <button mat-icon-button (click)='filter.notUsedFrom=null; onFilterChange(); $event.stopPropagation()' *ngIf='filter.notUsedFrom' matSuffix aria-label="Clear">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-datepicker #picker disabled="false"></mat-datepicker><!--{{filter.notUsedFrom.toString()}}--><!-- | date:'mediumDate'-->
+  </mat-form-field>
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end center">
     <button mat-icon-button [matMenuTriggerFor]="menuOther" aria-label="Nastavení kurzu" matTooltip="Nastavení kurzu">
