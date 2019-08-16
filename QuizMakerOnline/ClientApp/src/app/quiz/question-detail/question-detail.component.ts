@@ -5,7 +5,7 @@ import { Question, Answer, RelatedLists } from '../../quiz/questionModel';
 import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import { MathjaxEditComponent } from '../mathjax-edit/mathjax-edit.component';
 import { QuestionService } from '../question.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { QuestionsComponent } from '../questions/questions.component';
 
 @Component({
@@ -27,6 +27,7 @@ export class QuestionDetailComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private questionService: QuestionService,
+    private route: ActivatedRoute,
     private router: Router,
     private _snackBar: MatSnackBar,
     public questionsComponent: QuestionsComponent
@@ -166,7 +167,7 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   delQuestion(): void {
-    if (confirm("Opravdu si přejete smazat odtázku " + this.question.id_question + " ?")) {
+    if (confirm("Opravdu si přejete smazat otázku " + this.question.id_question + " ?")) {
 
       this.questionService.delQuestion(this.question).subscribe(_ => {
         this.deleted.emit(this.question.id_question);
@@ -179,5 +180,28 @@ export class QuestionDetailComponent implements OnInit {
 
   questionHistory(): void {
     this.router.navigate([`/question-history/${this.question.id_question}`]);
+  }
+
+  linkToClipboard(): void {
+    const url = window.location.origin + this
+        .router
+        .createUrlTree([{ id_question: this.question.id_question, id_category: this.question.id_category }], { relativeTo: this.route })
+      .toString();
+
+    this.copyToClipboard(url);
+
+    this._snackBar.open("Odkaz na otázku byl vložen do schránky", null, { duration: 3000 })
+
+  }
+
+  copyToClipboard(item): void {
+    let listener = (e: ClipboardEvent) => {
+      e.clipboardData.setData('text/plain', (item));
+      e.preventDefault();
+    };
+
+    document.addEventListener('copy', listener);
+    document.execCommand('copy');
+    document.removeEventListener('copy', listener);
   }
 }

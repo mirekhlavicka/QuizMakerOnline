@@ -1,5 +1,5 @@
-<mat-card class="question-filter-card" *ngIf="!accessDenied">
-  <mat-form-field class="select-category question-filter-select" appearance="standard">
+<mat-card class="question-filter-card" *ngIf="!accessDenied" fxLayout="row nowrap" fxLayout.lt-lg="row wrap">
+  <mat-form-field class="select-category question-filter-select" appearance="standard" fxFlex="0 1 400px">
     <mat-label>Téma</mat-label>
     <mat-select placeholder="Téma" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_category" panelClass="panel-category">
       <mat-option *ngFor="let category of courseCategories" [value]="category.id_category">
@@ -8,7 +8,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field class="question-filter-select" appearance="standard">
+  <mat-form-field class="question-filter-select" appearance="standard" fxFlex="0 1 200px">
     <mat-label>Autor</mat-label>
     <mat-select placeholder="Autor" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_user" multiple>
       <mat-option *ngFor="let user of courseUsers" [value]="user.id_user">
@@ -20,7 +20,7 @@
     </button>
   </mat-form-field>
 
-  <mat-form-field class="question-filter-select" appearance="standard">
+  <mat-form-field class="question-filter-select" appearance="standard" fxFlex="0 1 150px">
     <mat-label>Typ</mat-label>
     <mat-select placeholder="Typ" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_type" multiple>
       <!--<mat-option [value]="0">(nerozhoduje)</mat-option>-->
@@ -33,7 +33,7 @@
     </button>
   </mat-form-field>
 
-  <mat-form-field class="question-filter-select" appearance="standard">
+  <mat-form-field class="question-filter-select" appearance="standard" fxFlex="0 1 150px">
     <mat-label>Obtížnost</mat-label>
     <mat-select placeholder="Obtížnost" (selectionChange)="onFilterChange()" [(ngModel)]="filter.id_difficulty" multiple>
       <!--<mat-option [value]="0">(nerozhoduje)</mat-option>-->
@@ -46,7 +46,7 @@
     </button>
   </mat-form-field>
 
-  <mat-form-field class="question-filter-select" appearance="standard">
+  <mat-form-field class="question-filter-select" appearance="standard" fxFlex="0 1 150px">
     <mat-label>Stav</mat-label>
     <mat-select placeholder="Stav" (selectionChange)="onFilterChange()" [(ngModel)]="filter.state" multiple>
       <!--<mat-option [value]="-1">(nerozhoduje)</mat-option>-->
@@ -59,10 +59,13 @@
     </button>
   </mat-form-field>
 
-  <mat-form-field class="question-filter-select" appearance="standard">
+  <mat-form-field class="question-filter-select" appearance="standard" fxFlex="0 1 200px">
+    <mat-checkbox matPrefix (click)='$event.stopPropagation()' (change)='onFilterChange()' [(ngModel)]="filter.notUsedFromByMe" matTooltip="Hledat pouze v mých testech" style="margin-right: 10px"></mat-checkbox>
     <mat-label>Nepoužito od</mat-label>
-    <input matInput [matDatepicker]="picker" placeholder="Nepoužito od" (dateChange)="onFilterChange()" [(ngModel)]="filter.notUsedFrom" readonly (focus)="picker.open()"  (click)="picker.open()" style="cursor:pointer">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <input matInput [matDatepicker]="picker" placeholder="Nepoužito od" (dateChange)="onFilterChange()" [(ngModel)]="filter.notUsedFrom" readonly (focus)="picker.open()" (click)="picker.open()" style="cursor:pointer">
+    <mat-datepicker-toggle matSuffix [for]="picker">
+      <mat-icon matDatepickerToggleIcon>arrow_drop_down</mat-icon>
+    </mat-datepicker-toggle>
     <button mat-icon-button (click)='filter.notUsedFrom=null; onFilterChange(); $event.stopPropagation()' *ngIf='filter.notUsedFrom' matSuffix aria-label="Clear">
       <mat-icon>close</mat-icon>
     </button>

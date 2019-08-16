@@ -11,12 +11,12 @@
 
 .question-filter-select{
   margin-right:20px;
-  max-width:180px;
+  /*max-width:180px;*/
 }
 
 .select-category {
-  width: 400px;
-  max-width: 400px!important;
+  /*width: 400px;
+  max-width: 400px!important;*/
 }
 
 .panel-category.mat-select-panel {

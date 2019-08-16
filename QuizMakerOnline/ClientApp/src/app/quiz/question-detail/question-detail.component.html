@@ -24,6 +24,11 @@
       <mat-icon>file_copy</mat-icon>
     </button>
 
+    <button mat-stroked-button color="primary" (click)="linkToClipboard()" matTooltip="Kopírovat adresu otázky" style="margin-left: 6px;">
+      <mat-icon>link</mat-icon>
+    </button>
+
+
     <button mat-stroked-button color="warn" (click)="delQuestion()" matTooltip="Smazat otázku" style="margin-left: 6px;" [disabled]="!question.canEdit || question['useCount'] != 0">
       <mat-icon>delete_forever</mat-icon>
     </button>

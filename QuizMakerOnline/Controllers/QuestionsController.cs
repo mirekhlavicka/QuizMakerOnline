@@ -25,7 +25,7 @@ namespace QuizMakerOnline.Controllers
 
         // GET: api/questions
         [HttpGet]
-        public ActionResult<IEnumerable<Object>> GetQuestions(int id_course, int? id_category, string id_difficulty, string id_user, string id_type, string state, string nuf)
+        public ActionResult<IEnumerable<Object>> GetQuestions(int id_course, int? id_category, string id_difficulty, string id_user, string id_type, string state, string nuf, string nufbm)
         {
             var current_id_user = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
@@ -71,7 +71,14 @@ namespace QuizMakerOnline.Controllers
 
                 if (DateTime.TryParseExact(nuf, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out notUsedFrom))
                 {
-                    res = res.Where(q => !q.TestQuestions.Any(tq => tq.IdTestNavigation.EnterDate >= notUsedFrom));
+                    if (nufbm == "1")
+                    {
+                        res = res.Where(q => !q.TestQuestions.Any(tq => tq.IdTestNavigation.EnterDate >= notUsedFrom && tq.IdTestNavigation.IdUser == current_id_user));
+                    }
+                    else
+                    {
+                        res = res.Where(q => !q.TestQuestions.Any(tq => tq.IdTestNavigation.EnterDate >= notUsedFrom));
+                    }                    
                 }
             }
 

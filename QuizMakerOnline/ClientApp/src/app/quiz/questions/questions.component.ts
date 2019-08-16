@@ -34,6 +34,7 @@ export class QuestionsComponent implements OnInit {
     id_type: "",
     state: "",
     notUsedFrom: null,
+    notUsedFromByMe: false,
     sortFromOldest: false
   }
 
@@ -141,6 +142,7 @@ export class QuestionsComponent implements OnInit {
           this.filter.id_type = "";
           this.filter.state = "";
           this.filter.notUsedFrom = null;
+          this.filter.notUsedFromByMe = false;
 
           this.filter.sortFromOldest = false;
         }
@@ -160,6 +162,7 @@ export class QuestionsComponent implements OnInit {
           this.filter.id_type = "";
           this.filter.state = "";
           this.filter.notUsedFrom = null;
+          this.filter.notUsedFromByMe = false;
         }
 
         this.onFilterChange();

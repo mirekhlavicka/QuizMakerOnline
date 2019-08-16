@@ -54,6 +54,7 @@ export class  QuestionsFilter  {
   id_type: number | string;
   state: number | string;
   notUsedFrom: Date;
+  notUsedFromByMe: boolean;
   sortFromOldest: boolean
 }
 

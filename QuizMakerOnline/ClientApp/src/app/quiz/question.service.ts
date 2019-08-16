@@ -57,7 +57,7 @@ export class QuestionService {
       nuf = formatDate(filter.notUsedFrom, 'yyyy-MM-dd', 'en-US');
     }
 
-    const url = `${this.questionsUrl}/?id_course=${filter.id_course}&id_category=${filter.id_category}&id_difficulty=${filter.id_difficulty}&id_user=${filter.id_user}&id_type=${filter.id_type}&state=${filter.state}&nuf=${nuf}`;
+    const url = `${this.questionsUrl}/?id_course=${filter.id_course}&id_category=${filter.id_category}&id_difficulty=${filter.id_difficulty}&id_user=${filter.id_user}&id_type=${filter.id_type}&state=${filter.state}&nuf=${nuf}&nufbm=${filter.notUsedFromByMe ? 1 : 0}`;
 
     return this.http.get<Question[]>(url);
     //.pipe(
