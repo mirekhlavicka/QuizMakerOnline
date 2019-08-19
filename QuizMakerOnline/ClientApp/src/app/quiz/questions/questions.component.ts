@@ -289,11 +289,17 @@ export class QuestionsComponent implements OnInit {
 
   addToTest(): void {
     this.testService.add(this.question);
+    //if (this.question['useCount']) {
+      this.question['useCount'] = +this.question['useCount'] + 1;
+    //}
     this._snackBar.open("Otázka byla do testu přidána", null, { duration: 3000 });
   }
 
   removeFromTest(): void {
     this.testService.del(this.question);
+    //if (this.question['useCount']) {
+      this.question['useCount'] = +this.question['useCount'] - 1;
+    //}
     this._snackBar.open("Otázka byla z testu odebrána", null, { duration: 3000 });
   }
 
