@@ -31,13 +31,29 @@
   margin: 0 12px 0 0;
 }
 
-.imgLogo {
-  margin-left:4px;
-  margin-right:12px;
-  opacity:0.8;
-  /*border-radius:4px;*/
+#aLogo {
+  position: relative;
+  height: 30px;
+  width: 30px;
+  margin-left: 4px;
+  margin-right: 12px;
+  margin-top: auto;
+  margin-bottom:auto;
 }
 
-.imgLogo:hover {
-  opacity: 1;
-}
+  #aLogo img {
+    position: absolute;
+    left: 0;
+    -webkit-transition: opacity 500ms ease-in-out;
+    -moz-transition: opacity 500ms ease-in-out;
+    -o-transition: opacity 500ms ease-in-out;
+    transition: opacity 500ms ease-in-out;
+  }
+
+    #aLogo img.top {
+      opacity: 0;
+    }
+
+    #aLogo img.top:hover {
+      opacity: 1;
+    }

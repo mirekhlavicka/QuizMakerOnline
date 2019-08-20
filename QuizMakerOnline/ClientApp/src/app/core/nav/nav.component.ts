@@ -14,6 +14,7 @@ import { AuthService } from '../auth.service';
 import { Course } from '../../quiz/questionModel';
 import { QuestionService } from '../../quiz/question.service';
 import { TestService } from '../../quiz/test.service';
+import { Title } from '@angular/platform-browser';
 
 
 
@@ -47,7 +48,8 @@ export class NavComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private questionService: QuestionService,
-    public testService: TestService) {
+    public testService: TestService,
+    private titleService: Title ) {
   }
 
   ngOnInit(): void {
@@ -77,11 +79,14 @@ export class NavComponent implements OnInit, OnDestroy {
           }
         } else if (this.id_test != 0) {
           setTimeout(() => {
-            this.course_title = (this.id_test > 0 ? " » Editace testu " + (this.testService.currentTestId() != -1 ? " testu " + this.testService.currentTest().year : "") : " » Přidání testu");
+            this.course_title = (this.id_test > 0 ? " » Editace testu " + (this.testService.currentTestId() != -1 ? this.testService.currentTest().year : "") : " » Přidání testu");
+            this.titleService.setTitle("Quiz Maker " + this.course_title.replace(/»/gi, "–"));
           }, 500);          
         } else {
           this.course_title = (this.router.url.lastIndexOf("tests") > -1 ? " » Moje testy" : (this.id_question != 0 ? " » Historie použití otázky " + this.id_question : ""));
         }
+
+        this.titleService.setTitle("Quiz Maker " + this.course_title.replace(/»/gi, "–"));
       })
     });
   }
