@@ -38,7 +38,8 @@ export class QuestionDetailComponent implements OnInit {
 
   editQuestion(solution: boolean): void {
     const dialogRef = this.dialog.open(MathjaxEditComponent, {
-      width: '70%',
+      maxWidth: '1350px',
+      width: '98%',
       //minHeight: '500px',
       //height: '80%',
       data: {
@@ -91,7 +92,8 @@ export class QuestionDetailComponent implements OnInit {
 
   editAnswer(answer: Answer): void {
     const dialogRef = this.dialog.open(MathjaxEditComponent, {
-      width: '70%',
+      maxWidth: '1350px',
+      width: '98%',
       data: {
         type: 3,
         text: answer.answer,
