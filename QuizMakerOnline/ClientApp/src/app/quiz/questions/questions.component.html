@@ -136,7 +136,7 @@
 
 </mat-toolbar>
 
-<app-question-detail #questionDetail [question]="question" (deleted)="onQuestionDeleted($event)"
+<app-question-detail #questionDetail [question]="question" (deleted)="onQuestionDeleted($event)" (swipeleft)="next()" (swiperight)="prev()"
                      [relatedLists]="{courseCategories: courseCategories, allUsers: allUsers, questionTypes: questionTypes, questionDifficulties: questionDifficulties, questionState: questionState}">
 </app-question-detail>
 

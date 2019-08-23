@@ -45,7 +45,7 @@ export class QuestionDetailComponent implements OnInit {
       data: {
         type: solution ? 2 : 1,
         text: solution ? this.question.solution : this.question.question,
-        points: this.question.points,
+        points: this.question.id_question_type == 3 ? this.question.answers.reduce((sum, current) => sum + current.points, 0) : this.question.points, //this.question.points
         id_category: this.question.id_category,
         id_user: this.question.id_user,
         id_question_type: this.question.id_question_type,
@@ -205,5 +205,10 @@ export class QuestionDetailComponent implements OnInit {
     document.addEventListener('copy', listener);
     document.execCommand('copy');
     document.removeEventListener('copy', listener);
+  }
+
+  sumPoints(): string {
+    var res = this.question.id_question_type == 3 ? this.question.answers.reduce((sum, current) => sum + current.points, 0) : this.question.points;
+    return res.toString() + " " + (res == 1 ? "bod" : (res < 5 && res > 0 ? "body" : "bodů"));
   }
 }

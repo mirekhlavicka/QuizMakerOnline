@@ -320,6 +320,8 @@ export class QuestionsComponent implements OnInit {
       canEdit: true
     }
 
+    nq['useCount'] = 0;
+
     this.currentBeforeAdd = this.current;
 
     if (this.filter.sortFromOldest) {

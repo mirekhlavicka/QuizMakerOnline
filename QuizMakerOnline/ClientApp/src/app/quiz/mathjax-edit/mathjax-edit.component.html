@@ -42,11 +42,11 @@
 
         <mat-form-field *ngIf="data.type == 1 || (data.type == 3 && data.id_question_type != 1)" appearance="standard" style="max-width:80px">
           <mat-label>Počet bodů</mat-label>
-          <input matInput placeholder="Počet bodů" [(ngModel)]="data.points" type="number" name="points" required (input)="dirty=true">
+          <input matInput placeholder="Počet bodů" [(ngModel)]="data.points" type="number" name="points" required (input)="dirty=true" [disabled]="data.type == 1 && data.id_question_type == 3">
         </mat-form-field>
-        <button *ngIf="data.type == 1 && data.id_question_type == 3" type="button" mat-icon-button (click)="sumPoints()" matTooltip="Spočítat">
+        <!--<button *ngIf="data.type == 1 && data.id_question_type == 3" type="button" mat-icon-button (click)="sumPoints()" matTooltip="Spočítat">
           <mat-icon>control_point</mat-icon>
-        </button>
+        </button>-->
 
         <mat-form-field *ngIf="data.type == 1 && data.id_question_type == 1" class="edit-field-left" appearance="standard">
           <mat-label>Správná odpověď</mat-label>

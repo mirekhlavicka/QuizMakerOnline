@@ -14,7 +14,7 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <mathjax [content]='question.question'></mathjax>
-    <div class="points">({{question.points}} {{question.points == 1 ? "bod" : (question.points < 5 && question.points > 0 ? "body" : "bodů")}})</div>
+    <div class="points">({{sumPoints()}})</div>
 
     <button mat-stroked-button color="primary" (click)="editQuestion(false)" matTooltip="Upravit otázku" [disabled]="!question.canEdit">
       <mat-icon>edit</mat-icon>
