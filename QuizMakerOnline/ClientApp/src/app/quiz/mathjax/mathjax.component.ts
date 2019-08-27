@@ -13,6 +13,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 })
 export class MathjaxComponent implements OnChanges, OnInit {
   @Input() content: string;
+  @Input() changeDirection: number = 0;
   preparedContent: string;
   typesetting: boolean = false;
 

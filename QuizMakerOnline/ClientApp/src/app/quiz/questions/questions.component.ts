@@ -50,6 +50,7 @@ export class QuestionsComponent implements OnInit {
   questions: Question[];
   question: Question;
   current: number = -1;
+  changeDirection: number = 0;
   gotoCurrent: number = -1;
   currentBeforeAdd: number = -1;
 
@@ -195,6 +196,7 @@ export class QuestionsComponent implements OnInit {
           //this.goto_id_question = 0;
         }
 
+        this.changeDirection = 0;
         if (this.gotoCurrent >= 0 && this.gotoCurrent < this.questions.length) {
           this.current = this.gotoCurrent;
           this.question = this.questions[this.current];
@@ -207,7 +209,7 @@ export class QuestionsComponent implements OnInit {
             this.current = -1;
             this.question = null;
           }
-        }
+        }        
 
         if (this.goto_id_question != 0) {
           this.goto_id_question = 0;
@@ -219,6 +221,7 @@ export class QuestionsComponent implements OnInit {
           this.loading = false;
           this.current = -1;
           this.question = null;
+          this.changeDirection = 0;
           this.questions = [];
           this.accessDenied = true;
         //alert(e.error)
@@ -227,6 +230,7 @@ export class QuestionsComponent implements OnInit {
 
   next(): void {
     this.current++;
+    this.changeDirection = 1;
     if (this.current == this.questions.length) {
       this.current = 0;
     }
@@ -236,6 +240,7 @@ export class QuestionsComponent implements OnInit {
 
   prev(): void {
     this.current--;
+    this.changeDirection = -1;
     if (this.current == -1) {
       this.current = this.questions.length - 1;
     }
@@ -269,6 +274,7 @@ export class QuestionsComponent implements OnInit {
     }
 
     this.current = n - 1;
+    this.changeDirection = 0;
     this.question = this.questions[this.current];
     this.saveCurrentPosition();
   }

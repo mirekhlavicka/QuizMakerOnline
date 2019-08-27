@@ -1,1 +1,1 @@
-<div [innerHTML]="preparedContent" class="mathjax" [class.typesetting]="typesetting"></div>
+<div [innerHTML]="preparedContent" class="mathjax" [class.typesetting]="typesetting && changeDirection==0" [class.typesettingLeft]="typesetting && changeDirection==1" [class.typesettingRight]="typesetting && changeDirection==-1"></div>

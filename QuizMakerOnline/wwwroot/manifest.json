@@ -1,0 +1,19 @@
+﻿{
+  "short_name": "Quiz Maker",
+  "name": "Quiz Maker",
+  "icons": [
+    {
+      "src": "math-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "math-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/tests",
+  "display": "standalone",
+  "orientation": "landscape"
+}

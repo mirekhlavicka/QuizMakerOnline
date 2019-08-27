@@ -4,7 +4,7 @@
       <mat-panel-title>
         Otázka
       </mat-panel-title>
-      <mat-panel-description>
+      <mat-panel-description fxHide.lt-md>
         <span class="infoItem">{{question.enter_date | date:'mediumDate'}}</span><span class="infoItemSeparator"></span>
         <mat-icon inline>person</mat-icon><span class="infoItem">{{relatedLists.allUsers[question.id_user]}}</span><span class="infoItemSeparator"></span>
         <mat-icon inline>{{question.id_question_type == 2 ? "remove" : "list"}}</mat-icon><span class="infoItem">{{relatedLists.questionTypes[question.id_question_type]}}</span><span class="infoItemSeparator"></span>
@@ -13,7 +13,7 @@
         <span class="infoItem">id: {{question.id_question}}</span>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <mathjax [content]='question.question'></mathjax>
+    <mathjax [content]='question.question' [changeDirection]="questionsComponent.changeDirection"></mathjax>
     <div class="points">({{sumPoints()}})</div>
 
     <button mat-stroked-button color="primary" (click)="editQuestion(false)" matTooltip="Upravit otázku" [disabled]="!question.canEdit">
@@ -46,7 +46,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div *ngFor="let answer of question.answers; let i = index" class="answer">
-      <mathjax [content]='"\\textbf{" + answer.position + ")} " + answer.answer'></mathjax>
+      <mathjax [content]='"\\textbf{" + answer.position + ")} " + answer.answer' [changeDirection]="questionsComponent.changeDirection"></mathjax>
       <div *ngIf="question.id_question_type != 1" class="points">({{answer.points}} {{answer.points == 1 ? "bod" : (answer.points < 5 && answer.points > 0 ? "body" : "bodů")}})</div>
 
       <div fxLayout class="answer_tools" [class.answer_tools_test]="question.id_question_type == 1">
@@ -85,7 +85,7 @@
         Řešení
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <mathjax [content]='question.solution'></mathjax>
+    <mathjax [content]='question.solution' [changeDirection]="questionsComponent.changeDirection"></mathjax>
     <button mat-stroked-button color="primary" (click)="editQuestion(true)" matTooltip="Upravit řešení" style="margin-top:10px" [disabled]="!question.canEdit">
       <mat-icon>edit</mat-icon>
     </button>
