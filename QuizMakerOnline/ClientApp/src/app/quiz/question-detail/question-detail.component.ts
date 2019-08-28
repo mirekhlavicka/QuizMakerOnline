@@ -123,7 +123,7 @@ export class QuestionDetailComponent implements OnInit {
     if (this.question.answers.length > 0) {
       position = String.fromCharCode(this.question.answers[this.question.answers.length - 1].position.charCodeAt(0) + 1);
     }
-
+    this.questionsComponent.changeDirection = 0;
     const dialogRef = this.dialog.open(MathjaxEditComponent, {
       width: '70%',
       data: {
