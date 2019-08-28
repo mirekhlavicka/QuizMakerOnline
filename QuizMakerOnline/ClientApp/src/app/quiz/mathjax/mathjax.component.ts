@@ -22,8 +22,8 @@ export class MathjaxComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['content']) {
       this.hideContent();
-      this.prepareContent();
-      this.renderMath()
+      //this.prepareContent();
+      //this.renderMath()
     }
   }
 
@@ -35,9 +35,24 @@ export class MathjaxComponent implements OnChanges, OnInit {
 
   hideContent() {
     this.typesetting = true;
-    setTimeout(() => {
-      this.typesetting = false;
-    }, 250);
+
+    if (this.changeDirection == 0) {
+      this.prepareContent();
+      this.renderMath();
+      setTimeout(() => {
+        this.typesetting = false;
+      }, 250);
+    } else {
+      this.changeDirection = -this.changeDirection;
+      setTimeout(() => {
+        this.changeDirection = -this.changeDirection;
+        this.prepareContent();
+        this.renderMath()
+        setTimeout(() => {
+          this.typesetting = false;
+        }, 250);
+      }, 250);
+    }
   }
 
   prepareContent() {

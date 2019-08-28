@@ -2,7 +2,7 @@ div.mathjax {
   font-size: 16px;
   font-weight: 400;
   opacity: 1;
-  transition: opacity 500ms ease-out, max-height 1500ms ease-out, transform 250ms ease-out;
+  transition: opacity 250ms ease-out, max-height 1500ms ease-out, transform 250ms ease-out;
   max-height: 1000px;
   transform: none;
 }
@@ -16,16 +16,16 @@ div.mathjax {
 
 .typesettingLeft {
   opacity: 0 !important;
-  max-height: 0px !important;
-  transition: opacity 0s, max-height 0s, transform 0s !important;
-  transform: translateX(800px) !important;
+  /*max-height: 0px !important;*/
+  /*transition: opacity 0s, max-height 0s, transform 0s !important;*/
+  transform: translateX(400px) !important;
 }
 
 .typesettingRight {
   opacity: 0 !important;
-  max-height: 0px !important;
-  transition: opacity 0s, max-height 0s, transform 0s !important;
-  transform: translateX(-800px) !important;
+  /*max-height: 0px !important;*/
+  /*transition: opacity 0s, max-height 0s, transform 0s !important;*/
+  transform: translateX(-400px) !important;
 }
 
 

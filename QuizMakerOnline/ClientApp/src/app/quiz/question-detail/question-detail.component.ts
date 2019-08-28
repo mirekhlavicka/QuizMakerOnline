@@ -37,6 +37,7 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   editQuestion(solution: boolean): void {
+    this.questionsComponent.changeDirection = 0;
     const dialogRef = this.dialog.open(MathjaxEditComponent, {
       maxWidth: '1350px',
       width: '98%',
@@ -91,6 +92,7 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   editAnswer(answer: Answer): void {
+    this.questionsComponent.changeDirection = 0;
     const dialogRef = this.dialog.open(MathjaxEditComponent, {
       maxWidth: '1350px',
       width: '98%',
@@ -210,5 +212,10 @@ export class QuestionDetailComponent implements OnInit {
   sumPoints(): string {
     var res = this.question.id_question_type == 3 ? this.question.answers.reduce((sum, current) => sum + current.points, 0) : this.question.points;
     return res.toString() + " " + (res == 1 ? "bod" : (res < 5 && res > 0 ? "body" : "bodů"));
+  }
+
+  trackByFn(index, item ) {
+    //console.log( 'TrackBy:', item.id, 'at index', index );
+    return( item.position );
   }
 }
