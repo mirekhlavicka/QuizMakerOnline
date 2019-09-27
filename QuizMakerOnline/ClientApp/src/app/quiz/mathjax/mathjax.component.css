@@ -1,3 +1,12 @@
+mathjax {
+  display: block;
+  background-image: url('/dot-loader-small.gif'); /*https://paulund.co.uk/uploads/2016/10/dot-loader.gif, https://www.tourisme-baiedesomme.fr/wp-content/themes/ot-baie-somme/images/loader.gif*/
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: inherit;
+  /*background-size: 122px 36px;*/
+}
+
 div.mathjax {
   font-size: 16px;
   font-weight: 400;
@@ -5,6 +14,7 @@ div.mathjax {
   transition: opacity 250ms ease-out, transform 250ms ease-out; /*, max-height 1500ms ease-out*/
   /*max-height: 1000px;*/
   transform: none;
+  background-color: inherit; /*rgba(255,255,255,1.0);*/
 }
 
 .typesetting {

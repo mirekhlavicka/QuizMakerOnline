@@ -13,7 +13,9 @@
         <span class="infoItem">id: {{question.id_question}}</span>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <mathjax [content]='question.question' [changeDirection]="questionsComponent.changeDirection"></mathjax>
+    <div class="question">
+      <mathjax [content]='question.question' [changeDirection]="questionsComponent.changeDirection"></mathjax>
+    </div>
     <div class="points">({{sumPoints()}})</div>
 
     <button mat-stroked-button color="primary" (click)="editQuestion(false)" matTooltip="Upravit otázku" [disabled]="!question.canEdit">
@@ -85,7 +87,9 @@
         Řešení
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <mathjax [content]='question.solution' [changeDirection]="questionsComponent.changeDirection"></mathjax>
+    <div class="question">
+      <mathjax [content]='question.solution' [changeDirection]="questionsComponent.changeDirection"></mathjax>
+    </div>
     <button mat-stroked-button color="primary" (click)="editQuestion(true)" matTooltip="Upravit řešení" style="margin-top:10px" [disabled]="!question.canEdit">
       <mat-icon>edit</mat-icon>
     </button>
