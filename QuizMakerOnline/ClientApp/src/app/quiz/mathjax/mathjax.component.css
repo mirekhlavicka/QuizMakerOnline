@@ -1,6 +1,6 @@
 mathjax {
   display: block;
-  background-image: url('/dot-loader-small.gif'); /*https://paulund.co.uk/uploads/2016/10/dot-loader.gif, https://www.tourisme-baiedesomme.fr/wp-content/themes/ot-baie-somme/images/loader.gif*/
+  background-image: url('/loader_anim.gif');
   background-position: center;
   background-repeat: no-repeat;
   background-color: inherit;
