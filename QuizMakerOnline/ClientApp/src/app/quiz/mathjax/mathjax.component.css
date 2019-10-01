@@ -1,7 +1,7 @@
 mathjax {
   display: block;
   background-image: url('/loader_anim.gif');
-  background-position: center;
+  background-position: left center;
   background-repeat: no-repeat;
   background-color: inherit;
   /*background-size: 122px 36px;*/
