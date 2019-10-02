@@ -9,6 +9,7 @@ import { forEach } from '@angular/router/src/utils/collection';
   selector: 'mathjax',
   templateUrl: './mathjax.component.html',
   styleUrls: ['./mathjax.component.css'],
+  host: { '[class.loader]': 'showLoader' },
   encapsulation: ViewEncapsulation.None
 })
 export class MathjaxComponent implements OnChanges, OnInit {
@@ -16,6 +17,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
   @Input() changeDirection: number = 0;
   preparedContent: string;
   typesetting: boolean = false;
+  showLoader: boolean = false;
 
   constructor(private el: ElementRef) { }
 
@@ -35,12 +37,16 @@ export class MathjaxComponent implements OnChanges, OnInit {
 
   hideContent() {
     this.typesetting = true;
+    this.showLoader = true;
 
     if (this.changeDirection == 0) {
       this.prepareContent();
       this.renderMath();
       setTimeout(() => {
         this.typesetting = false;
+        setTimeout(() => {
+          this.showLoader = false;
+        }, 300);
       }, 250);
     } else {
       this.changeDirection = -this.changeDirection;
@@ -50,6 +56,9 @@ export class MathjaxComponent implements OnChanges, OnInit {
         this.renderMath()
         setTimeout(() => {
           this.typesetting = false;
+          setTimeout(() => {
+            this.showLoader = false;
+          }, 300);
         }, 250);
       }, 250);
     }
