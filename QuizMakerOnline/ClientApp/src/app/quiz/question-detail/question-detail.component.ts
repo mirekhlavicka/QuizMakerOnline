@@ -64,6 +64,7 @@ export class QuestionDetailComponent implements OnInit {
       if (result != null) {
         if (solution) {
           this.question.solution = result.text;
+          this.question.right_answer = result.right_answer;
         } else {
           this.question.question = result.text;
           this.question.points = result.points;

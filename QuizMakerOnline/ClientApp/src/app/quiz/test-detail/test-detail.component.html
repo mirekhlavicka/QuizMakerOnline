@@ -35,6 +35,8 @@
     </a>
   </mat-menu>
 
+  <mat-spinner *ngIf="printing" [diameter]="40" fxFlexOffset="50px"></mat-spinner>
+
   <div fxFlex fxLayout fxLayoutAlign="flex-end center">
     <mat-slide-toggle [(ngModel)]="showSolution" color="primary" (change)="onShowChange()">Zobrazit řešení</mat-slide-toggle>
     &nbsp;

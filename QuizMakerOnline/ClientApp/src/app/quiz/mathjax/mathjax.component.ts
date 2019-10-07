@@ -99,6 +99,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
     };
 
     this.preprocessLaTeXEnums();
+    this.preprocessTabular2Array();
 
   }
 
@@ -110,6 +111,22 @@ export class MathjaxComponent implements OnChanges, OnInit {
           return p1 ? "<li class=\"hasorder\">" + p1 + p2 + "</li>" : "<li>" + p2 + "</li>";
         }) + "</ul>";
     });
+  }
+
+  private preprocessTabular2Array() {
+    this.preparedContent = this
+      .preparedContent
+      .replace(/\\begin{tabular}({.*?})([^]*?)\\end{tabular}/g, (m, p1, p2) => {
+        return "\\begin{array}" + p1 +
+          (p2 as string).split(/(&|\\\\)/).map(function (s: string) {
+            if (s == "&" || s == "\\\\") {
+              return s;
+            } else {
+              return "\\text{" + s + "}"
+            }
+          }).join("")
+          + "\\end{array}";
+      });
   }
 
   private preprocessLaTeXTextStyle(): boolean  {

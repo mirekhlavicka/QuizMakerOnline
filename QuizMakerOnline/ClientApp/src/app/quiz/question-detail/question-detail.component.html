@@ -81,7 +81,7 @@
   </mat-expansion-panel>
 
 
-  <mat-expansion-panel [expanded]='question.solution.trim() != ""'>
+  <mat-expansion-panel [expanded]='question.solution.trim() != "" || question.id_question_type==1'>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Řešení
@@ -90,12 +90,13 @@
     <div class="question">
       <mathjax [content]='question.solution' [changeDirection]="questionsComponent.changeDirection"></mathjax>
     </div>
+    <!--<div *ngIf="question.id_question_type==1" style="margin-top:10px; font-size: 16px">
+      Správná odpověď: <b>{{question.right_answer}})</b>
+    </div>-->
+    <mathjax *ngIf="question.id_question_type==1" style="margin-top:10px" [content]='"Správná odpověď: \\textbf{" + question.right_answer + ")} " + "<!--" + question.id_question + "-->"' [changeDirection]="questionsComponent.changeDirection"></mathjax>
     <button mat-stroked-button color="primary" (click)="editQuestion(true)" matTooltip="Upravit řešení" style="margin-top:10px" [disabled]="!question.canEdit">
       <mat-icon>edit</mat-icon>
     </button>
-    <div *ngIf="question.id_question_type==1" style="margin-top:10px">
-      Správná odpověď: {{question.right_answer}})
-    </div>
   </mat-expansion-panel>
 
 </div>

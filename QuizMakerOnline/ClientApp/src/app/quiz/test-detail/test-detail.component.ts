@@ -26,6 +26,8 @@ export class TestDetailComponent implements OnInit {
   showPoints: boolean = true;
   infoBarItems: number = 1 | 2 | 4 | 8 | 16 | 32;
 
+  printing: boolean = false;
+
   constructor(private questionService: QuestionService,
     public testService: TestService,
     private location: Location,
@@ -97,6 +99,11 @@ export class TestDetailComponent implements OnInit {
   }
 
   print(): void {
+
+    this.printing = true;
+
+    setTimeout(() => { this.printing = false }, 1000);
+
     this.router.navigate(['/',
       {
         outlets: {

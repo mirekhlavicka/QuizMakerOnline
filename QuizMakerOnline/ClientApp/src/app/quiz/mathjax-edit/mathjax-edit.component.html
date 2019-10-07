@@ -48,7 +48,7 @@
           <mat-icon>control_point</mat-icon>
         </button>-->
 
-        <mat-form-field *ngIf="data.type == 1 && data.id_question_type == 1" class="edit-field-left" appearance="standard">
+        <mat-form-field *ngIf="(data.type == 1 || data.type == 2) && data.id_question_type == 1" class="edit-field-left" appearance="standard">
           <mat-label>Správná odpověď</mat-label>
           <mat-select placeholder="Správná odpověď" [(ngModel)]="data.right_answer" name="right_answer" required (selectionChange)="dirty=true">
             <mat-option value="?">?</mat-option>
