@@ -9,7 +9,7 @@
     <span class="infoItem" *ngIf="testInfoBarItemsBit(32)">{{test.enter_date | date:'mediumDate'}}</span>
   </div>
 
-  <div *ngFor="let question of testService.getQuestions(); let i = index" class="question" [class.noPoints]="question.points == 0 || !showPoints || question.id_question_type == 3">
+  <div *ngFor="let question of testService.getQuestions(); let i = index" class="question" [class.noPoints]="question.points == 0 || !showPoints || showSolution">
     <mathjax *ngIf='question.question != ""' [content]='"<b>" + (i+1).toString() + ".</b> " +  question.question'></mathjax>
     <div *ngFor="let answer of question.answers" class="answer" [class.noPoints]="answer.points == 0 || !showPoints">
       <mathjax [content]='(question.question == "" && answer.position =="a"  ? "<b>" + (i+1).toString() + ".</b> " : "") + answer.position + ") " +  answer.answer'></mathjax>
@@ -18,11 +18,11 @@
     <div class="points" [hidden]="question.points == 0 || !showPoints || question.id_question_type == 3">({{question.points}} {{question.points == 1 ? "bod" : (question.points < 5 ? "body" : "bodů")}})</div>
 
     <div [hidden]="!showSolution" class="answer">
-      <h5>Řešeni:</h5>
-      <mathjax [content]='question.solution'></mathjax>
-      <div *ngIf="question.id_question_type==1" style="margin-top:10px">
+      <h5>Řešení:</h5>
+      <mathjax [content]='question.solution + (question.id_question_type == 1 ? (question.solution != "" ? "\\\\\\\\" : "") + "Správná odpověď: \\textbf{" + question.right_answer + ")} " : "")'></mathjax>
+      <!--<div *ngIf="question.id_question_type==1" style="margin-top:10px">
         Správná odpověď: {{question.right_answer}})
-      </div>
+      </div>-->
     </div>
 
   </div>

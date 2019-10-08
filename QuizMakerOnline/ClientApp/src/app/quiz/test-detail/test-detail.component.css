@@ -90,3 +90,9 @@ mat-slide-toggle {
   font-size: 15px;
   color:rgba(0,0,0,.54) ;
 }
+
+h5 {
+  font-size: inherit;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

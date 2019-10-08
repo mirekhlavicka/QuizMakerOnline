@@ -79,11 +79,11 @@
     <div class="points" [hidden]="question.points == 0 || !showPoints || question.id_question_type == 3">({{question.points}} {{question.points == 1 ? "bod" : (question.points < 5 ? "body" : "bodů")}})</div>
 
     <div [hidden]="!showSolution" class="answer">
-      <h5>Řešeni:</h5>
-      <mathjax [content]='question.solution'></mathjax>
-      <div *ngIf="question.id_question_type==1" style="margin-top:10px">
+      <h5>Řešení:</h5>
+      <mathjax [content]='question.solution + (question.id_question_type == 1 ? (question.solution != "" ? "\\\\\\\\" : "") + "Správná odpověď: \\textbf{" + question.right_answer + ")} " : "")'></mathjax>
+      <!--<div *ngIf="question.id_question_type==1" style="margin-top:10px">
         Správná odpověď: {{question.right_answer}})
-      </div>
+      </div>-->
     </div>
 
     <div fxLayout class="question_tools">
