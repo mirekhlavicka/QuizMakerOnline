@@ -218,18 +218,32 @@ namespace QuizMakerOnline.Controllers
 
         [HttpPut]
         [Route("move")]
-        public async Task<IEnumerable<Object>> MoveAnswer(ClientAnswer ca, int direction)
+        public async Task</*IEnumerable<*/Object> MoveAnswer(ClientAnswer ca, int direction)
         {
             int id_question = ca.id_question;
+            var question = _context.Questions.SingleOrDefault(q => q.IdQuestion == id_question);
 
             var pos1 = ca.position[0];
             var pos2 = (char)(pos1 + direction);
+
+            if (question.RightAnswer[0] == pos1)
+            {
+                question.RightAnswer = pos2.ToString();
+                await _context.SaveChangesAsync();
+            }
+            else if (question.RightAnswer[0] == pos2)
+            {
+                question.RightAnswer = pos1.ToString();
+                await _context.SaveChangesAsync();
+            }
 
             await SetAnswerPosition(id_question, pos1, 'x');
             await SetAnswerPosition(id_question, pos2, pos1);
             await SetAnswerPosition(id_question, 'x', pos2);
 
-            return _context.Answers
+            return new
+            {
+                answers = _context.Answers
                 .Where(a => a.IdQuestion == id_question)
                 .OrderBy(a => a.Position)
                 .Select(a => new
@@ -238,7 +252,9 @@ namespace QuizMakerOnline.Controllers
                     position = a.Position,
                     answer = a.Answer,
                     points = a.Points
-                }).ToArray();
+                }).ToArray(),
+                right_answer = question.RightAnswer
+            };
         }
 
         private async Task<int> SetAnswerPosition(int id_question, char oldpos, char newpos)

@@ -71,7 +71,9 @@
 
         </div>
       </div>
-
+      <button *ngIf="question.id_question_type == 1" mat-icon-button [color]='answer.position ==  question.right_answer ? "primary" : "primary"' (click)="setAsRightAnswer(answer)" style="position:absolute; right: 5px; top: 5px" [matTooltip]='answer.position ==  question.right_answer ? "Správná odpověď" : "Nastavit jako správnou odpověď"'>
+        <mat-icon>{{answer.position ==  question.right_answer ? "check_circle" : "check_circle_outline"}}</mat-icon>
+      </button>
     </div>
     <div style="margin-top:10px">
       <button (click)="addAnswer()" mat-stroked-button color="accent" matTooltip='Přidat {{ question.id_question_type==1 ? "odpověď" : "podtázku"}}' [disabled]="!question.canEdit">

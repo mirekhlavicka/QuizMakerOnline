@@ -201,8 +201,8 @@ export class QuestionService {
     );
   }
 
-  moveAnswer(answer: Answer, direction: number): Observable<Answer[]> {
-    return this.http.put<Answer[]>(`${this.answersUrl}/move?direction=${direction}`, answer, httpOptions).pipe(
+  moveAnswer(answer: Answer, direction: number): Observable<any/*Answer[]*/> {
+    return this.http.put/*<Answer[]>*/(`${this.answersUrl}/move?direction=${direction}`, answer, httpOptions).pipe(
       catchError(this.handleError<Answer[]>('moveAnswer'))
     );
   }

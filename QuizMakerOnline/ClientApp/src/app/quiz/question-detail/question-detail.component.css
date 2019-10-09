@@ -44,6 +44,7 @@ mat-panel-description mat-icon {
 }
 
 .answer {
+  position:relative;
   padding: 5px;
   border-left-width: 2px;
   border-left-style: solid;

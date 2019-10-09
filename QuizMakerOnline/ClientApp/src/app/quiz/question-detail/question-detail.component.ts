@@ -165,10 +165,24 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   moveAnswer(answer: Answer, direction: number): void {
-    this.questionService.moveAnswer(answer, direction).subscribe(alist => {
-      this.question.answers = alist;
+    this.questionsComponent.changeDirection = 0;
+    this.questionService.moveAnswer(answer, direction).subscribe(res => {
+      this.question.answers = res.answers;
+      this.question.right_answer = res.right_answer;
       this._snackBar.open((this.question.id_question_type == 1 ? "Odpověď " : "Podtázka ") + "byla přesunuta", null, { duration: 3000 })
     });
+  }
+
+  setAsRightAnswer(answer: Answer): void {
+    if (this.question.right_answer == answer.position) {
+      return;
+    }
+
+    this.questionsComponent.changeDirection = 0;
+    this.question.right_answer = answer.position;
+
+    this.questionService.updateQuestion(this.question).subscribe(_ => { this._snackBar.open("Odpověď " + answer.position + ") byla nastavena jako spávná", null, { duration: 3000 }) });
+
   }
 
   delQuestion(): void {
