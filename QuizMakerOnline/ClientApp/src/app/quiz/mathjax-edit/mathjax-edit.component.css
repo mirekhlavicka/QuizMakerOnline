@@ -5,7 +5,12 @@
   padding: 2px;
 }
 
+.dragover {
+  background-color: rgba(63,81,181,.80);
+}
+
 .edit_box {
+  position: relative;
   background-color: #ffffff;
   padding: 0px;
   border-right-style: solid;

@@ -414,7 +414,7 @@ namespace QuizMakerOnline.Controllers
             if (stream == null)
                 return NotFound();
 
-            return File(stream, "application/octet-stream", "test.tex");
+            return File(stream, "application/octet-stream", String.Format("test_{0}.tex", id_test));
         }
 
         private bool IsBitSet(byte b, int pos)

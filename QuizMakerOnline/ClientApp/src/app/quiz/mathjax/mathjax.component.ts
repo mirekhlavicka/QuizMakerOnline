@@ -100,6 +100,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
 
     this.preprocessLaTeXEnums();
     this.preprocessTabular2Array();
+    this.preprocessFigure();
 
   }
 
@@ -126,6 +127,43 @@ export class MathjaxComponent implements OnChanges, OnInit {
             }
           }).join("")
           + "\\end{array}";
+      });
+  }
+
+  private preprocessFigure() {
+    this.preparedContent = this
+      .preparedContent
+      .replace(/\\begin{figure}(?:\[.*?\])?([^]*?)\\end{figure}/g, (m, p) => {
+
+        let mm = p.match(/\\includegraphics(?:\[(.*?)\])?{(.*?)}/);
+
+        if (mm) {
+          let width: number = 100;
+          let center: boolean = false;
+          let url: string = "staticfiles/images/" + mm[2];
+
+          if (mm[1]) {
+            let mmm = mm[1].match(/width=(.*?)\\(?:line|text)width/);
+            if (mmm) {
+              width = parseFloat(mmm[1]);
+              if (Number.isNaN(width)) {
+                width = 1.0;
+              }
+              width = Math.round(100 * width);
+            }
+          }
+
+          if (p.match(/\\centering/)) {
+            center = true;
+          }
+
+          return `<p class="figure ${center?'center':''}"><img src="${url}" width="${width}%"/></p>`;
+
+          //
+
+        } else {
+          return "";
+        }
       });
   }
 

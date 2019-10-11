@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, ViewChild, AfterViewInit, HostListener } fro
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Question, EditQAData } from '../questionModel';
 import { Subject } from 'rxjs';
+import { HttpEventType, HttpClient } from '@angular/common/http';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -16,8 +17,10 @@ export class MathjaxEditComponent implements OnInit, AfterViewInit {
   textChangedSubject: Subject<string> = new Subject<string>();
   newtext: string;
   dirty: boolean = false;
+  dragover: boolean = false;
 
   constructor(
+    private http: HttpClient,
     public dialogRef: MatDialogRef<MathjaxEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: EditQAData) {
     this.newtext = this.data.text;
@@ -50,6 +53,60 @@ export class MathjaxEditComponent implements OnInit, AfterViewInit {
     }
     this.dialogRef.close(this.data);
   }
+
+  insertTextAtCursor(text: string): void {
+    var doc = this.codemirror.codeMirror.getDoc();
+    var cursor = doc.getCursor();
+    doc.replaceRange(text, cursor);
+  }
+
+  public uploadFile = (files) => {
+    if (files.length === 0) {
+      return;
+    }
+
+    let fileToUpload = <File>files[0];
+    const formData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+
+    this.http.post(`api/upload/${this.data.question.id_question}`, formData, { reportProgress: true, observe: 'events' })
+      .subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          //this.progress = Math.round(100 * event.loaded / event.total);
+        } else if (event.type === HttpEventType.Response) {
+          this.insertTextAtCursor((event.body as any).latex);
+          //this.insertTextAtCursor('<img src="' + (event.body as any).relativeURL + '" width="200"/>');
+          //this.message = 'Upload success.';
+          //this.onUploadFinished.emit(event.body);
+        }
+      });
+  }
+
+  //Drop listener
+  @HostListener('drop', ['$event']) public ondrop(evt) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    let files = evt.dataTransfer.files;
+    if (files.length > 0) {
+      this.uploadFile(files)
+    }
+    this.dragover = false;
+  }
+
+  //Dragover listener
+  @HostListener('dragover', ['$event']) onDragOver(evt) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    this.dragover = true;
+  }
+
+  //Dragleave listener
+  @HostListener('dragleave', ['$event']) public onDragLeave(evt) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    this.dragover = false;
+  }
+
 
   @HostListener('window:keyup.esc') onKeyUp() {
     if (this.confirmDiscardChanges()) {

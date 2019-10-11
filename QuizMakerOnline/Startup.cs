@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 //using Microsoft.AspNetCore.HttpsPolicy;
 
 namespace QuizMakerOnline
@@ -74,6 +76,13 @@ namespace QuizMakerOnline
 
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"StaticFiles")),
+                RequestPath = new PathString("/StaticFiles")
+            });
+
             app.UseSpaStaticFiles();
 
             app.UseCookiePolicy();

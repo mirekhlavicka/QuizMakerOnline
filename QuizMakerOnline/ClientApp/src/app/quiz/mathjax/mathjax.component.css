@@ -75,3 +75,11 @@ ul.enumerate {
 li.hasorder {
   list-style:none;
 }
+
+p.figure img {
+  /*max-height:200px;*/
+}
+
+p.center {
+  text-align: center;
+}
