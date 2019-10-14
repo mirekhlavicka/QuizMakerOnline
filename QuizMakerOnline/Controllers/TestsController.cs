@@ -14,6 +14,7 @@ using QuizMakerOnline.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using System.IO.Compression;
 
 namespace QuizMakerOnline.Controllers
 {
@@ -362,6 +363,17 @@ namespace QuizMakerOnline.Controllers
         [Route("DownloadTestLaTeX")]
         public IActionResult DownloadTestLaTeX(int id_test, int style, bool showPoints, bool showSolution, byte infoBarItems)
         {
+            MemoryStream stream = CreateTestSteam(id_test, style, showPoints, showSolution, infoBarItems);
+
+            if (stream == null)
+                return NotFound();
+
+            return File(stream, "application/octet-stream", String.Format("test_{0}.tex", id_test));
+        }
+
+
+        private MemoryStream CreateTestSteam(int id_test, int style, bool showPoints, bool showSolution, byte infoBarItems)
+        {
             var test = _context
                 .Tests
                 .Include(t => t.TestQuestions)
@@ -370,7 +382,7 @@ namespace QuizMakerOnline.Controllers
                 .Include(t => t.IdCourseNavigation)
                 .SingleOrDefault(t => t.IdTest == id_test);
 
-            string[] barItems = 
+            string[] barItems =
                 {
                     id_test.ToString(),
                     test.IdCourseNavigation.Name,
@@ -411,10 +423,7 @@ namespace QuizMakerOnline.Controllers
 
             MemoryStream stream = TransformXMLToTex(xml, "ToLaTeX" + style);
 
-            if (stream == null)
-                return NotFound();
-
-            return File(stream, "application/octet-stream", String.Format("test_{0}.tex", id_test));
+            return stream;
         }
 
         private bool IsBitSet(byte b, int pos)
@@ -439,6 +448,41 @@ namespace QuizMakerOnline.Controllers
             }
             return stream;
         }
+
+        [HttpGet]
+        [Route("DownloadImages")]
+        public IActionResult DownloadImages()
+        {
+
+            var outStream = new MemoryStream();
+
+            using (var archive = new ZipArchive(outStream, ZipArchiveMode.Create, true))
+            {
+                AddQuestionFolderToZip(3225, archive);
+                AddQuestionFolderToZip(1619, archive);
+
+                using (Stream fileStreamInZip = archive.CreateEntry("test_660.tex").Open())
+                    CreateTestSteam(660, 1, true, false, 254 ).CopyTo(fileStreamInZip);
+            }
+
+            outStream.Seek(0, SeekOrigin.Begin);
+            return File(outStream, "application/octet-stream", "test_660.zip");
+        }
+
+        private void AddQuestionFolderToZip(int id_question, ZipArchive archive)
+        {
+            var folderName = Path.Combine("StaticFiles", String.Format("Images\\{0}\\", id_question));
+            var inputDirectory = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+            foreach (var filePath in System.IO.Directory.GetFiles(inputDirectory, "*.*", System.IO.SearchOption.AllDirectories))
+            {
+                var relativePath = id_question.ToString() + "\\" + filePath.Replace(inputDirectory, string.Empty);
+                using (Stream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                using (Stream fileStreamInZip = archive.CreateEntry(relativePath).Open())
+                    fileStream.CopyTo(fileStreamInZip);
+            }
+        }
+
 
         public class ClientTest
         {

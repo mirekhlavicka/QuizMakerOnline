@@ -138,7 +138,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
         let mm = p.match(/\\includegraphics(?:\[(.*?)\])?{(.*?)}/);
 
         if (mm) {
-          let width: number = 100;
+          let width: number = 0;
           let center: boolean = false;
           let url: string = "staticfiles/images/" + mm[2];
 
@@ -147,7 +147,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
             if (mmm) {
               width = parseFloat(mmm[1]);
               if (Number.isNaN(width)) {
-                width = 1.0;
+                width = 0;
               }
               width = Math.round(100 * width);
             }
@@ -157,7 +157,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
             center = true;
           }
 
-          return `<p class="figure ${center?'center':''}"><img src="${url}" width="${width}%"/></p>`;
+          return `<p class="figure ${center ? 'center' : ''}"><img src="${url}" ${width != 0 ? ' width="' + width + '%"' : ''}/></p>`;
 
           //
 
