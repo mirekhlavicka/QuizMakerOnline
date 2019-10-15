@@ -80,6 +80,10 @@ p.figure img {
   max-width:100%;
 }
 
+.acrobat {
+  max-width:512px!important;
+}
+
 p.center {
   text-align: center;
 }

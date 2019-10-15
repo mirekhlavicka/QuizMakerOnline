@@ -5,6 +5,7 @@
 
 <xsl:template match="/">\documentclass[12pt]{article}
 \usepackage{amsfonts} %% Kvuli dvojitemu R
+\usepackage{amsmath}
 \usepackage[czech]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -53,7 +54,8 @@
 <xsl:template match="Questions">
 
 \bigskip
-{\bf <xsl:value-of select="position()"/>.} <xsl:value-of select="@question"/><xsl:if test="@question!='' and @id_question_type!=2">\\</xsl:if>
+{\bf <xsl:value-of select="position()"/>.} <xsl:value-of select="@question"/><xsl:if test="@question!='' and @id_question_type!=2">~\\
+</xsl:if>
 <xsl:if test="@id_question_type!=2">
 <xsl:apply-templates select="Answers"/>
 </xsl:if>
@@ -78,6 +80,7 @@
 <xsl:when test="@points &lt; 5">body</xsl:when>
 <xsl:otherwise>bodů</xsl:otherwise>
 </xsl:choose>)
-</xsl:if><xsl:if test="position()!=last()">\\</xsl:if>
+</xsl:if><xsl:if test="position()!=last()">~\\
+</xsl:if>
 </xsl:template>
 </xsl:stylesheet>

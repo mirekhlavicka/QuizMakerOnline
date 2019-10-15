@@ -101,6 +101,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
     this.preprocessLaTeXEnums();
     this.preprocessTabular2Array();
     this.preprocessFigure();
+    this.preprocessIncludegraphics();
 
   }
 
@@ -157,14 +158,44 @@ export class MathjaxComponent implements OnChanges, OnInit {
             center = true;
           }
 
-          return `<p class="figure ${center ? 'center' : ''}"><img src="${url}" ${width != 0 ? ' width="' + width + '%"' : ''}/></p>`;
-
-          //
+          return `<p class="figure ${center ? 'center' : ''}">${this.getImageHtml(url, width)}</p>`;
 
         } else {
           return "";
         }
       });
+  }
+
+  private preprocessIncludegraphics() {
+    this.preparedContent = this
+      .preparedContent
+      .replace(/\\includegraphics(?:\[(.*?)\])?{(.*?)}/g, (m, p1, p2) => {
+
+        let width: number = 0;
+        let url: string = "staticfiles/images/" + p2;
+
+        if (p1) {
+          let m = p1.match(/width=(.*?)\\(?:line|text)width/);
+          if (m) {
+            width = parseFloat(m[1]);
+            if (Number.isNaN(width)) {
+              width = 0;
+            }
+            width = Math.round(100 * width);
+          }
+        }
+
+        return `<p class="figure">${this.getImageHtml(url, width)}</p>`;
+
+      });
+  }
+
+  private getImageHtml(url: string, width: number): string {
+    if (url.endsWith(".pdf")) {
+      return `<a href="${url}" target="_blank" title="Klikněte pro zobrazení náhledu"><img class="acrobat" src="/Acrobat_Reader.png" width="128" height="128"/></a>`;
+    } else {
+      return `<img src="${url}" ${width != 0 ? ' width="' + width + '%"' : ''}/>`;
+    }
   }
 
   private preprocessLaTeXTextStyle(): boolean  {

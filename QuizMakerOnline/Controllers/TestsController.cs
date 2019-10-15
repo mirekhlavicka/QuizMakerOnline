@@ -363,18 +363,7 @@ namespace QuizMakerOnline.Controllers
         [Route("DownloadTestLaTeX")]
         public IActionResult DownloadTestLaTeX(int id_test, int style, bool showPoints, bool showSolution, byte infoBarItems)
         {
-            MemoryStream stream = CreateTestSteam(id_test, style, showPoints, showSolution, infoBarItems);
-
-            if (stream == null)
-                return NotFound();
-
-            return File(stream, "application/octet-stream", String.Format("test_{0}.tex", id_test));
-        }
-
-
-        private MemoryStream CreateTestSteam(int id_test, int style, bool showPoints, bool showSolution, byte infoBarItems)
-        {
-            var test = _context
+            Tests test = _context
                 .Tests
                 .Include(t => t.TestQuestions)
                 .ThenInclude(tq => tq.IdQuestionNavigation)
@@ -382,6 +371,42 @@ namespace QuizMakerOnline.Controllers
                 .Include(t => t.IdCourseNavigation)
                 .SingleOrDefault(t => t.IdTest == id_test);
 
+            MemoryStream stream = CreateTestSteam(id_test, style, showPoints, showSolution, infoBarItems, test);
+
+            if (stream == null)
+                return NotFound();
+
+            if (test.TestQuestions.Any(tq => Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("StaticFiles", Path.Combine("Images", tq.IdQuestion.ToString()))))))
+            {
+                var outStream = new MemoryStream();
+
+                using (var archive = new ZipArchive(outStream, ZipArchiveMode.Create, true))
+                {
+                    foreach (var id_question in test
+                        .TestQuestions
+                        .Where(tq => Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("StaticFiles", Path.Combine("Images", tq.IdQuestion.ToString())))))
+                        .Select(tq => tq.IdQuestion))
+                    {
+                        AddQuestionFolderToZip(id_question, archive);
+                    }
+
+                    using (Stream fileStreamInZip = archive.CreateEntry(String.Format("test_{0}.tex", id_test)).Open())
+                        stream.CopyTo(fileStreamInZip);
+                }
+
+                outStream.Seek(0, SeekOrigin.Begin);
+                return File(outStream, "application/octet-stream", String.Format("test_{0}.zip", id_test));
+
+            }
+            else
+            {
+                return File(stream, "application/octet-stream", String.Format("test_{0}.tex", id_test));
+            }            
+        }
+
+
+        private MemoryStream CreateTestSteam(int id_test, int style, bool showPoints, bool showSolution, byte infoBarItems, Tests test)
+        {
             string[] barItems =
                 {
                     id_test.ToString(),
@@ -449,25 +474,25 @@ namespace QuizMakerOnline.Controllers
             return stream;
         }
 
-        [HttpGet]
-        [Route("DownloadImages")]
-        public IActionResult DownloadImages()
-        {
+        //[HttpGet]
+        //[Route("DownloadImages")]
+        //public IActionResult DownloadImages()
+        //{
 
-            var outStream = new MemoryStream();
+        //    var outStream = new MemoryStream();
 
-            using (var archive = new ZipArchive(outStream, ZipArchiveMode.Create, true))
-            {
-                AddQuestionFolderToZip(3225, archive);
-                AddQuestionFolderToZip(1619, archive);
+        //    using (var archive = new ZipArchive(outStream, ZipArchiveMode.Create, true))
+        //    {
+        //        AddQuestionFolderToZip(3225, archive);
+        //        AddQuestionFolderToZip(1619, archive);
 
-                using (Stream fileStreamInZip = archive.CreateEntry("test_660.tex").Open())
-                    CreateTestSteam(660, 1, true, false, 254 ).CopyTo(fileStreamInZip);
-            }
+        //        //using (Stream fileStreamInZip = archive.CreateEntry("test_660.tex").Open())
+        //        //    CreateTestSteam(660, 1, true, false, 254 ).CopyTo(fileStreamInZip);
+        //    }
 
-            outStream.Seek(0, SeekOrigin.Begin);
-            return File(outStream, "application/octet-stream", "test_660.zip");
-        }
+        //    outStream.Seek(0, SeekOrigin.Begin);
+        //    return File(outStream, "application/octet-stream", "test_660.zip");
+        //}
 
         private void AddQuestionFolderToZip(int id_question, ZipArchive archive)
         {
