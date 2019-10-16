@@ -18,7 +18,7 @@ purple-green.css
 
 .CodeMirror {
   height: 100% !important;
-  font-family: inherit;
+  /*font-family: inherit;*/
 }
 
 .cm-s-eclipse span.cm-number {

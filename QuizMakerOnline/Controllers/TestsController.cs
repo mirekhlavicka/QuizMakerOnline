@@ -361,6 +361,7 @@ namespace QuizMakerOnline.Controllers
 
         [HttpGet]
         [Route("DownloadTestLaTeX")]
+        [AllowAnonymous]
         public IActionResult DownloadTestLaTeX(int id_test, int style, bool showPoints, bool showSolution, byte infoBarItems)
         {
             Tests test = _context

@@ -23,13 +23,14 @@
     <mat-icon>delete_forever</mat-icon>
   </button>
 
-
   <mat-menu #menuDownloadTex="matMenu">
-    <a mat-menu-item [href]='"/api/tests/DownloadTestLaTeX?style=1&showPoints=" + showPoints + "&showSolution=" + showSolution + "&id_test=" + test?.id_test + "&infoBarItems=" + infoBarItems' download>
+    <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item" [checked]="openInOverleaf" (change)="openInOverleaf = $event.checked" matTooltip="Otevřít v Overleaf.com"><img width="75" height="25" src="/overleaf_wide_colour_light_bg.png" style="position: relative; top: 3px; left: 20px"/></mat-checkbox>
+
+    <a mat-menu-item [href]='getDownloadURL(1)' [attr.download]="openInOverleaf ? null : ''" [target]="openInOverleaf ? '_blank' : '_self'">
       <mat-icon>format_align_left</mat-icon>
       <span>Výchozí Styl</span>
     </a>
-    <a mat-menu-item [href]='"/api/tests/DownloadTestLaTeX?style=2&showPoints=" + showPoints + "&showSolution=" + showSolution + "&id_test=" + test?.id_test + "&infoBarItems=" + infoBarItems' download>
+    <a mat-menu-item [href]='getDownloadURL(2)' [attr.download]="openInOverleaf ? null : ''" [target]="openInOverleaf ? '_blank' : '_self'">
       <mat-icon>format_list_numbered</mat-icon>
       <span>Styl enumerate</span>
     </a>

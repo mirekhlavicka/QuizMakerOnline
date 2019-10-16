@@ -28,6 +28,8 @@ export class TestDetailComponent implements OnInit {
 
   printing: boolean = false;
 
+  openInOverleaf: boolean = false;
+
   constructor(private questionService: QuestionService,
     public testService: TestService,
     private location: Location,
@@ -110,6 +112,23 @@ export class TestDetailComponent implements OnInit {
           'print': ['printtest', { showSolution: this.showSolution, showPoints: this.showPoints, infoBarItems: this.infoBarItems }]
         }
       }], { skipLocationChange: true });
+  }
+
+  getDownloadURL(style: number): string {
+    let url = location.protocol/*"https:"*/ + "//" +
+      location.hostname/*"math.fme.vutbr.cz"*/ +
+      (location.port ? ":" + location.port : "")/*":44302"*/ +
+      "/api/tests/DownloadTestLaTeX?style=" + style +
+      "&showPoints=" + this.showPoints +
+      "&showSolution=" + this.showSolution +
+      "&id_test=" + (this.test ? this.test.id_test : 0) +
+      "&infoBarItems=" + this.infoBarItems;
+
+    if (this.openInOverleaf) {
+      return "https://www.overleaf.com/docs?snip_uri=" + encodeURIComponent(url) + "&snip_name=test_" + (this.test ? this.test.id_test : 0);
+    } else {
+      return url;
+    }
   }
 
   goBack(): void {
