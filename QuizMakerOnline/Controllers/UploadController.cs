@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using ceTe.DynamicPDF.Rasterizer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,6 +56,24 @@ namespace QuizMakerOnline.Controllers
             {
                 return StatusCode(500, "Internal server error");
             }
+        }
+
+        [HttpGet]
+        [Route("PdfRasterize/{id_question}/{fileName}")]
+        //[AllowAnonymous]
+        public IActionResult PdfRasterize(int id_question, string fileName)
+        {
+            var pathToPDF = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles\\Images\\" + id_question + "\\" +  fileName).ToLower();
+            var pathToPNG = pathToPDF.Replace(".pdf", ".png");
+
+
+            if (!System.IO.File.Exists(pathToPNG))
+            {
+                PdfRasterizer rasterizer = new PdfRasterizer(pathToPDF);
+                rasterizer.Draw(pathToPNG, ImageFormat.Png, ImageSize.Dpi300);
+            }
+
+            return PhysicalFile(pathToPNG, "image/png");
         }
     }
 }
