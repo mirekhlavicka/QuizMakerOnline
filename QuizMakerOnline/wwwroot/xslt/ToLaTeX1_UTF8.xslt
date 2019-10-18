@@ -67,8 +67,12 @@
 </xsl:choose>)
 </xsl:if>
 <xsl:if test="/Tests/@showSolution='true'">
-{\bf Řešení:}
+{\bf Řešení:}\\<xsl:if test="@id_question_type=1">
+Správná odpověď: {\bf <xsl:value-of select="@right_answer"/>)}\\
+</xsl:if>
 <xsl:value-of select="@solution"/><xsl:text>
+
+
 </xsl:text>
 </xsl:if>
 </xsl:template>

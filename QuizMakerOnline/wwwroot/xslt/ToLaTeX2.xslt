@@ -5,6 +5,7 @@
 
 <xsl:template match="/">\documentclass[12pt]{article}
 \usepackage{amsfonts} %% Kvuli dvojitemu R
+\usepackage{amsmath}
 \usepackage[czech]{babel}
 \usepackage[cp1250]{inputenc}
 \usepackage{graphicx}
@@ -54,7 +55,8 @@
 
 <xsl:template match="Questions">
 \item
-<xsl:value-of select="@question"/><xsl:if test="@question!='' and @id_question_type!=2">\\</xsl:if>
+<xsl:value-of select="@question"/><xsl:if test="@question!='' and @id_question_type!=2">~\\
+</xsl:if>
 <xsl:if test="@id_question_type!=2">
 <xsl:apply-templates select="Answers"/>
 </xsl:if>
@@ -66,7 +68,9 @@
 </xsl:choose>)
 </xsl:if>
 <xsl:if test="/Tests/@showSolution='true'">
-{\bf Øešení:}
+{\bf Øešení:}<xsl:if test="@id_question_type=1">
+~\\Správná odpovìï: {\bf <xsl:value-of select="@right_answer"/>)}\\
+</xsl:if>
 <xsl:value-of select="@solution"/><xsl:text>
 
 
@@ -81,6 +85,7 @@
 <xsl:when test="@points &lt; 5">body</xsl:when>
 <xsl:otherwise>bodù</xsl:otherwise>
 </xsl:choose>)
-</xsl:if><xsl:if test="position()!=last()">\\</xsl:if>
+</xsl:if><xsl:if test="position()!=last()">~\\
+</xsl:if>
 </xsl:template>
 </xsl:stylesheet>

@@ -52,7 +52,7 @@ namespace QuizMakerOnline.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 return StatusCode(500, "Internal server error");
             }
@@ -63,8 +63,8 @@ namespace QuizMakerOnline.Controllers
         //[AllowAnonymous]
         public IActionResult PdfRasterize(int id_question, string fileName)
         {
-            var pathToPDF = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles\\Images\\" + id_question + "\\" +  fileName).ToLower();
-            var pathToPNG = pathToPDF.Replace(".pdf", ".png");
+            var pathToPDF = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles\\Images\\" + id_question + "\\" + fileName).ToLower();
+            var pathToPNG = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles\\Images\\" + id_question + "\\pdf2img_" + fileName.Replace(".pdf", ".png")).ToLower(); 
 
 
             if (!System.IO.File.Exists(pathToPNG))

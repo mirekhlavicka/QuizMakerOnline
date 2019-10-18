@@ -35,7 +35,7 @@
 
 .question {
   padding: 5px;
-  border-left-width: 2px;
+  border-left-width: 3px;
   border-left-style: solid;
   border-left-color: rgba(0, 0, 0, 0);
   border-bottom-style: solid;
@@ -50,8 +50,8 @@
 
 
 .question:hover {
-  background-color: #f7f7f7;
-  border-left-width: 2px;
+  /*background-color: #f7f7f7;*/
+  border-left-width: 3px;
   border-left-style: solid;
   border-left-color: #3f51b5;
 }

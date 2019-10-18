@@ -56,6 +56,11 @@ export class TestDetailComponent implements OnInit {
       this.showPoints = (stemp == "true");
     }
 
+    stemp = localStorage.getItem("test_openInOverleaf");
+    if (stemp) {
+      this.openInOverleaf = (stemp == "true");
+    }
+
     this.getData();
   }
 
@@ -212,5 +217,9 @@ export class TestDetailComponent implements OnInit {
   onShowChange(): void {
     localStorage.setItem("test_showPoints", this.showPoints.toString());
     localStorage.setItem("test_showSolution", this.showSolution.toString());
+  }
+
+  onOpenInOverleafChange(): void {
+    localStorage.setItem("test_openInOverleaf", this.openInOverleaf.toString());
   }
 }

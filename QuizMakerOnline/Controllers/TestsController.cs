@@ -438,6 +438,7 @@ namespace QuizMakerOnline.Controllers
                         new XAttribute("id_question_type", q.IdQuestionType),
                         new XAttribute("solution", q.Solution),
                         new XAttribute("points", q.Points),
+                        new XAttribute("right_answer", q.RightAnswer),
                         q.Answers.OrderBy(a => a.Position).Select(a => new XElement("Answers",
                             new XAttribute("position", a.Position),
                             new XAttribute("answer", a.Answer),
@@ -502,6 +503,11 @@ namespace QuizMakerOnline.Controllers
 
             foreach (var filePath in System.IO.Directory.GetFiles(inputDirectory, "*.*", System.IO.SearchOption.AllDirectories))
             {
+                if (filePath.Contains("pdf2img_"))
+                {
+                    continue;
+                }
+
                 var relativePath = id_question.ToString() + "\\" + filePath.Replace(inputDirectory, string.Empty);
                 using (Stream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 using (Stream fileStreamInZip = archive.CreateEntry(relativePath).Open())

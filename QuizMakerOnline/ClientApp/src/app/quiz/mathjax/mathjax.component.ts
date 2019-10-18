@@ -158,7 +158,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
             center = true;
           }
 
-          return `<p class="figure ${center ? 'center' : ''}">${this.getImageHtml(url, width)}</p>`;
+          return `<div class="figure ${center ? 'center' : ''}">${this.getImageHtml(url, width)}</div>`;
 
         } else {
           return "";
@@ -192,7 +192,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
 
   private getImageHtml(url: string, width: number): string {
     if (url.endsWith(".pdf")) {
-      return `<a href="${url}" target="_blank" title="Klikněte pro zobrazení PDF"><img class="acrobat" src="/api/upload/PdfRasterize/${url.replace("staticfiles/images/", "")}" ${width != 0 ? ' width="' + width + '%"' : ''}/></a>`;
+      return `<div class="hideDPDF" ></div><a href="${url}" target="_blank" title="Klikněte pro zobrazení PDF"><img class="acrobat" src="/api/upload/PdfRasterize/${url.replace("staticfiles/images/", "")}" ${width != 0 ? ' width="' + width + '%"' : ''}/></a>`;
     } else {
       return `<img src="${url}" ${width != 0 ? ' width="' + width + '%"' : ''}/>`;
     }

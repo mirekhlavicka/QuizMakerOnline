@@ -24,7 +24,7 @@
   </button>
 
   <mat-menu #menuDownloadTex="matMenu">
-    <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item" [checked]="openInOverleaf" (change)="openInOverleaf = $event.checked" matTooltip="Otevřít v Overleaf.com"><img width="75" height="25" src="/overleaf_wide_colour_light_bg.png" style="position: relative; top: 3px; left: 20px"/></mat-checkbox>
+    <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item" [(ngModel)]="openInOverleaf" (change)="onOpenInOverleafChange()" matTooltip="Otevřít v Overleaf.com"><img width="75" height="25" src="/overleaf_wide_colour_light_bg.png" style="position: relative; top: 3px; left: 20px"/></mat-checkbox>
 
     <a mat-menu-item [href]='getDownloadURL(1)' [attr.download]="openInOverleaf ? null : ''" [target]="openInOverleaf ? '_blank' : '_self'">
       <mat-icon>format_align_left</mat-icon>
