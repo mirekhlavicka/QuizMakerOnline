@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.IO.Compression;
+using System.Security.Cryptography;
 
 namespace QuizMakerOnline.Controllers
 {
@@ -81,6 +82,7 @@ namespace QuizMakerOnline.Controllers
                 group = t.Group,
                 year = t.Year,
                 enter_date = t.EnterDate,
+                sid = CalculateHash(t.IdTest),
                 questions = t.TestQuestions
                 .OrderBy(tq => tq.Order)
                 .Select(tq => new
@@ -362,8 +364,16 @@ namespace QuizMakerOnline.Controllers
         [HttpGet]
         [Route("DownloadTestLaTeX")]
         [AllowAnonymous]
-        public IActionResult DownloadTestLaTeX(int id_test, int style, bool showPoints, bool showSolution, byte infoBarItems)
+        public IActionResult DownloadTestLaTeX(int id_test, int style, bool showPoints, bool showSolution, byte infoBarItems, string sid = "")
         {
+            if (!Request.HttpContext.User.Identity.IsAuthenticated)
+            {
+                if (sid != CalculateHash(id_test))
+                {
+                    return Unauthorized();
+                }
+            }
+
             Tests test = _context
                 .Tests
                 .Include(t => t.TestQuestions)
@@ -515,6 +525,17 @@ namespace QuizMakerOnline.Controllers
             }
         }
 
+        public static string CalculateHash(int id)
+        {
+            string input = DateTime.Today.ToString("yyMMdd") + "QMO" + id;
+
+            using (var algorithm = MD5.Create()) //SHA512 SHA256 MD5
+            {
+                var hashedBytes = algorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+        }
 
         public class ClientTest
         {

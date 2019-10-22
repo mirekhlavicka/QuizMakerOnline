@@ -4,6 +4,7 @@ import { Component, OnInit, Input, OnChanges, AfterViewInit, ElementRef, ViewEnc
 import { SimpleChanges } from '@angular/core';
 import { globals } from '../../globals';
 import { forEach } from '@angular/router/src/utils/collection';
+//import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'mathjax',
@@ -16,10 +17,11 @@ export class MathjaxComponent implements OnChanges, OnInit {
   @Input() content: string;
   @Input() changeDirection: number = 0;
   preparedContent: string;
+  //safeHtml: SafeHtml;
   typesetting: boolean = false;
   showLoader: boolean = false;
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef/*, private sanitizer: DomSanitizer*/) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['content']) {
@@ -103,6 +105,8 @@ export class MathjaxComponent implements OnChanges, OnInit {
     this.preprocessFigure();
     this.preprocessIncludegraphics();
 
+    //this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(this.preparedContent);
+    this.el.nativeElement.children[0].innerHTML = this.preparedContent;
   }
 
   private preprocessLaTeXEnums() {
@@ -192,9 +196,9 @@ export class MathjaxComponent implements OnChanges, OnInit {
 
   private getImageHtml(url: string, width: number): string {
     if (url.endsWith(".pdf")) {
-      return `<div class="hideDPDF" ></div><a href="${url}" target="_blank" title="Klikněte pro zobrazení PDF"><img class="acrobat" src="/api/upload/PdfRasterize/${url.replace("staticfiles/images/", "")}" ${width != 0 ? ' width="' + width + '%"' : ''}/></a>`;
+      return `<div class="hideDPDF"><a href="${url}" target="_blank" draggable="false" title="Klikněte pro zobrazení PDF souboru">${url.replace(/staticfiles\/images\/[0-9]*\//, "")}</a></div><img draggable="false" src="/api/upload/PdfRasterize/${url.replace("staticfiles/images/", "")}" ${width != 0 ? ' width="' + width + '%"' : ''}/>`;
     } else {
-      return `<img src="${url}" ${width != 0 ? ' width="' + width + '%"' : ''}/>`;
+      return `<img draggable="false" src="${url}" ${width != 0 ? ' width="' + width + '%"' : ''}/>`;
     }
   }
 

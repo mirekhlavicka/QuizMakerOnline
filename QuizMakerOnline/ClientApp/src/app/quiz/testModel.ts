@@ -14,6 +14,7 @@ export class Test {
   course_name?: string;
   semester_name?: string;
   canEdit?: boolean;
+  sid?: string;
 }
 
 export interface EditTest {

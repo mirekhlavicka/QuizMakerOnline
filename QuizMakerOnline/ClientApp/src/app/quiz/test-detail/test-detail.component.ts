@@ -130,7 +130,7 @@ export class TestDetailComponent implements OnInit {
       "&infoBarItems=" + this.infoBarItems;
 
     if (this.openInOverleaf) {
-      return "https://www.overleaf.com/docs?snip_uri=" + encodeURIComponent(url) + "&snip_name=test_" + (this.test ? this.test.id_test : 0);
+      return "https://www.overleaf.com/docs?snip_uri=" + encodeURIComponent(url + "&sid=" + (this.test ? this.test.sid : "")) + "&snip_name=test_" + (this.test ? this.test.id_test : 0);
     } else {
       return url;
     }
