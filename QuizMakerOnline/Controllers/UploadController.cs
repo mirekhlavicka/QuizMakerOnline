@@ -39,11 +39,7 @@ namespace QuizMakerOnline.Controllers
 
                     return Ok(new
                     {
-                        latex = String.Format(@"\begin{{figure}}[h!]
-\includegraphics[width=0.75\linewidth]{{{0}}}
-\centering
-\end{{figure}}
-",fileName.Replace("\\", "/")),
+                        latex = getLatexImage(fileName),
                         relativeURL
                     });
                 }
@@ -74,6 +70,16 @@ namespace QuizMakerOnline.Controllers
             }
 
             return PhysicalFile(pathToPNG, "image/png");
+        }
+
+
+        public static string getLatexImage(string fileName)
+        {
+            return String.Format(@"\begin{{figure}}[h!]
+\includegraphics[width=0.75\linewidth]{{{0}}}
+\centering
+\end{{figure}}
+", fileName.Replace("\\", "/"));
         }
     }
 }

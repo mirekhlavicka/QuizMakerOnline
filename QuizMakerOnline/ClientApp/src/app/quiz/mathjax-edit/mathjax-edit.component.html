@@ -70,14 +70,29 @@
   <div class="edit_container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.0%" fxLayoutAlign="center" [class.dragover]="dragover">
     <div fxFlex="50%" class="edit_box">
       <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
-      <button mat-icon-button (click)='file.click()' style="position:absolute; right:0px; bottom: 0px; z-index: 1000" matTooltip="Vložit obrázek">
+      <!--<button mat-icon-button (click)='file.click()' style="position:absolute; right:0px; bottom: 0px; z-index: 1000" matTooltip="Vložit obrázek">
+        <mat-icon>add_photo_alternate</mat-icon>
+      </button>-->
+
+      <button mat-icon-button [matMenuTriggerFor]="menuInsertImage" style="position:absolute; right:0px; bottom: 0px; z-index: 1000" matTooltip="Vložit obrázek">
         <mat-icon>add_photo_alternate</mat-icon>
       </button>
+      <mat-menu #menuInsertImage="matMenu">
+        <button mat-menu-item (click)='file.click()'>
+          <mat-icon>folder</mat-icon>
+          <span>Vložit z disku  </span>
+        </button>
+        <button mat-menu-item (click)="selectFile()">
+          <mat-icon>cloud</mat-icon>
+          <span>Vybrat na serveru</span>
+        </button>
+      </mat-menu>
+
 
       <!--<textarea matInput placeholder="LaTeX" [ngModel]="data.text" (ngModelChange)='textChanged($event)' cdkTextareaAutosize
-      cdkAutosizeMinRows="10"
-      cdkFocusInitial
-      spellcheck="false"></textarea>-->
+  cdkAutosizeMinRows="10"
+  cdkFocusInitial
+  spellcheck="false"></textarea>-->
 
       <ngx-codemirror #codemirror [ngModel]="data.text" (ngModelChange)='textChanged($event)' [autoFocus]="true"
                       [options]="{
@@ -90,13 +105,13 @@
   }"></ngx-codemirror>
 
       <!--lineNumbers: false,
-        theme: 'material',
-      theme: 'cobalt',
+    theme: 'material',
+  theme: 'cobalt',
 
-        mode: 'stex',
-        inMathMode: true
-        lineSeparator : '#@',
-            -->
+    mode: 'stex',
+    inMathMode: true
+    lineSeparator : '#@',
+        -->
     </div>
     <div fxFlex="50%" class="edit_box_preview">
       <mathjax [content]='newtext'></mathjax>

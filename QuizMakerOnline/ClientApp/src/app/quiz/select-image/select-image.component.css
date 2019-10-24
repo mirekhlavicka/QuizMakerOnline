@@ -1,0 +1,22 @@
+.mat-dialog-content {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #f0f0f0;
+}
+
+.imgContainer {
+  display: inline-block;
+  margin:4px;
+  padding:5px;
+  background-color: #fafafa;
+}
+
+  .imgContainer:hover {
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.35);
+  }
+
+  .imgContainer img {
+    max-height: 200px;
+    max-width: 400px;
+    vertical-align: middle;
+  }

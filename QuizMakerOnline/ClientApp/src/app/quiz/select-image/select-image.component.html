@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Výběr obrázku</h1>
+<div mat-dialog-content>
+
+  <div *ngFor="let img of images" class="imgContainer">
+    <a href="javascript:void(0)" (click)="onSelectClick(img)">
+    <!--{{img.fileName}}-->
+      <img [src]="getImgUrl(img.fileName)" />
+    </a>   
+  </div>
+
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()" >Zrušit</button>
+</div>

@@ -26,6 +26,7 @@ export class QuestionService {
   private questiondifficultiesUrl = 'api/questions/questiondifficulties';
   private questionstateUrl = 'api/questions/questionstate';
   private questionhistoryUrl = 'api/questions/history';
+  private questionimagesUrl = 'api/questions/images';
 
   private answersUrl = 'api/answers';
 
@@ -213,6 +214,14 @@ export class QuestionService {
         catchError(this.handleError<Test[]>('getHistoryTests', []))
       );
   }
+
+  getImages(id_question: number): Observable<any[]> {
+    return this.http.get<Test[]>(`${this.questionimagesUrl}/${id_question}`)
+      .pipe(
+        catchError(this.handleError<Test[]>('getImages', []))
+      );
+  }
+
 
   /**
    * Handle Http operation that failed.

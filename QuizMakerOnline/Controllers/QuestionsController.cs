@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using QuizMakerOnline.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using System.IO;
 
 namespace QuizMakerOnline.Controllers
 {
@@ -565,6 +566,25 @@ namespace QuizMakerOnline.Controllers
                 canEdit = t.IdUser == current_id_user
             })
             .ToList());
+        }
+
+        [HttpGet("images/{id_question}")]
+        public ActionResult<IEnumerable<Object>> GetImages(int id_question)
+        {
+            var directoryTemplate = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles\\Images\\{0}");
+            var directoryRoot = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles\\Images\\");
+
+            return _context.Questions
+                .Select(q => String.Format(directoryTemplate, q.IdQuestion))
+                .Where(p => Directory.Exists(p))
+                .SelectMany(p => System.IO.Directory.GetFiles(p))
+                .Where(p => !p.Contains("pdf2img_"))
+                .Select(fn => new
+                {
+                    fileName = fn.Replace(directoryRoot, "").Replace("\\", "/"),
+                    latex = UploadController.getLatexImage(fn.Replace(directoryRoot, ""))
+                })
+                .ToList();
         }
 
 

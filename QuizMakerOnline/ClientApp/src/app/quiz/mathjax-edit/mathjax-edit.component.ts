@@ -4,6 +4,7 @@ import { Question, EditQAData } from '../questionModel';
 import { Subject } from 'rxjs';
 import { HttpEventType, HttpClient } from '@angular/common/http';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { SelectImageComponent } from '../select-image/select-image.component';
 
 @Component({
   selector: 'app-mathjax-edit',
@@ -18,9 +19,11 @@ export class MathjaxEditComponent implements OnInit, AfterViewInit {
   newtext: string;
   dirty: boolean = false;
   dragover: boolean = false;
+  selectFileOpened = false;
 
   constructor(
     private http: HttpClient,
+    public dialog: MatDialog,
     public dialogRef: MatDialogRef<MathjaxEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: EditQAData) {
     this.newtext = this.data.text;
@@ -82,6 +85,25 @@ export class MathjaxEditComponent implements OnInit, AfterViewInit {
       });
   }
 
+  selectFile(): void {
+    this.selectFileOpened = true;
+    const dialogRef = this.dialog.open(SelectImageComponent, {
+      maxWidth: '1350px',
+      width: '98%',
+      data: {
+        id_question: this.data.question.id_question
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.selectFileOpened = false;
+      if (result != null) {
+        this.insertTextAtCursor(result);
+      }
+    });
+  }
+
+
   //Drop listener
   @HostListener('drop', ['$event']) public ondrop(evt) {
     evt.preventDefault();
@@ -109,7 +131,7 @@ export class MathjaxEditComponent implements OnInit, AfterViewInit {
 
 
   @HostListener('window:keyup.esc') onKeyUp() {
-    if (this.confirmDiscardChanges()) {
+    if (!this.selectFileOpened && this.confirmDiscardChanges()) {
       this.dialogRef.close();
     }
   }

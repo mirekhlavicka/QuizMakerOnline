@@ -25,6 +25,7 @@ import { TestEditComponent } from './test-edit/test-edit.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { QuestionHistoryComponent } from './question-history/question-history.component';
 import { CourseRightsComponent } from './course-rights/course-rights.component';
+import { SelectImageComponent } from './select-image/select-image.component';
 
 
 
@@ -43,7 +44,8 @@ import { CourseRightsComponent } from './course-rights/course-rights.component';
     TestEditComponent,
     CategoriesComponent,
     QuestionHistoryComponent,
-    CourseRightsComponent],
+    CourseRightsComponent,
+    SelectImageComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,
@@ -61,7 +63,8 @@ import { CourseRightsComponent } from './course-rights/course-rights.component';
   ],
   entryComponents: [
     MathjaxEditComponent,
-    TestEditComponent
+    TestEditComponent,
+    SelectImageComponent
   ],
 })
 export class QuizModule { }
