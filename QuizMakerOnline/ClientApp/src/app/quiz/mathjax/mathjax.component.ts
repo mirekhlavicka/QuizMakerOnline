@@ -196,7 +196,7 @@ export class MathjaxComponent implements OnChanges, OnInit {
 
   private getImageHtml(url: string, width: number): string {
     if (url.endsWith(".pdf")) {
-      return `<div class="hideDPDF"><a href="${url}" target="_blank" draggable="false" title="Klikněte pro zobrazení PDF souboru">${url.replace(/staticfiles\/images\/[0-9]*\//, "")}</a></div><img draggable="false" src="/api/upload/PdfRasterize/${url.replace("staticfiles/images/", "")}" ${width != 0 ? ' width="' + width + '%"' : ''}/>`;
+      return `<div class="imgContainer" ${width != 0 ? ' style="width: ' + width + '%"' : ''}><div class="hideDPDF"><a href="${url}" target="_blank" draggable="false" title="Klikněte pro zobrazení PDF souboru">${url.replace(/staticfiles\/images\/[0-9]*\//, "")}</a></div><img draggable="false" src="/api/upload/PdfRasterize/${url.replace("staticfiles/images/", "")}"/></div>`;
     } else {
       return `<img draggable="false" src="${url}" ${width != 0 ? ' width="' + width + '%"' : ''}/>`;
     }

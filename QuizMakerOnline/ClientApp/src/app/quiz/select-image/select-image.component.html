@@ -2,10 +2,12 @@
 <div mat-dialog-content>
 
   <div *ngFor="let img of images" class="imgContainer">
+    <div class="imgTitle">
+      <a [href]="getImgUrl(img.fileName, false)" target="_blank">{{getImgName(img.fileName)}}</a>
+    </div>
     <a href="javascript:void(0)" (click)="onSelectClick(img)">
-    <!--{{img.fileName}}-->
-      <img [src]="getImgUrl(img.fileName)" />
-    </a>   
+      <img [src]="getImgUrl(img.fileName, true)" />
+    </a>
   </div>
 
 </div>

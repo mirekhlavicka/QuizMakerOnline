@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.IO.Compression;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 namespace QuizMakerOnline.Controllers
 {
@@ -320,46 +321,46 @@ namespace QuizMakerOnline.Controllers
                 .ToDictionary(c => c.id, c => c.name);
         }
 
-        //not used
-        [HttpGet]
-        [Route("Download")]
-        public IActionResult Download(int style, bool showPoints, bool showSolution, string idList)
-        {
-            var questions = idList
-                .Split(',')
-                .Select(s => Int32.Parse(s))
-                .Select(id => _context.Questions
-                    .Include(q => q.Answers)
-                    .Include(q => q.IdCategoryNavigation).ThenInclude(c => c.IdCourseNavigation)
-                .SingleOrDefault(q => q.IdQuestion == id))
-                .ToArray();
+        ////not used
+        //[HttpGet]
+        //[Route("Download")]
+        //public IActionResult Download(int style, bool showPoints, bool showSolution, string idList)
+        //{
+        //    var questions = idList
+        //        .Split(',')
+        //        .Select(s => Int32.Parse(s))
+        //        .Select(id => _context.Questions
+        //            .Include(q => q.Answers)
+        //            .Include(q => q.IdCategoryNavigation).ThenInclude(c => c.IdCourseNavigation)
+        //        .SingleOrDefault(q => q.IdQuestion == id))
+        //        .ToArray();
 
-            XElement xml = new XElement("Tests", 
-                new XAttribute("course_code", questions[0].IdCategoryNavigation.IdCourseNavigation.Name),
-                new XAttribute("group", "A"),
-                new XAttribute("showPoints", showPoints),
-                new XAttribute("showSolution", showSolution),
-                    questions.Select(q => new XElement("Questions", 
-                        new XAttribute("question", q.Question),
-                        new XAttribute("id_question_type", q.IdQuestionType),
-                        new XAttribute("solution", q.Solution),
-                        new XAttribute("points", q.Points),
-                        q.Answers.Select(a => new XElement("Answers",
-                            new XAttribute("position", a.Position),
-                            new XAttribute("answer", a.Answer),
-                            new XAttribute("points", a.Points)
-                        ))
-                    ))
-                );
+        //    XElement xml = new XElement("Tests", 
+        //        new XAttribute("course_code", questions[0].IdCategoryNavigation.IdCourseNavigation.Name),
+        //        new XAttribute("group", "A"),
+        //        new XAttribute("showPoints", showPoints),
+        //        new XAttribute("showSolution", showSolution),
+        //            questions.Select(q => new XElement("Questions", 
+        //                new XAttribute("question", q.Question),
+        //                new XAttribute("id_question_type", q.IdQuestionType),
+        //                new XAttribute("solution", q.Solution),
+        //                new XAttribute("points", q.Points),
+        //                q.Answers.Select(a => new XElement("Answers",
+        //                    new XAttribute("position", a.Position),
+        //                    new XAttribute("answer", a.Answer),
+        //                    new XAttribute("points", a.Points)
+        //                ))
+        //            ))
+        //        );
 
 
-            MemoryStream stream = TransformXMLToTex(xml, "ToLaTeX" + style);
+        //    MemoryStream stream = TransformXMLToTex(xml, "ToLaTeX" + style);
 
-            if (stream == null)
-                return NotFound();
+        //    if (stream == null)
+        //        return NotFound();
 
-            return File(stream, "application/octet-stream", "test.tex");
-        }
+        //    return File(stream, "application/octet-stream", "test.tex");
+        //}
 
         [HttpGet]
         [Route("DownloadTestLaTeX")]
@@ -387,19 +388,25 @@ namespace QuizMakerOnline.Controllers
             if (stream == null)
                 return NotFound();
 
-            if (test.TestQuestions.Any(tq => Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("StaticFiles", Path.Combine("Images", tq.IdQuestion.ToString()))))))
+            string testText = (new StreamReader(stream, Encoding.UTF8)).ReadToEnd();
+            stream.Seek(0, SeekOrigin.Begin);
+            var images = GetImgList(testText);
+
+            if (images.Length > 0 /*test.TestQuestions.Any(tq => Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("StaticFiles", Path.Combine("Images", tq.IdQuestion.ToString())))))*/)
             {
                 var outStream = new MemoryStream();
 
                 using (var archive = new ZipArchive(outStream, ZipArchiveMode.Create, true))
                 {
-                    foreach (var id_question in test
+                    /*foreach (var id_question in test
                         .TestQuestions
                         .Where(tq => Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("StaticFiles", Path.Combine("Images", tq.IdQuestion.ToString())))))
                         .Select(tq => tq.IdQuestion))
                     {
                         AddQuestionFolderToZip(id_question, archive);
-                    }
+                    }*/
+
+                    AddImagesToZip(images, archive);
 
                     using (Stream fileStreamInZip = archive.CreateEntry(String.Format("test_{0}.tex", id_test)).Open())
                         stream.CopyTo(fileStreamInZip);
@@ -486,43 +493,51 @@ namespace QuizMakerOnline.Controllers
             return stream;
         }
 
-        //[HttpGet]
-        //[Route("DownloadImages")]
-        //public IActionResult DownloadImages()
+        //private void AddQuestionFolderToZip(int id_question, ZipArchive archive)
         //{
+        //    var folderName = Path.Combine("StaticFiles", String.Format("Images\\{0}\\", id_question));
+        //    var inputDirectory = Path.Combine(Directory.GetCurrentDirectory(), folderName);
 
-        //    var outStream = new MemoryStream();
-
-        //    using (var archive = new ZipArchive(outStream, ZipArchiveMode.Create, true))
+        //    foreach (var filePath in System.IO.Directory.GetFiles(inputDirectory, "*.*", System.IO.SearchOption.AllDirectories))
         //    {
-        //        AddQuestionFolderToZip(3225, archive);
-        //        AddQuestionFolderToZip(1619, archive);
+        //        if (filePath.Contains("pdf2img_"))
+        //        {
+        //            continue;
+        //        }
 
-        //        //using (Stream fileStreamInZip = archive.CreateEntry("test_660.tex").Open())
-        //        //    CreateTestSteam(660, 1, true, false, 254 ).CopyTo(fileStreamInZip);
+        //        var relativePath = id_question.ToString() + "\\" + filePath.Replace(inputDirectory, string.Empty);
+        //        using (Stream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+        //        using (Stream fileStreamInZip = archive.CreateEntry(relativePath).Open())
+        //            fileStream.CopyTo(fileStreamInZip);
         //    }
-
-        //    outStream.Seek(0, SeekOrigin.Begin);
-        //    return File(outStream, "application/octet-stream", "test_660.zip");
         //}
 
-        private void AddQuestionFolderToZip(int id_question, ZipArchive archive)
+        private void AddImagesToZip(string[] images, ZipArchive archive)
         {
-            var folderName = Path.Combine("StaticFiles", String.Format("Images\\{0}\\", id_question));
-            var inputDirectory = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+            var inputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles\\Images\\");
 
-            foreach (var filePath in System.IO.Directory.GetFiles(inputDirectory, "*.*", System.IO.SearchOption.AllDirectories))
+            foreach (var relativePath in images)
             {
-                if (filePath.Contains("pdf2img_"))
+                var filePath = inputDirectory + relativePath;
+
+                if (!System.IO.File.Exists(filePath))
                 {
                     continue;
                 }
 
-                var relativePath = id_question.ToString() + "\\" + filePath.Replace(inputDirectory, string.Empty);
                 using (Stream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 using (Stream fileStreamInZip = archive.CreateEntry(relativePath).Open())
                     fileStream.CopyTo(fileStreamInZip);
             }
+        }
+
+
+
+        private string[] GetImgList(string testText)
+        {
+            var res = Regex.Matches(testText, @"\\includegraphics(?:\[(.*?)\])?{(.*?)}").Select(m => m.Groups[2].Value.Replace("/", "\\")).ToArray();
+            return res;
+
         }
 
         public static string CalculateHash(int id)

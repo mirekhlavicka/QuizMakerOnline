@@ -24,13 +24,18 @@ export class SelectImageComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  getImgUrl(fileName: string) {
-    if (fileName.endsWith(".pdf")) {
+  getImgUrl(fileName: string, rasterize: boolean) {
+    if (rasterize && fileName.endsWith(".pdf")) {
       return "/api/upload/PdfRasterize/" + fileName;
     } else {
       return "/staticfiles/images/" + fileName;
     }
   }
+
+  getImgName(fileName: string) {
+    return fileName.replace(/^[0-9]*\//, "")
+  }
+
 
   onSelectClick(img: any): void {
     this.dialogRef.close(img.latex);

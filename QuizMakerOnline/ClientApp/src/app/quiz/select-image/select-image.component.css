@@ -9,6 +9,7 @@
   margin:4px;
   padding:5px;
   background-color: #fafafa;
+  position: relative;
 }
 
   .imgContainer:hover {
@@ -20,3 +21,30 @@
     max-width: 400px;
     vertical-align: middle;
   }
+
+.imgTitle {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 100;
+  background-color: #b0b0b04d;
+  width: 100%;
+  height: 25px;
+  text-align: center;
+  padding-top: 3px;
+}
+
+.imgContainer:hover .imgTitle {
+  background-color: #b0b0b0ff;
+}
+
+.imgTitle a {
+  text-decoration: none;
+  color: #3f51b5;
+  font-size: 14px;
+  padding-left: 10px;
+}
+
+    .imgTitle a:hover {
+      text-decoration: underline;
+    }

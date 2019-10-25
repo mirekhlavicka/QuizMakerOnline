@@ -574,15 +574,19 @@ namespace QuizMakerOnline.Controllers
             var directoryTemplate = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles\\Images\\{0}");
             var directoryRoot = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles\\Images\\");
 
+            var question = _context.Questions.SingleOrDefault(q => q.IdQuestion == id_question);
+
             return _context.Questions
-                .Select(q => String.Format(directoryTemplate, q.IdQuestion))
-                .Where(p => Directory.Exists(p))
-                .SelectMany(p => System.IO.Directory.GetFiles(p))
-                .Where(p => !p.Contains("pdf2img_"))
-                .Select(fn => new
+                .Where(q => q.IdCategory == question.IdCategory)
+                .Select(q => new { question = q, path = String.Format(directoryTemplate, q.IdQuestion) })
+                .Where(q => Directory.Exists(q.path))
+                .SelectMany(q => System.IO.Directory.GetFiles(q.path), (q,f) => new { question = q.question, fileName = f })
+                .Where(f => !f.fileName.Contains("pdf2img_"))
+                .OrderByDescending(f => f.question.IdQuestion)
+                .Select(f => new
                 {
-                    fileName = fn.Replace(directoryRoot, "").Replace("\\", "/"),
-                    latex = UploadController.getLatexImage(fn.Replace(directoryRoot, ""))
+                    fileName = f.fileName.Replace(directoryRoot, "").Replace("\\", "/"),
+                    latex = UploadController.getLatexImage(f.fileName.Replace(directoryRoot, ""))
                 })
                 .ToList();
         }
