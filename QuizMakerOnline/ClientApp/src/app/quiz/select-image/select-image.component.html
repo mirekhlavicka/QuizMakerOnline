@@ -1,17 +1,119 @@
 <h1 mat-dialog-title>Výběr obrázku</h1>
 <div mat-dialog-content>
 
-  <div *ngFor="let img of images" class="imgContainer">
-    <div class="imgTitle">
-      <a [href]="getImgUrl(img.fileName, false)" target="_blank">{{getImgName(img.fileName)}}</a>
-    </div>
-    <a href="javascript:void(0)" (click)="onSelectClick(img)">
-      <img [src]="getImgUrl(img.fileName, true)" />
-    </a>
-  </div>
+  <button mat-icon-button (click)="drawer.toggle()" style="position:absolute; z-index: 1000; margin-left: -30px"><mat-icon>{{ drawer.opened ? "chevron_left" :  "chevron_right" }}</mat-icon></button>
+
+
+  <mat-drawer-container class="drawer-container" hasBackdrop="false">
+    <mat-drawer #drawer mode="side">
+      <div class="filter">
+
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="selected_id_category==1001">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                FEKT - přijímačky
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-nav-list>
+              <a mat-list-item href="javascript: void(0)" (click)="loadImages(1001)" [class.active]="selected_id_category==1001">FEKT Abs irac</a><!--drawer.close();-->
+            </mat-nav-list>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel [expanded]="selected_id_category==1101 || selected_id_category==350">
+            <mat-expansion-panel-header>
+                Skupina 2
+            </mat-expansion-panel-header>
+            <mat-nav-list>
+              <a mat-list-item href="javascript: void(0)" (click)="loadImages(1101)" [class.active]="selected_id_category==1101">FIT abs hodn</a>
+              <a mat-list-item href="javascript: void(0)" (click)="loadImages(350)" [class.active]="selected_id_category==350">SA1 - logika</a>
+            </mat-nav-list>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Skupina 3
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-nav-list>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
+
+            </mat-nav-list>
+
+
+          </mat-expansion-panel>
+
+
+        </mat-accordion>
+
+      </div>
+    </mat-drawer>
+    <mat-drawer-content>
+
+      <!--<mat-form-field>
+        <mat-label>Sidenav mode</mat-label>
+        <mat-select #mode value="side">
+          <mat-option value="side">Side</mat-option>
+          <mat-option value="over">Over</mat-option>
+          <mat-option value="push">Push</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Has backdrop</mat-label>
+        <mat-select #hasBackdrop>
+          <mat-option>Unset</mat-option>
+          <mat-option [value]="true">True</mat-option>
+          <mat-option [value]="false">False</mat-option>
+        </mat-select>
+      </mat-form-field>-->
+
+      <div *ngFor="let img of images" class="imgContainer">
+        <div class="imgTitle">
+          <a [href]="getImgUrl(img.fileName, false)" target="_blank">{{getImgName(img.fileName)}}</a>
+        </div>
+        <a href="javascript:void(0)" (click)="onSelectClick(img)">
+          <img [src]="getImgUrl(img.fileName, true)" />
+        </a>
+      </div>
+
+
+    </mat-drawer-content>
+  </mat-drawer-container>
+
 
 </div>
 
 <div mat-dialog-actions align="end">
-  <button mat-button (click)="onNoClick()" >Zrušit</button>
+  <button mat-button (click)="onNoClick()" [attr.cdkFocusInitial]="true">Zrušit</button>
 </div>

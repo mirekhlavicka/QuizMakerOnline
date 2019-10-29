@@ -6,9 +6,9 @@
 
 .imgContainer {
   display: inline-block;
-  margin:4px;
-  padding:5px;
-  background-color: #fafafa;
+  margin:5px;
+  /*padding:5px;
+  background-color: #fafafa;*/
   position: relative;
 }
 
@@ -27,7 +27,7 @@
   left: 0px;
   top: 0px;
   z-index: 100;
-  background-color: #b0b0b04d;
+  background-color: #b0b0b0a0;
   width: 100%;
   height: 25px;
   text-align: center;
@@ -48,3 +48,18 @@
     .imgTitle a:hover {
       text-decoration: underline;
     }
+
+.drawer-container {
+  min-height: 800px;
+}
+
+.filter {
+  min-width: 300px;
+  margin-top:20px;
+  margin-left:20px;
+  padding-right: 20px;
+}
+
+.active {
+  background-color: rgba(0, 0, 0, 0.08);
+}

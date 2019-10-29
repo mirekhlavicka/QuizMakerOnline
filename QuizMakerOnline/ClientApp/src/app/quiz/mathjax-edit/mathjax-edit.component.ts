@@ -91,7 +91,8 @@ export class MathjaxEditComponent implements OnInit, AfterViewInit {
       maxWidth: '1350px',
       width: '98%',
       data: {
-        id_question: this.data.question.id_question
+        id_question: this.data.question.id_question,
+        id_category: this.data.question.id_category
       }
     });
 

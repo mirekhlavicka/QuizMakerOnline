@@ -569,15 +569,20 @@ namespace QuizMakerOnline.Controllers
         }
 
         [HttpGet("images/{id_question}")]
-        public ActionResult<IEnumerable<Object>> GetImages(int id_question)
+        public ActionResult<IEnumerable<Object>> GetImages(int id_question, int? id_category)
         {
             var directoryTemplate = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles\\Images\\{0}");
             var directoryRoot = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles\\Images\\");
 
             var question = _context.Questions.SingleOrDefault(q => q.IdQuestion == id_question);
 
+            if (id_category == null || id_category == 0)
+            {
+                id_category = question.IdCategory;
+            }
+
             return _context.Questions
-                .Where(q => q.IdCategory == question.IdCategory)
+                .Where(q => q.IdCategory == id_category)
                 .Select(q => new { question = q, path = String.Format(directoryTemplate, q.IdQuestion) })
                 .Where(q => Directory.Exists(q.path))
                 .SelectMany(q => System.IO.Directory.GetFiles(q.path), (q,f) => new { question = q.question, fileName = f })

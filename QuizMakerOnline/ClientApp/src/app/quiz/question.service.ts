@@ -215,8 +215,8 @@ export class QuestionService {
       );
   }
 
-  getImages(id_question: number): Observable<any[]> {
-    return this.http.get<Test[]>(`${this.questionimagesUrl}/${id_question}`)
+  getImages(id_question: number, id_category: number): Observable<any[]> {
+    return this.http.get<Test[]>(`${this.questionimagesUrl}/${id_question}?id_category=${id_category}`)
       .pipe(
         catchError(this.handleError<Test[]>('getImages', []))
       );
