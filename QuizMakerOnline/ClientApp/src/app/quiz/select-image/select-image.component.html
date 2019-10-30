@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Výběr obrázku</h1>
-<div mat-dialog-content>
+<div mat-dialog-content style="position: relative; padding-left:40px">
 
-  <button mat-icon-button (click)="drawer.toggle()" style="position:absolute; z-index: 1000; margin-left: -30px"><mat-icon>{{ drawer.opened ? "chevron_left" :  "chevron_right" }}</mat-icon></button>
+  <button mat-icon-button (click)="drawer.toggle()" style="position:absolute; z-index: 1000; left: 0px; top: 50%"><mat-icon>{{ drawer.opened ? "chevron_left" :  "chevron_right" }}</mat-icon></button>
 
 
   <mat-drawer-container class="drawer-container" hasBackdrop="false">

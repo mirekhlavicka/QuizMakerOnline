@@ -88,7 +88,7 @@ export class MathjaxEditComponent implements OnInit, AfterViewInit {
   selectFile(): void {
     this.selectFileOpened = true;
     const dialogRef = this.dialog.open(SelectImageComponent, {
-      maxWidth: '1350px',
+      maxWidth: '1650px',
       width: '98%',
       data: {
         id_question: this.data.question.id_question,
