@@ -597,6 +597,37 @@ namespace QuizMakerOnline.Controllers
         }
 
 
+        [HttpGet("imagecategories")]
+        public ActionResult<IEnumerable<object>> GetImageCategories()
+        {
+            var directoryRoot = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles\\Images\\");
+
+            var qlist = System.IO.Directory.GetDirectories(directoryRoot)
+                .Select(p => Int32.Parse(p.Replace(directoryRoot, "")))
+                .ToArray();
+
+            var cats = _context
+                .QuestionCategories
+                .Where(c => c.Questions.Any(q => qlist.Contains(q.IdQuestion)));
+
+            return cats
+                .Select(c => c.IdCourseNavigation)
+                .Distinct()
+                .Select(c => new
+                    {
+                        id_course = c.IdCourse,
+                        name = c.Name,
+                        categories = cats.Where(cat => cat.IdCourse == c.IdCourse).OrderBy(cat => cat.Name).Select( cat => new
+                        {
+                            id_category = cat.IdCategory,
+                            name = cat.Name
+                        })
+                    })
+                .OrderBy(c => c.name )
+                .ToArray();
+        }
+
+
         public class ClientQuestion
         {
             public int id_question {get; set;}

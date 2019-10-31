@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject, HostListener } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject, HostListener, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDrawer } from '@angular/material';
 import { QuestionService } from '../question.service';
 
 @Component({
@@ -10,7 +10,9 @@ import { QuestionService } from '../question.service';
 export class SelectImageComponent implements OnInit {
 
   images: any[] = [];
+  categories: any[] = [];
   selected_id_category: number = 0;
+  @ViewChild(MatDrawer/*, { static: true }*/) drawer: MatDrawer;
 
   constructor(
     private questionService: QuestionService,
@@ -19,7 +21,11 @@ export class SelectImageComponent implements OnInit {
 
   ngOnInit() {
     this.selected_id_category = this.data.id_category;
-    this.loadImages(this.selected_id_category);
+
+    this.questionService.getImageCategories().subscribe(c => {
+      this.categories = c;
+      this.loadImages(this.selected_id_category);
+    });    
   }
 
   onNoClick(): void {
@@ -40,12 +46,22 @@ export class SelectImageComponent implements OnInit {
 
   loadImages(id_category: number) {
     this.selected_id_category = id_category;
-    this.questionService.getImages(this.data.id_question, this.selected_id_category).subscribe(i => this.images = i);
+    this.questionService.getImages(this.data.id_question, this.selected_id_category).subscribe(i => {
+      this.images = i;
+      if (this.images.length == 0) {
+        this.drawer.open();
+      }
+    });
   }
 
   onSelectClick(img: any): void {
     this.dialogRef.close(img.latex);
   }
+
+  isCourseSelected(course: any): boolean {
+    return (course.categories as any[]).find(c => c.id_category == this.selected_id_category);
+  }
+
 
   @HostListener('window:keyup.esc') onKeyUp() {
       this.dialogRef.close();

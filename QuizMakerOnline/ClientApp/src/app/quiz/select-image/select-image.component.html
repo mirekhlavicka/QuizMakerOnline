@@ -9,74 +9,17 @@
       <div class="filter">
 
         <mat-accordion>
-          <mat-expansion-panel [expanded]="selected_id_category==1001">
+          <mat-expansion-panel *ngFor="let course of categories" [expanded]="isCourseSelected(course)">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                FEKT - přijímačky
+                {{course.name}}
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <mat-nav-list>
-              <a mat-list-item href="javascript: void(0)" (click)="loadImages(1001)" [class.active]="selected_id_category==1001">FEKT Abs irac</a><!--drawer.close();-->
+            <mat-nav-list *ngFor="let c of course.categories">
+              <a mat-list-item href="javascript: void(0)" (click)="loadImages(c.id_category)" [class.active]="selected_id_category==c.id_category">{{c.name}}</a><!--drawer.close();-->
             </mat-nav-list>
           </mat-expansion-panel>
-
-          <mat-expansion-panel [expanded]="selected_id_category==1101 || selected_id_category==350">
-            <mat-expansion-panel-header>
-                Skupina 2
-            </mat-expansion-panel-header>
-            <mat-nav-list>
-              <a mat-list-item href="javascript: void(0)" (click)="loadImages(1101)" [class.active]="selected_id_category==1101">FIT abs hodn</a>
-              <a mat-list-item href="javascript: void(0)" (click)="loadImages(350)" [class.active]="selected_id_category==350">SA1 - logika</a>
-            </mat-nav-list>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Skupina 3
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-nav-list>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-              <a mat-list-item href="javascript: void(0)" (click)="drawer.close()"> test 2</a>
-
-            </mat-nav-list>
-
-
-          </mat-expansion-panel>
-
-
         </mat-accordion>
-
       </div>
     </mat-drawer>
     <mat-drawer-content>

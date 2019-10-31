@@ -27,6 +27,7 @@ export class QuestionService {
   private questionstateUrl = 'api/questions/questionstate';
   private questionhistoryUrl = 'api/questions/history';
   private questionimagesUrl = 'api/questions/images';
+  private questionimagecategoriesUrl = 'api/questions/imagecategories';
 
   private answersUrl = 'api/answers';
 
@@ -216,12 +217,18 @@ export class QuestionService {
   }
 
   getImages(id_question: number, id_category: number): Observable<any[]> {
-    return this.http.get<Test[]>(`${this.questionimagesUrl}/${id_question}?id_category=${id_category}`)
+    return this.http.get<any[]>(`${this.questionimagesUrl}/${id_question}?id_category=${id_category}`)
       .pipe(
         catchError(this.handleError<Test[]>('getImages', []))
       );
   }
 
+  getImageCategories(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.questionimagecategoriesUrl}`)
+      .pipe(
+        catchError(this.handleError<Test[]>('getImageCategories', []))
+      );
+  }
 
   /**
    * Handle Http operation that failed.
