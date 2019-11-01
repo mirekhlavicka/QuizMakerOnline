@@ -3,7 +3,7 @@ import { Category } from '../questionModel';
 import { QuestionService } from '../question.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-categories',

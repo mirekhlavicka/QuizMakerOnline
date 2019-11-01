@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { UserCourseRights } from '../questionModel';
 import { ActivatedRoute } from '@angular/router';
 import { QuestionService } from '../question.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 

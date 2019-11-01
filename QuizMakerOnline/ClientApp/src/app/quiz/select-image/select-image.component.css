@@ -7,14 +7,13 @@
 .imgContainer {
   display: inline-block;
   margin: 5px;
-  /*padding:5px;
-  background-color: #fafafa;*/
+  background-color: #ffffff;
   position: relative;
   width: 300px;
   height: 200px;
   vertical-align: middle;
   text-align: center;
-  /*padding-top: 30px;*/
+  padding-top: 10px;
 }
 
   .imgContainer:hover {
@@ -66,6 +65,18 @@
   padding-right: 20px;
 }
 
+.catItem {
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-left-color: rgba(0, 0, 0, 0);
+}
+
+  .catItem:hover {
+    background-color: rgba(0,0,0,.02);
+    border-left-color: #3f51b5;
+  }
+
 .active {
-  background-color: rgba(0, 0, 0, 0.08);
+  background-color: rgba(0, 0, 0, 0.04);
+  border-left-color: #3f51b5;
 }

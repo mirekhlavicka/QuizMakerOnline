@@ -25,7 +25,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit, OnDestroy {
-  @ViewChild('drawer') drawer: any;
+  @ViewChild('drawer', { static: true }) drawer: any;
   authStatusChangedSubscription: Subscription;
   isAuthenticated: boolean = false;
   fullName: string = "";

@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, HostListener, ViewChild } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDrawer } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDrawer } from '@angular/material/sidenav';
 import { QuestionService } from '../question.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class SelectImageComponent implements OnInit {
   images: any[] = [];
   categories: any[] = [];
   selected_id_category: number = 0;
-  @ViewChild(MatDrawer/*, { static: true }*/) drawer: MatDrawer;
+  @ViewChild(MatDrawer, { static: true }) drawer: MatDrawer;
 
   constructor(
     private questionService: QuestionService,

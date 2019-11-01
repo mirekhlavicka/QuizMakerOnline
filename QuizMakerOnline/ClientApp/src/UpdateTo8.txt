@@ -1,0 +1,6 @@
+node -v
+ng update
+
+ng update @angular/cli @angular/core
+ng update @angular/cdk --allow-dirty --force
+ng update @angular/material --allow-dirty

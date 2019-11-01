@@ -3,7 +3,7 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit, ElementRef, ViewEncapsulation } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { globals } from '../../globals';
-import { forEach } from '@angular/router/src/utils/collection';
+//import { forEach } from '@angular/router/src/utils/collection';
 //import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({

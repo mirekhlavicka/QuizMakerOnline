@@ -2,7 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Question, Answer, RelatedLists } from '../../quiz/questionModel';
 
-import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MathjaxEditComponent } from '../mathjax-edit/mathjax-edit.component';
 import { QuestionService } from '../question.service';
 import { Router, ActivatedRoute } from '@angular/router';

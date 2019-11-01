@@ -8,7 +8,7 @@ import { switchMap, map, tap, flatMap, filter } from 'rxjs/operators';
 import { Course, Category, Question, Answer, User, QuestionsFilter } from '../../quiz/questionModel';
 import { QuestionService } from '../../quiz/question.service';
 import { TestService } from '../test.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 

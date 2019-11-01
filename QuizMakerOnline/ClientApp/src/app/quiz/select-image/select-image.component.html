@@ -11,12 +11,12 @@
         <mat-accordion>
           <mat-expansion-panel *ngFor="let course of categories" [expanded]="isCourseSelected(course)">
             <mat-expansion-panel-header>
-              <mat-panel-title>
+              <mat-panel-title style="font-weight: 500">
                 {{course.name}}
               </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-nav-list *ngFor="let c of course.categories">
-              <a mat-list-item href="javascript: void(0)" (click)="loadImages(c.id_category)" [class.active]="selected_id_category==c.id_category">{{c.name}}</a><!--drawer.close();-->
+              <a mat-list-item href="javascript: void(0)" (click)="loadImages(c.id_category)" class="catItem" [class.active]="selected_id_category==c.id_category">{{c.name}}</a><!--drawer.close();-->
             </mat-nav-list>
           </mat-expansion-panel>
         </mat-accordion>

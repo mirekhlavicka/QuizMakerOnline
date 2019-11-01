@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild, AfterViewInit, HostListener } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Question, EditQAData } from '../questionModel';
 import { Subject } from 'rxjs';
 import { HttpEventType, HttpClient } from '@angular/common/http';
@@ -12,7 +12,7 @@ import { SelectImageComponent } from '../select-image/select-image.component';
   styleUrls: ['./mathjax-edit.component.css']
 })
 export class MathjaxEditComponent implements OnInit, AfterViewInit {
-  @ViewChild('codemirror') codemirror: any;
+  @ViewChild('codemirror', { static: true }) codemirror: any;
   objectKeys = Object.keys;
 
   textChangedSubject: Subject<string> = new Subject<string>();

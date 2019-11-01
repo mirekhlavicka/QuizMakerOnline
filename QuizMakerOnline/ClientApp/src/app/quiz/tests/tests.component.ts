@@ -21,7 +21,7 @@ export class TestsComponent implements OnInit {
   dataSource = null;
   displayedColumns: string[] = ['id_test', 'course', 'semester', 'year', 'group', 'enter_date'];
 
-  @ViewChild(MatPaginator/*, { static: true }*/) paginator: MatPaginator; //!!!!!!
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   courses: Object = {};
   semesters: Object = {};
