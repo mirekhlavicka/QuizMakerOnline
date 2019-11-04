@@ -64,7 +64,7 @@ export class MathjaxEditComponent implements OnInit, AfterViewInit {
   }
 
   public uploadFile = (files) => {
-    if (files.length === 0) {
+    if (files.length === 0 || this.data.question.id_question == 0) {
       return;
     }
 

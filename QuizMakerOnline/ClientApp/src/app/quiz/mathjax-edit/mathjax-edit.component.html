@@ -78,9 +78,9 @@
         <mat-icon>add_photo_alternate</mat-icon>
       </button>
       <mat-menu #menuInsertImage="matMenu">
-        <button mat-menu-item (click)='file.click()'>
+        <button mat-menu-item (click)='file.click()' [disabled]="data.question.id_question == 0">
           <mat-icon>folder</mat-icon>
-          <span>Vložit z disku  </span>
+          <span>Vložit z disku</span>
         </button>
         <button mat-menu-item (click)="selectFile()">
           <mat-icon>cloud</mat-icon>

@@ -43,7 +43,7 @@ namespace QuizMakerOnline
             #region snippet1
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie("Cookies", options => {
-                    options.ExpireTimeSpan = TimeSpan.FromHours(2);
+                    //options.ExpireTimeSpan = TimeSpan.FromHours(2);
                     options.Cookie.Name = "auth_cookie";
                     options.Cookie.SameSite = SameSiteMode.None;
                     options.Events = new CookieAuthenticationEvents
