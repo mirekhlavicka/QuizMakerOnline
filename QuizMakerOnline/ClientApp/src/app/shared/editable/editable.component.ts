@@ -75,7 +75,8 @@ export class EditableComponent {
   private viewModeHandler() {
     fromEvent(this.element, 'click').pipe( //dblclick
       untilDestroyed(this)
-    ).subscribe(() => {
+    ).subscribe((event:any) => {
+      event.stopPropagation();
       this.toEditMode();
     });
   }

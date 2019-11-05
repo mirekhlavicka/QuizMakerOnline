@@ -85,3 +85,32 @@ mat-panel-description mat-icon {
   .answerActionButton:hover {
     opacity: 1;
   }
+
+.showID {
+  width: 50px;
+  color: #3f51b5;
+  /*font-size: inherit;
+  font-family: inherit;
+  font-weight: 500;*/
+  /*border: 1px solid #bdbdbd;
+  padding-left: 5px;
+  border-radius: 4px;*/
+}
+
+  .showID:hover {
+    text-decoration:underline;
+  }
+
+.goToID {
+  width: 50px;
+  color: #000;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: 400;
+  outline: none;
+  border: 1px solid #bdbdbd;
+  padding-left: 5px;
+  border-radius: 4px;
+  padding-top: 0px;
+  padding-bottom: 0px
+}

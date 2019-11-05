@@ -209,7 +209,7 @@ export class QuestionsComponent implements OnInit {
             this.current = -1;
             this.question = null;
           }
-        }        
+        }
 
         if (this.goto_id_question != 0) {
           this.goto_id_question = 0;
@@ -218,12 +218,12 @@ export class QuestionsComponent implements OnInit {
           this.saveCurrentPosition();
         }
       }, e => {
-          this.loading = false;
-          this.current = -1;
-          this.question = null;
-          this.changeDirection = 0;
-          this.questions = [];
-          this.accessDenied = true;
+        this.loading = false;
+        this.current = -1;
+        this.question = null;
+        this.changeDirection = 0;
+        this.questions = [];
+        this.accessDenied = true;
         //alert(e.error)
       });
   }
@@ -250,7 +250,7 @@ export class QuestionsComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    let targetTagName = (event.target instanceof Element ?  (<Element>event.target).tagName.toLowerCase() : "");
+    let targetTagName = (event.target instanceof Element ? (<Element>event.target).tagName.toLowerCase() : "");
     //console.log(targetTagName);
 
     if (targetTagName == "input" || targetTagName == "textarea" || targetTagName == "mat-select") {
@@ -296,7 +296,7 @@ export class QuestionsComponent implements OnInit {
   addToTest(): void {
     this.testService.add(this.question);
     //if (this.question['useCount']) {
-      this.question['useCount'] = +this.question['useCount'] + 1;
+    this.question['useCount'] = +this.question['useCount'] + 1;
     //}
     this._snackBar.open("Otázka byla do testu přidána", null, { duration: 3000 });
   }
@@ -304,7 +304,7 @@ export class QuestionsComponent implements OnInit {
   removeFromTest(): void {
     this.testService.del(this.question);
     //if (this.question['useCount']) {
-      this.question['useCount'] = +this.question['useCount'] - 1;
+    this.question['useCount'] = +this.question['useCount'] - 1;
     //}
     this._snackBar.open("Otázka byla z testu odebrána", null, { duration: 3000 });
   }
@@ -376,5 +376,26 @@ export class QuestionsComponent implements OnInit {
 
   testRight(right: number): boolean {
     return (this.rights & right) != 0;
+  }
+
+  goToQuestion(id_question: string): void {
+
+    /*this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };*/
+
+    this.questionService.findQuestion(id_question).subscribe(q => {
+      if (q) {
+        this.goto_id_question = +id_question;
+        this.goto_id_category = q.id_category;
+        if (q.id_course == this.id_course) {
+          this.setCurrentCourse(q.id_course);
+        } else {
+          this.router.navigate([`/questions/${q.id_course}`/*, { id_question: id_question, id_category: q.id_category }*/])
+        }
+      } else {
+        alert("Neplatné ID");
+      }
+    }, () => alert("Neplatné ID"));
   }
 }

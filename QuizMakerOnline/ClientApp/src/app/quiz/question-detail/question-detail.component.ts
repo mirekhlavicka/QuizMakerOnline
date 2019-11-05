@@ -25,6 +25,8 @@ export class QuestionDetailComponent implements OnInit {
 
   @Output() deleted = new EventEmitter<number>();
 
+  goto_id_question: string = "";
+
   constructor(
     public dialog: MatDialog,
     private questionService: QuestionService,
@@ -200,6 +202,11 @@ export class QuestionDetailComponent implements OnInit {
 
   questionHistory(): void {
     this.router.navigate([`/question-history/${this.question.id_question}`]);
+  }
+
+  goToId(): void {
+    this.questionsComponent.goToQuestion(this.goto_id_question);
+    this.goto_id_question = "";
   }
 
   linkToClipboard(): void {

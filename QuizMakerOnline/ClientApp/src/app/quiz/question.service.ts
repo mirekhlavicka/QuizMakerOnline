@@ -17,6 +17,7 @@ const httpOptions = {
 })
 export class QuestionService {
   private questionsUrl = 'api/questions';
+  private findquestionsUrl = 'api/questions/find';
   private coursesUrl = 'api/questions/courses';
   private categoriesUrl = 'api/questions/categories';
   private usersUrl = 'api/questions/users';
@@ -67,6 +68,14 @@ export class QuestionService {
     //  catchError(this.handleError<Hero[]>('getHeroes', []))
     //);
   }
+
+  findQuestion(id_question: string): Observable<any> {
+    return this.http.get<any>(`${this.findquestionsUrl}/${id_question}`);
+      //.pipe(
+      //  catchError(this.handleError<Test[]>('findQuestion', []))
+      //);
+  }
+
 
 
   getCourses(): Observable<Course[]> {

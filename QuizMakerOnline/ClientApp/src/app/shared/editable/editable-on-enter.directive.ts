@@ -8,8 +8,14 @@ export class EditableOnEnterDirective {
   constructor(private editable: EditableComponent) {
   }
 
-  @HostListener('keyup.enter')
-  onEnter() {
+  @HostListener('keydown.enter', ['$event'])
+  onEnterDown(e: any) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  @HostListener('keyup.enter', ['$event'])
+  onEnter(e: any) {
     this.editable.toViewMode();
   }
 

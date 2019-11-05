@@ -117,6 +117,27 @@ namespace QuizMakerOnline.Controllers
             .ToList());
         }
 
+        [HttpGet("find/{id_question}")]
+        public ActionResult<Object> GetQuestion(int id_question)
+        {
+
+            var question = _context.Questions.Include(q => q.IdCategoryNavigation).SingleOrDefault(q => q.IdQuestion == id_question);
+
+            if (question != null)
+            {
+                return Ok(new
+                {
+                    id_course = question.IdCategoryNavigation.IdCourse,
+                    id_category = question.IdCategory
+                });
+            }
+            else
+            {
+                return BadRequest("Not found");
+            }
+        }
+
+
         // GET: api/questions/courses
         [HttpGet]
         [Route("courses")]
