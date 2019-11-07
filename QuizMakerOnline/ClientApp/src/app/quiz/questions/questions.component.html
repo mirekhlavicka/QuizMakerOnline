@@ -101,7 +101,7 @@
         <mat-icon>navigate_before</mat-icon>
       </button>
 
-      <input class="inputGoTo" type="text" [value]="current+1" (input)="goto($event.target.value)" fxFlexOffset="6px" matTooltip="Přejít na zadanou otázku">&nbsp;/&nbsp;{{questions ? questions.length : 0}}
+      <input class="inputGoTo" type="text" [value]="current+1" (input)="goto($event.target.value)" fxFlexOffset="6px" matTooltip="Přejít na ...">&nbsp;/&nbsp;{{questions ? questions.length : 0}}
 
       <button (click)="next()" mat-stroked-button color="primary" matTooltip="Další otázka (klávesa &#8594; nebo swipe)" fxFlexOffset="6px">
         <mat-icon>navigate_next</mat-icon>

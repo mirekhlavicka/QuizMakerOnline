@@ -379,6 +379,9 @@ export class QuestionsComponent implements OnInit {
   }
 
   goToQuestion(id_question: string): void {
+    if (id_question == "") {
+      return;
+    }
 
     /*this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;

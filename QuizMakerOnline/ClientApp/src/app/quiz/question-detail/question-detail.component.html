@@ -10,7 +10,7 @@
         <mat-icon inline>{{question.id_question_type == 2 ? "remove" : "list"}}</mat-icon><span class="infoItem">{{relatedLists.questionTypes[question.id_question_type]}}</span><span class="infoItemSeparator"></span>
         <mat-icon inline>{{question.id_question_difficulty == 1 ? "star_border" : (question.id_question_difficulty == 2 ? "star_half" : "star")}}</mat-icon><span class="infoItem">{{relatedLists.questionDifficulties[question.id_question_difficulty]}}</span><span class="infoItemSeparator"></span>
         <mat-icon inline>{{question.state == 0 ? "warning" : (question.state == 1 ? "done" : "pan_tool")}}</mat-icon><span class="infoItem">{{relatedLists.questionState[question.state]}}</span><span class="infoItemSeparator"></span>
-        <span class="infoItem" style="width:100px">id:
+        <span class="infoItem" style="width:100px">ID:
         <editable style="display:inline" (update)="goToId()">
           <ng-template viewMode><span class="showID" matTooltip="Přejít na otázku s zadaným ID">{{question.id_question}}</span></ng-template>
           <ng-template editMode><input focusable editableOnEnter [(ngModel)]="goto_id_question" class="goToID"></ng-template>
