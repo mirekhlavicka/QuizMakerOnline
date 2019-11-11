@@ -18,6 +18,7 @@ export class EditableComponent {
   @ContentChild(EditModeDirective, { static: false }) editModeTpl: EditModeDirective;
   @Output() update = new EventEmitter();
   @Output() escape = new EventEmitter();
+  @Input() stopPropagationClick: boolean = false;
 
   editMode = new Subject();
   editMode$ = this.editMode.asObservable();
@@ -76,7 +77,9 @@ export class EditableComponent {
     fromEvent(this.element, 'click').pipe( //dblclick
       untilDestroyed(this)
     ).subscribe((event:any) => {
-      event.stopPropagation();
+      if (this.stopPropagationClick) {
+        event.stopPropagation();
+      }
       this.toEditMode();
     });
   }
