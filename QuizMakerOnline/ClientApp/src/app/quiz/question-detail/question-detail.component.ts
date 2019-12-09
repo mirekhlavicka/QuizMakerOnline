@@ -42,7 +42,7 @@ export class QuestionDetailComponent implements OnInit {
   editQuestion(solution: boolean): void {
     this.questionsComponent.changeDirection = 0;
     const dialogRef = this.dialog.open(MathjaxEditComponent, {
-      maxWidth: '1350px',
+      maxWidth: '1550px',
       width: '98%',
       //minHeight: '500px',
       //height: '80%',
