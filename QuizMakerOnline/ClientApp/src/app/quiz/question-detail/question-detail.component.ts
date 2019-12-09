@@ -98,7 +98,7 @@ export class QuestionDetailComponent implements OnInit {
   editAnswer(answer: Answer): void {
     this.questionsComponent.changeDirection = 0;
     const dialogRef = this.dialog.open(MathjaxEditComponent, {
-      maxWidth: '1350px',
+      maxWidth: '1550px',
       width: '98%',
       data: {
         type: 3,
