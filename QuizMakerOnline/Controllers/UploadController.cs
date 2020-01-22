@@ -27,6 +27,7 @@ namespace QuizMakerOnline.Controllers
                 if (file.Length > 0)
                 {
                     var fileName = Path.Combine(id_question.ToString(), ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+                    fileName = getNextFileName(pathToSave, fileName);
                     var fullPath = Path.Combine(pathToSave, fileName);
                     var relativeURL = Path.Combine(folderName, fileName).Replace("\\", "/");
 
@@ -52,6 +53,22 @@ namespace QuizMakerOnline.Controllers
             {
                 return StatusCode(500, "Internal server error");
             }
+        }
+
+        private string getNextFileName(string pathToSave, string fileName)
+        {
+            string extension = Path.GetExtension(fileName);
+
+            int i = 0;
+            while (System.IO.File.Exists(Path.Combine(pathToSave, fileName)))
+            {
+                if (i == 0)
+                    fileName = fileName.Replace(extension, "(" + ++i + ")" + extension);
+                else
+                    fileName = fileName.Replace("(" + i + ")" + extension, "(" + ++i + ")" + extension);
+            }
+
+            return fileName;
         }
 
         [HttpGet]

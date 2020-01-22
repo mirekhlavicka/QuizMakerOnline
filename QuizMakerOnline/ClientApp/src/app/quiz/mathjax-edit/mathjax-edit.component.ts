@@ -130,6 +130,22 @@ export class MathjaxEditComponent implements OnInit, AfterViewInit {
     this.dragover = false;
   }
 
+  //Paste listener
+  @HostListener('paste', ['$event']) public onpaste(evt) {
+    const items = (evt.clipboardData || evt.originalEvent.clipboardData).items;
+    let blob = null;
+
+    for (const item of items) {
+      if (item.type.indexOf('image') === 0) {
+        blob = item.getAsFile();
+        this.uploadFile([blob]);
+        evt.preventDefault();
+        evt.stopPropagation();
+      }
+    }
+  }
+
+
 
   @HostListener('window:keyup.esc') onKeyUp() {
     if (!this.selectFileOpened && this.confirmDiscardChanges()) {
