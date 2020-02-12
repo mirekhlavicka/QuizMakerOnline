@@ -84,6 +84,7 @@ namespace QuizMakerOnline.Controllers
             {
                 PdfRasterizer rasterizer = new PdfRasterizer(pathToPDF);
                 rasterizer.Draw(pathToPNG, ImageFormat.Png, ImageSize.Dpi300);
+                rasterizer.Dispose();
             }
 
             return PhysicalFile(pathToPNG, "image/png");

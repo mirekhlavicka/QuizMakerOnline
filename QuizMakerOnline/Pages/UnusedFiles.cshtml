@@ -1,0 +1,69 @@
+﻿@page
+@model QuizMakerOnline.UnusedFilesModel
+
+@{
+    ViewData["Title"] = "Nepoužité soubory";
+}
+
+    <h1>Nepoužité soubory</h1>
+
+<form method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Soubor
+                </th>
+                <th>
+                    Datum
+                </th>
+                <th>
+                    <input id="selectAll" type="checkbox"  />
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.Files)
+            {
+                <tr>
+                    <td>
+                        <a href="@("StaticFiles/Images/" + Model.FileUrl(item.FullName))" target="_blank">@Model.FileUrl(item.FullName)</a>
+                    </td>
+                    <td>
+                        @item.LastWriteTime.ToString("d")
+                    </td>
+
+                    <td>
+                        <input name="SelectedFiles" type="checkbox" value="@item.FullName" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="form-group">
+        <input type="submit" value="Smazat označené" class="btn btn-primary" />
+    </div>
+
+    @if (Model.SelectedFiles.Count > 0)
+    {
+        <h3>Smazáno:</h3>
+        @foreach (var item in Model.SelectedFiles)
+        {
+        @item
+        
+            <br />
+        }
+    }
+    </form>
+
+@section Scripts {
+    <script type="text/javascript">   
+        $(function () {
+            $('#selectAll').change(function () {
+                $("input[name='SelectedFiles']").prop('checked', this.checked)
+            });
+        });
+    </script>
+}
