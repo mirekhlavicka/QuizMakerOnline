@@ -20,6 +20,7 @@
       <td><mat-checkbox [checked]="testRight(ur.rights, 2)" (change)="setRight(ur, 2, $event.checked)">Vkládat otázky</mat-checkbox></td>
       <td><mat-checkbox [checked]="testRight(ur.rights, 4)" (change)="setRight(ur, 4, $event.checked)">Sestavovat testy</mat-checkbox></td>
       <td><mat-checkbox [checked]="testRight(ur.rights, 8)" (change)="setRight(ur, 8, $event.checked)">Nastavovat práva</mat-checkbox></td>
+      <td><mat-checkbox [checked]="testRight(ur.rights, 16)" (change)="setRight(ur, 16, $event.checked)">Editovat všechny otázky</mat-checkbox></td>
     </tr>
   </table>
 </mat-card>

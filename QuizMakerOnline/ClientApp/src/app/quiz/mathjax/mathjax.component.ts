@@ -295,6 +295,10 @@ export class MathjaxComponent implements OnChanges, OnInit {
           ea: "\\end{array}",
           cotg: "{\\rm cotg}",
           p: "\\varphi",
+          curl: '\\mathop{\\text{curl}}',
+          div: '\\mathop{\\text{div}}',
+          rot: '\\mathop{\\text{rot}}',
+          grad: '\\mathop{\\text{grad}}',
         }
       }
     });

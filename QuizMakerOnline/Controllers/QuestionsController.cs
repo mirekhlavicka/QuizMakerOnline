@@ -86,6 +86,8 @@ namespace QuizMakerOnline.Controllers
 
             res = res.OrderByDescending(q => q.IdQuestion);
 
+            var canEditAll = current_id_user == 1 ||_context.UserCourseRights.Any(ur => ur.IdUser == current_id_user && ur.IdCourse == id_course && (ur.Rights & 16) != 0);
+
             return Ok(res.Select(q => new
             {
                 id_question = q.IdQuestion,
@@ -99,7 +101,7 @@ namespace QuizMakerOnline.Controllers
                 solution = q.Solution,
                 enter_date = q.EnterDate,
                 state = q.State,
-                canEdit = (current_id_user == 1 || current_id_user == q.IdUser),
+                canEdit = (canEditAll || current_id_user == q.IdUser),
                 useCount = q.TestQuestions.Count(),
                 answers = q.Answers
                     .OrderBy(a => a.Position)
