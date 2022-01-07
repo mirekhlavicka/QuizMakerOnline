@@ -85,12 +85,26 @@ li.hasorder {
 }
 
 .figure img {
-  width:100%;  
+  max-width:100%;  
   /*pointer-events: none;*/
 }
 
 .center {
   text-align: center;
+}
+
+.showImg {
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  background-image: linear-gradient(rgba(250, 250, 250, 1), rgba(255, 255, 255, 0.5));
+  text-align: center;
+  top: 0px;
+  display: none;
+}
+
+.imgContainer:hover .showImg {
+  display: block;
 }
 
 .hideDPDF {
@@ -101,16 +115,16 @@ li.hasorder {
   padding-top: 5px;
 }
 
-  .hideDPDF a {
-    text-decoration: none;
-    color: #3f51b5;
-    font-size: 14px;
-    padding-left: 10px;
-  }
+.showImg a, .hideDPDF a {
+  text-decoration: none;
+  color: #3f51b5;
+  font-size: 14px;
+  padding-left: 10px;
+}
 
-  .hideDPDF a:hover {
-    text-decoration: underline;
-  }
+    .showImg a:hover, .hideDPDF a:hover {
+      text-decoration: underline;
+    }
 
 .imgContainer {
   display: inline-block;
