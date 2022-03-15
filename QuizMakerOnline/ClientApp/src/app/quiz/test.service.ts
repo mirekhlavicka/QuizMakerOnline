@@ -173,6 +173,7 @@ export class TestService {
 
   randomRightAnswer(test: Test): Observable<any> {
     return this.http.put(`${this.testsUrl}/randomrightanswer/${test.id_test}`, httpOptions).pipe(
+      catchError(this.handleError<any>('randomRightAnswer'))
     );
   }
 

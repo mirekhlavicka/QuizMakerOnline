@@ -203,20 +203,13 @@ export class TestDetailComponent implements OnInit {
 
   randomRightAnswer(): void {
 
-    if (confirm("Opravdu si přejete vygenerovat náhodné pořadí  ?")) {
+    if (confirm("Opravdu si přejete nastavit náhodnou pozici správných odpovědí ?")) {
 
       this.testService.randomRightAnswer(this.test).subscribe(_ => {
-        this._snackBar.open("Náhodné pořadí vzgenerováno", null, { duration: 3000 });
+        this._snackBar.open("Náhodné pozice aktualizovány", null, { duration: 3000 });
         this.testService.getTest(this.id_test)
           .subscribe(test => {
             this.test = test;
-            if (!test) {
-              alert("Test nelze editovat!");
-              this.location.back();
-            }
-            else if (this.test.id_test <= 0) {
-              this.editTest()
-            }
           });
 
       }, e => {

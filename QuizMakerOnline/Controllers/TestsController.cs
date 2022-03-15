@@ -301,12 +301,10 @@ namespace QuizMakerOnline.Controllers
 
             Random random = new Random();
 
-            foreach (var q in test.TestQuestions)
+            foreach (var q in test.TestQuestions.Where(tq => tq.IdQuestionNavigation.IdQuestionType == 1))
             {
-                var p = q.IdQuestionNavigation.Answers.Count();                
-
+                var p = q.IdQuestionNavigation.Answers.Count();
                 var ch = (char)('a' + random.Next(p));
-
                 q.RightAnswer = ch.ToString();
             }
 
