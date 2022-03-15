@@ -95,20 +95,22 @@ namespace QuizMakerOnline.Controllers
                     id_question_difficulty = tq.IdQuestionNavigation.IdQuestionDifficulty,
                     points = tq.IdQuestionNavigation.Points,
                     question = tq.IdQuestionNavigation.Question,
-                    right_answer = tq.IdQuestionNavigation.RightAnswer,
+                    right_answer = (tq.IdQuestionNavigation.IdQuestionType != 1 || tq.RightAnswer == "?" || String.IsNullOrEmpty(tq.RightAnswer)) ? tq.IdQuestionNavigation.RightAnswer : tq.RightAnswer,
                     solution = tq.IdQuestionNavigation.Solution,
                     enter_date = tq.IdQuestionNavigation.EnterDate,
                     state = tq.IdQuestionNavigation.State,
                     canEdit = (current_id_user == 1 || current_id_user == tq.IdQuestionNavigation.IdUser),
                     answers = tq.IdQuestionNavigation.Answers
-                    .OrderBy(a => a.Position)
                     .Select(a => new
                     {
                         id_question = a.IdQuestion,
-                        position = a.Position,
+                        position = (tq.IdQuestionNavigation.IdQuestionType != 1 || tq.RightAnswer == "?" || String.IsNullOrEmpty(tq.RightAnswer)) ? 
+                            a.Position : 
+                            (a.Position == tq.IdQuestionNavigation.RightAnswer ? tq.RightAnswer : (a.Position == tq.RightAnswer ? tq.IdQuestionNavigation.RightAnswer : a.Position)),
                         answer = a.Answer,
                         points = a.Points
                     })
+                    .OrderBy(a => a.position)
                 })
             }).SingleOrDefault());
         }
@@ -287,6 +289,40 @@ namespace QuizMakerOnline.Controllers
             return NoContent();
         }
 
+        [HttpPut]
+        [Route("randomrightanswer/{id}")]
+        public  IActionResult RandomRightAnswer(int id)
+        {
+            var test = _context.Tests.Include(t => t.TestQuestions).ThenInclude(tq => tq.IdQuestionNavigation).ThenInclude(qq => qq.Answers).SingleOrDefault(t => t.IdTest == id);
+            if (test == null)
+            {
+                return NotFound();
+            }
+
+            Random random = new Random();
+
+            foreach (var q in test.TestQuestions)
+            {
+                var p = q.IdQuestionNavigation.Answers.Count();                
+
+                var ch = (char)('a' + random.Next(p));
+
+                q.RightAnswer = ch.ToString();
+            }
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.InnerException.Message);
+            }
+
+            return NoContent();
+        }
+
+
         // GET: api/tests/semesters
         [HttpGet()]
         [Route("semesters")]
@@ -383,6 +419,8 @@ namespace QuizMakerOnline.Controllers
                 .Include(t => t.IdCourseNavigation)
                 .SingleOrDefault(t => t.IdTest == id_test);
 
+            _context.Entry(test).State = EntityState.Detached;
+
             MemoryStream stream = CreateTestSteam(id_test, style, showPoints, showSolution, infoBarItems, test);
 
             if (stream == null)
@@ -440,6 +478,27 @@ namespace QuizMakerOnline.Controllers
                 .Select((item, i) => new { item = item, pos = i })
                 .Where(bi => IsBitSet(infoBarItems, bi.pos))
                 .Select(bi => bi.item));
+
+
+            foreach (TestQuestions tq in test.TestQuestions.Where(tq => tq.IdQuestionNavigation.IdQuestionType == 1 && !(String.IsNullOrEmpty(tq.RightAnswer) || tq.RightAnswer == "?")))
+            {
+                string a1 = tq.RightAnswer;
+                string a2 = tq.IdQuestionNavigation.RightAnswer;
+
+                tq.IdQuestionNavigation.RightAnswer = a1;
+
+                foreach (Answers a in tq.IdQuestionNavigation.Answers)
+                {
+                    if (a.Position == a1)
+                    {
+                        a.Position = a2;
+                    }
+                    else if (a.Position == a2)
+                    {
+                        a.Position = a1;
+                    }
+                }
+            }
 
             XElement xml = new XElement("Tests",
                 new XAttribute("header", header),

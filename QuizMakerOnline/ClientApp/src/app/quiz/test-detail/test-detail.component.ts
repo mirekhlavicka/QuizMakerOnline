@@ -201,6 +201,30 @@ export class TestDetailComponent implements OnInit {
     }
   }
 
+  randomRightAnswer(): void {
+
+    if (confirm("Opravdu si přejete vygenerovat náhodné pořadí  ?")) {
+
+      this.testService.randomRightAnswer(this.test).subscribe(_ => {
+        this._snackBar.open("Náhodné pořadí vzgenerováno", null, { duration: 3000 });
+        this.testService.getTest(this.id_test)
+          .subscribe(test => {
+            this.test = test;
+            if (!test) {
+              alert("Test nelze editovat!");
+              this.location.back();
+            }
+            else if (this.test.id_test <= 0) {
+              this.editTest()
+            }
+          });
+
+      }, e => {
+        alert(e.error)
+      });
+    }
+  }
+
   testInfoBarItemsBit(b: number, notlast: boolean = false): boolean {
     return (this.infoBarItems & b) != 0 && (!notlast || this.infoBarItems >= 2 * b);
   }

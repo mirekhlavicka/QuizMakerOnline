@@ -22,6 +22,10 @@
   <button mat-stroked-button color="warn" (click)="delTest()" matTooltip="Smazat test">
     <mat-icon>delete_forever</mat-icon>
   </button>
+  &nbsp;
+  <button mat-stroked-button color="primary" (click)="randomRightAnswer()" matTooltip="Upravit vlastnosti testu">
+    <mat-icon>edit</mat-icon>
+  </button>
 
   <mat-menu #menuDownloadTex="matMenu">
     <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item" [(ngModel)]="openInOverleaf" (change)="onOpenInOverleafChange()" matTooltip="Otevřít v Overleaf.com"><img width="75" height="25" src="/overleaf_wide_colour_light_bg.png" style="position: relative; top: 3px; left: 20px" /></mat-checkbox>
@@ -37,6 +41,10 @@
     <a mat-menu-item [href]='getDownloadURL(3)' [attr.download]="openInOverleaf ? null : ''" [target]="openInOverleaf ? '_blank' : '_self'">
       <mat-icon>format_indent_increase</mat-icon>
       <span>Enumerate i v podotázkách</span>
+    </a>
+    <a mat-menu-item [href]='getDownloadURL(4)' [attr.download]="openInOverleaf ? null : ''" [target]="openInOverleaf ? '_blank' : '_self'">
+      <mat-icon>format_align_justify</mat-icon>
+      <span>Jen odpovědi</span>
     </a>
   </mat-menu>
 

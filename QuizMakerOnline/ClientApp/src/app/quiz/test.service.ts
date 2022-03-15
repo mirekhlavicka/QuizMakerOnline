@@ -171,6 +171,11 @@ export class TestService {
     );
   }
 
+  randomRightAnswer(test: Test): Observable<any> {
+    return this.http.put(`${this.testsUrl}/randomrightanswer/${test.id_test}`, httpOptions).pipe(
+    );
+  }
+
   public getQuestions(): Question[] {
     if (this.test) {
       return this.test.questions;
