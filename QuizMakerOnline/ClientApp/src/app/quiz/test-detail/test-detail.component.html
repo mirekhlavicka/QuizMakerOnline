@@ -19,10 +19,12 @@
     <mat-icon>edit</mat-icon>
   </button>
   &nbsp;
-  <button mat-stroked-button color="primary" (click)="randomRightAnswer()" matTooltip="Náhodná pozice správných odpovědí">
-    <mat-icon>sync</mat-icon>
-  </button>
-  &nbsp;
+  <div *ngIf="isQuestionTypeTest()">
+    <button mat-stroked-button color="primary" [matMenuTriggerFor]="menuRandomRightAnswer" matTooltip="Náhodná pozice správných odpovědí">
+      <mat-icon>sync</mat-icon>
+    </button>
+    &nbsp;
+  </div>
   <button mat-stroked-button color="warn" (click)="delTest()" matTooltip="Smazat test">
     <mat-icon>delete_forever</mat-icon>
   </button>
@@ -45,6 +47,17 @@
     <a mat-menu-item [href]='getDownloadURL(4)' [attr.download]="openInOverleaf ? null : ''" [target]="openInOverleaf ? '_blank' : '_self'">
       <mat-icon>format_align_justify</mat-icon>
       <span>Jen odpovědi</span>
+    </a>
+  </mat-menu>
+
+  <mat-menu #menuRandomRightAnswer="matMenu">
+    <a mat-menu-item href="javascript: void(0)" (click)="randomRightAnswer(false)">
+      <mat-icon>sync</mat-icon>
+      <span>Vygenerovat náhodnou pozici</span>
+    </a>
+    <a mat-menu-item href="javascript: void(0)" (click)="randomRightAnswer(true)">
+      <mat-icon>sync_disabled</mat-icon>
+      <span>Obnovit původní pozici</span>
     </a>
   </mat-menu>
 

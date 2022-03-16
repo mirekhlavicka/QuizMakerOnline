@@ -291,7 +291,7 @@ namespace QuizMakerOnline.Controllers
 
         [HttpPut]
         [Route("randomrightanswer/{id}")]
-        public  IActionResult RandomRightAnswer(int id)
+        public  IActionResult RandomRightAnswer(int id, bool reset)
         {
             var test = _context.Tests.Include(t => t.TestQuestions).ThenInclude(tq => tq.IdQuestionNavigation).ThenInclude(qq => qq.Answers).SingleOrDefault(t => t.IdTest == id);
             if (test == null)
@@ -299,15 +299,24 @@ namespace QuizMakerOnline.Controllers
                 return NotFound();
             }
 
-            Random random = new Random();
-
-            foreach (var q in test.TestQuestions.Where(tq => tq.IdQuestionNavigation.IdQuestionType == 1))
+            if (reset)
             {
-                var p = q.IdQuestionNavigation.Answers.Count();
-                var ch = (char)('a' + random.Next(p));
-                q.RightAnswer = ch.ToString();
+                foreach (var q in test.TestQuestions.Where(tq => tq.IdQuestionNavigation.IdQuestionType == 1))
+                {
+                    q.RightAnswer = "?";
+                }
             }
+            else
+            {
+                Random random = new Random();
 
+                foreach (var q in test.TestQuestions.Where(tq => tq.IdQuestionNavigation.IdQuestionType == 1))
+                {
+                    var p = q.IdQuestionNavigation.Answers.Count();
+                    var ch = (char)('a' + random.Next(p));
+                    q.RightAnswer = ch.ToString();
+                }
+            }
             try
             {
                 _context.SaveChanges();

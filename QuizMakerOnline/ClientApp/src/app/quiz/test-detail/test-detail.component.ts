@@ -201,21 +201,25 @@ export class TestDetailComponent implements OnInit {
     }
   }
 
-  randomRightAnswer(): void {
+  randomRightAnswer(reset: boolean): void {
+    this.testService.randomRightAnswer(this.test, reset).subscribe(_ => {
+      this._snackBar.open(reset ? "Pozice obnoveny" : "Náhodné pozice vygenerovány", null, { duration: 3000 });
+      this.testService.getTest(this.id_test)
+        .subscribe(test => {
+          this.test = test;
+        });
 
-    if (confirm("Opravdu si přejete nastavit náhodnou pozici správných odpovědí ?")) {
+    }, e => {
+      alert(e.error)
+    });
+  }
 
-      this.testService.randomRightAnswer(this.test).subscribe(_ => {
-        this._snackBar.open("Náhodné pozice aktualizovány", null, { duration: 3000 });
-        this.testService.getTest(this.id_test)
-          .subscribe(test => {
-            this.test = test;
-          });
-
-      }, e => {
-        alert(e.error)
-      });
+  isQuestionTypeTest(): boolean {
+    if (!this.test) {
+      return false;
     }
+
+    return this.test.questions.find(q => q.id_question_type == 1) != null;
   }
 
   testInfoBarItemsBit(b: number, notlast: boolean = false): boolean {

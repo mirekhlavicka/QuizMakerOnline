@@ -171,8 +171,8 @@ export class TestService {
     );
   }
 
-  randomRightAnswer(test: Test): Observable<any> {
-    return this.http.put(`${this.testsUrl}/randomrightanswer/${test.id_test}`, httpOptions).pipe(
+  randomRightAnswer(test: Test, reset: boolean): Observable<any> {
+    return this.http.put(`${this.testsUrl}/randomrightanswer/${test.id_test}?reset=${reset}`, httpOptions).pipe(
       catchError(this.handleError<any>('randomRightAnswer'))
     );
   }
