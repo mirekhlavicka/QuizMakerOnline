@@ -56,7 +56,7 @@
 \bigskip
 {\bf <xsl:value-of select="position()"/>.} 
 <xsl:if test="@id_question_type=1">{\bf <xsl:value-of select="@right_answer"/>)}</xsl:if>
-<xsl:value-of select="@solution"/><xsl:text>
+<!--<xsl:value-of select="@solution"/>--><xsl:text>
 </xsl:text>
 
 </xsl:template>

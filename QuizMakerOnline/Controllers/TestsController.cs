@@ -364,6 +364,21 @@ namespace QuizMakerOnline.Controllers
                 .ToDictionary(c => c.id, c => c.name);
         }
 
+        // GET: api/tests/XSLTList
+        [HttpGet()]
+        [Route("XSLTList")]
+        public Object GetXSLTList()
+        {
+            XElement list = XElement.Load(System.IO.Path.Combine(_env.WebRootPath, @"xslt\list.xml"));
+
+            return list.Descendants("Item").Select(e => new 
+            { 
+                id = e.Element("id").Value,
+                title = e.Element("title").Value,
+                icon = e.Element("icon").Value
+            });
+        }
+
         ////not used
         //[HttpGet]
         //[Route("Download")]

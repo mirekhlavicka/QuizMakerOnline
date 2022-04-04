@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Items>
+	<Item>
+		<id>1</id>
+		<title>Výchozí Styl</title>
+		<icon>format_align_left</icon>
+	</Item>
+	<Item>
+		<id>2</id>
+		<title>Enumerate</title>
+		<icon>format_list_numbered</icon>
+	</Item>
+	<Item>
+		<id>3</id>
+		<title>Enumerate i v podotázkách</title>
+		<icon>format_indent_increase</icon>
+	</Item>
+	<Item>
+		<id>5</id>
+		<title>Kompaktní test</title>
+		<icon>format_align_justify</icon>
+	</Item>
+	<Item>
+		<id>4</id>
+		<title>Jen odpovědi</title>
+		<icon>drag_handle</icon>
+	</Item>
+</Items>

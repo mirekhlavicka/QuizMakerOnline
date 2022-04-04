@@ -17,6 +17,7 @@ export class TestService {
   private testsUrl = 'api/tests';
   private semestersUrl = 'api/tests/semesters';
   private coursesUrl = 'api/tests/courses';
+  private XSLTListUrl = 'api/tests/XSLTList';
 
   private test: Test = null;
 
@@ -71,7 +72,7 @@ export class TestService {
         year: "", //new Date().getFullYear().toString(),
         enter_date: new Date(),
         questions: []
-      })) : this.http.get<Test>(`${this.testsUrl}/${id_test}`))
+      }) as Test) : this.http.get<Test>(`${this.testsUrl}/${id_test}`))
       .pipe(
         tap(t => this.test = t),
         catchError(this.handleError<Test>('getTests', null))
@@ -84,6 +85,26 @@ export class TestService {
         tap(s => this.semesters = s),
         catchError(this.handleError<Object>('getSemesters', null))
       );
+  }
+
+  getXSLTList(): Observable<Object[]> {
+    /*return (of([
+      {
+        id: 1,
+        title: "Výchozí Styl",
+        icon: "format_align_left"
+      },
+      {
+        id: 2,
+        title: "Enumerate",
+        icon: "format_list_numbered"
+      }
+    ]));*/
+    return this.http.get<Object[]>(this.XSLTListUrl)
+      .pipe(
+        catchError(this.handleError<Object[]>('getXSLTList', null))
+      );
+
   }
 
   getMyCourses(): Observable<Object> {

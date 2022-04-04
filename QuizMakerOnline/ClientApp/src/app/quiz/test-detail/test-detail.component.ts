@@ -21,7 +21,8 @@ export class TestDetailComponent implements OnInit {
   test: Test;
 
   courses: Object = {};
-  semesters: Object = {};  
+  semesters: Object = {};
+  XSLTList: Object[] = [];
 
   showSolution: boolean = false;
   showPoints: boolean = true;
@@ -75,8 +76,13 @@ export class TestDetailComponent implements OnInit {
       }),
       flatMap(s => {
         this.semesters = s;
+        return this.testService.getXSLTList();
+      }),
+      flatMap(x => {
+        this.XSLTList = x;
         return this.testService.getTest(this.id_test);
       })
+
     ).subscribe(test => {
       this.test = test;
       if (!test) {
